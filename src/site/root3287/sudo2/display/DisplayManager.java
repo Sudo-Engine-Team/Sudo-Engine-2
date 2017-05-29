@@ -1,6 +1,24 @@
 package site.root3287.sudo2.display;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 
 import java.nio.IntBuffer;
 
@@ -8,6 +26,9 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
+
+import site.root3287.sudo2.logger.LogLevel;
+import site.root3287.sudo2.logger.Logger;
 
 public class DisplayManager {
 	public static String TITLE = "SUDO-Engine 2";
@@ -18,10 +39,20 @@ public class DisplayManager {
 	public static final float FAR_PLANE = 10000f;
 	public static Vector4f BACKGROUND_COLOUR = new Vector4f(0.5f, 0.5f, 0.5f, 1);
 	public static long WINDOW;
+	public static Screen SCREEN;
+	
 	public static void init(){
 		init(WIDTH, HEIGHT, TITLE);
 	}
 	public static void init(float width, float height, String title){
+		Logger.log(LogLevel.INFO, "Loading LWJGL natives for "+System.getProperty("os.name"));
+		Logger.log(LogLevel.INFO, "System.getProperty('os.name') == " + System.getProperty("os.name"));
+		Logger.log(LogLevel.INFO, "System.getProperty('os.version') == " + System.getProperty("os.version"));
+		Logger.log(LogLevel.INFO, "System.getProperty('os.arch') == " + System.getProperty("os.arch"));
+		Logger.log(LogLevel.INFO, "System.getProperty('java.version') == " + System.getProperty("java.version"));
+		Logger.log(LogLevel.INFO, "System.getProperty('java.vendor') == " + System.getProperty("java.vendor"));
+		Logger.log(LogLevel.INFO, "System.getProperty('sun.arch.data.model') == " + System.getProperty("sun.arch.data.model"));
+		
 		if(!glfwInit())
 			throw new IllegalStateException("Cannot start GLFW");
 		
@@ -40,14 +71,19 @@ public class DisplayManager {
 		GL.createCapabilities();
 		glfwSwapInterval(1);
 		glfwShowWindow(WINDOW);
+		
+		SCREEN.init();
 	}
 	
 	public static void loop(){
+		SCREEN.update();
+		SCREEN.render();
 		glfwSwapBuffers(WINDOW);
 		glfwPollEvents();
 	}
 	
 	public static void dispose(){
+		SCREEN.destory();
 		// Free the window callbacks and destroy the window
 		glfwDestroyWindow(WINDOW);
 		// Terminate GLFW and free the error callback
@@ -63,5 +99,17 @@ public class DisplayManager {
 		IntBuffer h = BufferUtils.createIntBuffer(1);
 		glfwGetWindowSize(WINDOW, w, h);
 		return new Vector2f(w.get(0), h.get(0));
+	}
+	
+	public static void setScreen(Screen screen){
+		boolean wasNull = false;
+		if(SCREEN != null){
+			SCREEN.destory();
+			wasNull = true;
+		}
+		SCREEN = screen;
+		if(!wasNull){
+			SCREEN.init();
+		}
 	}
 }

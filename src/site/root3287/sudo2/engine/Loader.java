@@ -1,7 +1,9 @@
 package site.root3287.sudo2.engine;
 
-import java.io.FileInputStream;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -9,14 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
-import org.newdawn.slick.opengl.Texture;
-import org.newdawn.slick.opengl.TextureLoader;
 
 import site.root3287.sudo2.logger.LogLevel;
 import site.root3287.sudo2.logger.Logger;
@@ -141,21 +143,36 @@ public class Loader {
 		return b;
 	}
 	public int loadTexture(String fileName){
-		Texture texture = null;
-		int textureID;
+		BufferedImage texture = null;
+		int textureID = GL11.glGenTextures();
 		if(!textureCache.containsKey(fileName)){
 			try {
-				texture = TextureLoader.getTexture("PNG", new FileInputStream(fileName));
+				texture = ImageIO.read(new File(fileName));
+				int[] rawPixels = new int[texture.getWidth() * texture.getHeight() * 4];
+				rawPixels = texture.getRGB(0,0, texture.getWidth(), texture.getHeight(), null, 0, texture.getWidth());
+				
+				ByteBuffer pixels = BufferUtils.createByteBuffer(texture.getWidth() * texture.getHeight() * 4);
+				for(int i = 0; i<texture.getWidth(); i++){
+					for(int j=0; j<texture.getHeight(); j++){
+						int pixel = rawPixels[i*texture.getWidth()+j];
+						pixels.put((byte) ((pixel >> 16)&0xFF));
+						pixels.put((byte) ((pixel >> 8)&0xFF));
+						pixels.put((byte) ((pixel >> 0)&0xFF));
+						pixels.put((byte) ((pixel >> 24)&0xFF));
+					}
+				}
+				pixels.flip();
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 				GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
 				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
 				GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.4f);
+				GL11.glTexImage2D(textureID, 0, GL11.GL_RGBA, texture.getWidth(), texture.getWidth(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, pixels);
+				textures.add(textureID);
+				textureCache.put(fileName, textureID);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			textureID = texture.getTextureID();
-			textures.add(textureID);
-			textureCache.put(fileName, textureID);
 		}else{
 			textureID = textureCache.get(fileName);
 		}
