@@ -1,24 +1,6 @@
 package site.root3287.sudo2.display;
 
-import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
-import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
-import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
-import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
-import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwGetTime;
-import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.glfw.GLFW.glfwWindowHint;
+import static org.lwjgl.glfw.GLFW.*;
 
 import java.nio.IntBuffer;
 
@@ -40,6 +22,7 @@ public class DisplayManager {
 	public static Vector4f BACKGROUND_COLOUR = new Vector4f(0.5f, 0.5f, 0.5f, 1);
 	public static long WINDOW;
 	public static Screen SCREEN;
+	public static boolean fullscreen = true;
 	
 	public static void init(){
 		init(WIDTH, HEIGHT, TITLE);
@@ -62,7 +45,7 @@ public class DisplayManager {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		
-		WINDOW = glfwCreateWindow((int)WIDTH, (int)HEIGHT, TITLE, 0, 0);
+		WINDOW = glfwCreateWindow((int)WIDTH, (int)HEIGHT, TITLE, fullscreen?glfwGetPrimaryMonitor():0, 0);
 		if(WINDOW == 0){
 			throw new RuntimeException("Failed to create window!");
 		}
