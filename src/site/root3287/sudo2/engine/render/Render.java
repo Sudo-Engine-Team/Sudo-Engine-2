@@ -15,6 +15,7 @@ import site.root3287.sudo2.engine.TexturedModel;
 import site.root3287.sudo2.engine.font.FontText;
 import site.root3287.sudo2.engine.font.GUIText;
 import site.root3287.sudo2.engine.shader.programs.EntityShader;
+import site.root3287.sudo2.entities.Camera;
 import site.root3287.sudo2.entities.Entity;
 import site.root3287.sudo2.entities.Light;
 import site.root3287.sudo2.logger.LogLevel;
@@ -22,6 +23,8 @@ import site.root3287.sudo2.logger.Logger;
 import site.root3287.sudo2.utils.SudoMaths;
 
 public class Render {
+	private Camera camera;
+	
 	private Matrix4f projectionMatrix;
 	private Matrix4f orthographicMatrix;
 
@@ -54,7 +57,10 @@ public class Render {
 	public void render() {
 		prepare();
 
+		Matrix4f viewMatrix = SudoMaths.createViewMatrix(camera);
+		
 		entityShader.start();
+		entityShader.loadViewMatrix(viewMatrix);
 		entityShader.loadLight(lights);
 		entityRender.render(entities);
 		entityShader.stop();
@@ -63,6 +69,10 @@ public class Render {
 		
 		entities.clear();
 		lights.clear();
+	}
+	
+	public void updateCamera(Camera c){
+		this.camera = c;
 	}
 
 	public void addEntity(Entity entity) {

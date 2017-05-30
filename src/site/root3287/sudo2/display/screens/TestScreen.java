@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector4f;
 import site.root3287.sudo2.display.Screen;
 import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.render.Render;
+import site.root3287.sudo2.entities.Camera;
 import site.root3287.sudo2.entities.CubeEntity;
 import site.root3287.sudo2.entities.Light;
 
@@ -14,9 +15,11 @@ public class TestScreen implements Screen {
 	private Render render;
 	private CubeEntity cube;
 	private Light light;
+	private Camera camera;
 	
 	@Override
 	public void init() {
+		this.camera = new Camera();
 		this.render = new Render();
 		cube = new CubeEntity();
 		this.light = new Light(new Vector3f(0,10,0), new Vector4f(1, 1, 1, 1));
@@ -24,6 +27,8 @@ public class TestScreen implements Screen {
 
 	@Override
 	public void update() {
+		this.camera.update(1);
+		this.render.updateCamera(camera);
 		this.render.addEntity(cube);
 		this.render.addLight(this.light);
 	}

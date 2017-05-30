@@ -9,9 +9,6 @@ public class Camera extends Entity{
 	}
 	
 	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update(float delta) {}
 
 }
