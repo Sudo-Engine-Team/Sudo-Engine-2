@@ -22,7 +22,7 @@ public class DisplayManager {
 	public static Vector4f BACKGROUND_COLOUR = new Vector4f(0.5f, 0.5f, 0.5f, 1);
 	public static long WINDOW;
 	public static Screen SCREEN;
-	public static boolean fullscreen = true;
+	public static boolean fullscreen = false;
 	
 	public static void init(){
 		init(WIDTH, HEIGHT, TITLE);

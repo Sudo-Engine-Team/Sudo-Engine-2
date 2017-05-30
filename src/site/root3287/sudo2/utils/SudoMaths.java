@@ -69,7 +69,7 @@ public class SudoMaths {
 	public static Matrix4f createProjectionMatrix(){
 		Logger.log(LogLevel.INFO, "Creating projection Matrix");
 		Vector2f size = DisplayManager.getCurrentWindowSize();
-		float aspectRatio = (float) size.x/ size.y;
+		float aspectRatio = (float) size.x/size.y;
 		float y_scale = (float) ((1f / Math.tan(Math.toRadians(DisplayManager.FOV/ 2f))) * aspectRatio);
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = DisplayManager.FAR_PLANE - DisplayManager.NEAR_PLANE;
@@ -90,14 +90,14 @@ public class SudoMaths {
 		float frustum_length = DisplayManager.FAR_PLANE - DisplayManager.NEAR_PLANE;
 		
 		Matrix4f orthoMatrix = new Matrix4f();
-		orthoMatrix.m00 = (2/DisplayManager.WIDTH);
-		orthoMatrix.m11 = (2/DisplayManager.HEIGHT);
-		orthoMatrix.m22 = -(2/(frustum_length));
-		orthoMatrix.m33 = 1;
-		
-		//orthoMatrix.m30 = -((right+left)/(right+left));
-	//	orthoMatrix.m31 = -((top+bottom)/(top-bottom));
-		orthoMatrix.m32 = ((DisplayManager.FAR_PLANE+DisplayManager.NEAR_PLANE) / -(frustum_length));
+		orthoMatrix.m00 = 2.0f/DisplayManager.WIDTH;
+		orthoMatrix.m11 = 2.0f/DisplayManager.HEIGHT;
+		orthoMatrix.m22 = -2.0f/frustum_length;
+		orthoMatrix.m30 = -(0)/DisplayManager.WIDTH;
+		orthoMatrix.m31 = -(0)/DisplayManager.HEIGHT;
+		orthoMatrix.m32 =   -(DisplayManager.FAR_PLANE+DisplayManager.NEAR_PLANE)/frustum_length;
+		orthoMatrix.m33 = 1.0f;
+		System.out.println(orthoMatrix);
 		return orthoMatrix;
 	}
 	

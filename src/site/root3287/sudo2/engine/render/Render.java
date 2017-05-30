@@ -8,6 +8,8 @@ import java.util.Map;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
+import site.root3287.sudo2.component.functions.ModelComponet;
+import site.root3287.sudo2.component.functions.TransposeComponent;
 import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.engine.TexturedModel;
 import site.root3287.sudo2.engine.font.FontText;
@@ -58,8 +60,26 @@ public class Render {
 		entityShader.stop();
 		
 		fontRender.render();
+		
+		entities.clear();
+		lights.clear();
 	}
 
+	public void addEntity(Entity entity) {
+		if(!entity.hasComponent(ModelComponet.class) && !entity.hasComponent(TransposeComponent.class)){
+			return;
+		}
+		TexturedModel entityModel = entity.getComponent(ModelComponet.class).model;
+		List<Entity> batch = entities.get(entityModel);
+		if (batch != null) {
+			batch.add(entity);
+		} else {
+			List<Entity> newBatch = new ArrayList<Entity>();
+			newBatch.add(entity);
+			entities.put(entityModel, newBatch);
+		}
+	}
+	
 	public void addLight(Light l) {
 		lights.add(l);
 	}
