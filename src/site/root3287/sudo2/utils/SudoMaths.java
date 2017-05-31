@@ -97,7 +97,6 @@ public class SudoMaths {
 		orthoMatrix.m31 = -(0)/DisplayManager.HEIGHT;
 		orthoMatrix.m32 =   -(DisplayManager.FAR_PLANE+DisplayManager.NEAR_PLANE)/frustum_length;
 		orthoMatrix.m33 = 1.0f;
-		System.out.println(orthoMatrix);
 		return orthoMatrix;
 	}
 	

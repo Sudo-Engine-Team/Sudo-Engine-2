@@ -3,6 +3,7 @@ package site.root3287.sudo2.display.screens;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.display.Screen;
 import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.render.Render;
@@ -10,6 +11,7 @@ import site.root3287.sudo2.entities.Camera;
 import site.root3287.sudo2.entities.CubeEntity;
 import site.root3287.sudo2.entities.Light;
 import site.root3287.sudo2.entities.ProspectiveCamera;
+import site.root3287.sudo2.utils.Input;
 
 public class TestScreen implements Screen {
 
@@ -17,8 +19,6 @@ public class TestScreen implements Screen {
 	private CubeEntity cube;
 	private Light light;
 	private Camera camera;
-	
-	//private StringBuilder sb = new StringBuilder();
 	
 	@Override
 	public void init() {
@@ -30,31 +30,12 @@ public class TestScreen implements Screen {
 
 	@Override
 	public void update() {
+		System.out.println("DX: "+Input.Mouse.getDX()+"\n"+"DY: "+Input.Mouse.getDY());
 		this.camera.update(1);
 		this.render.updateCamera(camera);
 		this.render.addEntity(cube);
 		this.render.addLight(this.light);
-		/*for(int i = 0; i<GLFW.GLFW_KEY_LAST; i++){
-			if(Input.isKeyPressed(i)){
-				if(i == GLFW.GLFW_KEY_ENTER){
-					sb.append("\n");
-				}else if(i == GLFW.GLFW_KEY_BACKSPACE){
-					sb.deleteCharAt(sb.length()-1);
-				}else if(i== GLFW.GLFW_KEY_SPACE){
-					sb.append(" ");
-				}else if(i == GLFW.GLFW_KEY_UNKNOWN){
-					
-				}else{
-					sb.append(GLFW.glfwGetKeyName(i, 0));
-				}
-			}
-		}
-		
-		
-		for(int i = 0; i<50; i++){
-			System.out.println();
-		}
-		System.out.println(sb);*/
+		Input.Mouse.setMousePosition(DisplayManager.WIDTH-DisplayManager.WIDTH/2, DisplayManager.HEIGHT-DisplayManager.HEIGHT/2);
 	}
 	
 	@Override

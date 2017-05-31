@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL32;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -20,12 +21,27 @@ public abstract class Shader {
 	private int programID;
     private int vertexShaderID;
     private int fragmentShaderID;
+    private int geometryShaderID;
      
     private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
      
     public Shader(String vertexFile,String fragmentFile){
         vertexShaderID = loadShader(vertexFile,GL20.GL_VERTEX_SHADER);
         fragmentShaderID = loadShader(fragmentFile,GL20.GL_FRAGMENT_SHADER);
+        geometryShaderID = -1;
+        programID = GL20.glCreateProgram();
+        GL20.glAttachShader(programID, vertexShaderID);
+        GL20.glAttachShader(programID, fragmentShaderID);
+        bindAttributes();
+        GL20.glLinkProgram(programID);
+        GL20.glValidateProgram(programID);
+        getAllUniformLocations();
+    }
+    
+    public Shader(String vertexFile,String fragmentFile, String geometryFile){
+        vertexShaderID = loadShader(vertexFile,GL20.GL_VERTEX_SHADER);
+        fragmentShaderID = loadShader(fragmentFile,GL20.GL_FRAGMENT_SHADER);
+        geometryShaderID = loadShader(geometryFile, GL32.GL_GEOMETRY_SHADER);
         programID = GL20.glCreateProgram();
         GL20.glAttachShader(programID, vertexShaderID);
         GL20.glAttachShader(programID, fragmentShaderID);
@@ -56,6 +72,10 @@ public abstract class Shader {
         stop();
         GL20.glDetachShader(programID, vertexShaderID);
         GL20.glDetachShader(programID, fragmentShaderID);
+        if(geometryShaderID != -1){
+        	GL20.glDetachShader(programID, geometryShaderID);
+        	GL20.glDeleteShader(geometryShaderID);
+        }
         GL20.glDeleteShader(vertexShaderID);
         GL20.glDeleteShader(fragmentShaderID);
         GL20.glDeleteProgram(programID);

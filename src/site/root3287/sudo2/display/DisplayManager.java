@@ -9,9 +9,9 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.callbacks.Input;
 import site.root3287.sudo2.logger.LogLevel;
 import site.root3287.sudo2.logger.Logger;
+import site.root3287.sudo2.utils.Input;
 
 public class DisplayManager {
 	public static String TITLE = "SUDO-Engine 2";

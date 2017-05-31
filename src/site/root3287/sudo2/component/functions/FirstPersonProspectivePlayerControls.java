@@ -5,10 +5,10 @@ import java.util.UUID;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 
-import site.root3287.sudo2.callbacks.Input;
 import site.root3287.sudo2.component.Component;
 import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.entities.Entity;
+import site.root3287.sudo2.utils.Input;
 
 public class FirstPersonProspectivePlayerControls extends Component{
 	public boolean isGrabbed = true, 
@@ -72,35 +72,35 @@ public class FirstPersonProspectivePlayerControls extends Component{
 			}
 		}*/
 		
-		if(Input.isKeyDown(GLFW.GLFW_KEY_W)){
+		if(Input.Keyboard.isKeyDown(GLFW.GLFW_KEY_W)){
 			position.x += finalDistance * (float)Math.sin(Math.toRadians(yaw));
 		    position.z -= finalDistance * (float)Math.cos(Math.toRadians(yaw));
 		}
-		if(Input.isKeyDown(GLFW.GLFW_KEY_S)){
+		if(Input.Keyboard.isKeyDown(GLFW.GLFW_KEY_S)){
 			position.x -= finalDistance * (float)Math.sin(Math.toRadians(yaw));
 		    position.z += finalDistance * (float)Math.cos(Math.toRadians(yaw));
 		}
-		if(Input.isKeyDown(GLFW.GLFW_KEY_A)){
+		if(Input.Keyboard.isKeyDown(GLFW.GLFW_KEY_A)){
 			position.x -= finalDistance * (float)Math.sin(Math.toRadians(yaw+90));
 		    position.z += finalDistance * (float)Math.cos(Math.toRadians(yaw+90));
 		}
-		if(Input.isKeyDown(GLFW.GLFW_KEY_D)){
+		if(Input.Keyboard.isKeyDown(GLFW.GLFW_KEY_D)){
 			position.x -= finalDistance * (float)Math.sin(Math.toRadians(yaw-90));
 		    position.z += finalDistance * (float)Math.cos(Math.toRadians(yaw-90));
 		}
 		
-		if(Input.isKeyDown(GLFW.GLFW_KEY_ESCAPE)){
+		if(Input.Keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)){
 			if(pauseCooldown >= 0.75){
 				this.isMouseGrabbedRequest = true;
 				pauseCooldown = 0;
 			}
 		}
 		
-		if(Input.isKeyDown(GLFW.GLFW_KEY_SPACE)){
+		if(Input.Keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE)){
 			position.y += finalDistance;
 		}
 		
-		if(Input.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)){
+		if(Input.Keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)){
 			position.y -= finalDistance;
 		}
 		
