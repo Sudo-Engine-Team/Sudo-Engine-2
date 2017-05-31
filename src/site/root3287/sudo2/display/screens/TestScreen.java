@@ -30,12 +30,12 @@ public class TestScreen implements Screen {
 
 	@Override
 	public void update() {
-		System.out.println("DX: "+Input.Mouse.getDX()+"\n"+"DY: "+Input.Mouse.getDY());
+		//Input.Mouse.setMousePosition(DisplayManager.WIDTH-DisplayManager.WIDTH/2, DisplayManager.HEIGHT-DisplayManager.HEIGHT/2);
+		System.out.println("DX: "+Input.Mouse.getDX()+"\n"+"DY: "+Input.Mouse.getDY()+"\n");
 		this.camera.update(1);
 		this.render.updateCamera(camera);
 		this.render.addEntity(cube);
 		this.render.addLight(this.light);
-		Input.Mouse.setMousePosition(DisplayManager.WIDTH-DisplayManager.WIDTH/2, DisplayManager.HEIGHT-DisplayManager.HEIGHT/2);
 	}
 	
 	@Override

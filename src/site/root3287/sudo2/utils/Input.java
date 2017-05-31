@@ -50,13 +50,25 @@ public class Input {
 		public static double getY(){
 			return y;
 		}
-		
+		/**
+		 * getDX
+		 * movement since last DX call.
+		 * @return double
+		 */
 		public static double getDX(){
-			return prevX-x;
+			double current = x;
+			double prev = prevX;
+			double res = prev-current;
+			prevX = x;
+			return res;
 		}
 		
 		public static double getDY(){
-			return prevY-y;
+			double current = y;
+			double prev = prevY;
+			double res = prev-current;
+			prevY = y;
+			return res;
 		}
 		
 		public static void setMousePosition(double x, double y){
@@ -79,10 +91,5 @@ public class Input {
 		for(int i = 0; i<GLFW.GLFW_MOUSE_BUTTON_LAST; i++){
 			Mouse.mouse[i] = Mouse.isMouseDown(i);
 		}
-	}
-	
-	public static void postUpdate(){
-		Mouse.prevX = Mouse.getX();
-		Mouse.prevY = Mouse.getY();
 	}
 }
