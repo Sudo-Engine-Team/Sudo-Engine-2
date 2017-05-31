@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
+import site.root3287.sudo2.callbacks.Input;
 import site.root3287.sudo2.logger.LogLevel;
 import site.root3287.sudo2.logger.Logger;
 
@@ -42,6 +43,7 @@ public class DisplayManager {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		
@@ -62,6 +64,7 @@ public class DisplayManager {
 		SCREEN.update();
 		SCREEN.render();
 		glfwSwapBuffers(WINDOW);
+		Input.update();
 		glfwPollEvents();
 	}
 	
