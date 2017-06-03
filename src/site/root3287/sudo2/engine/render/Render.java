@@ -14,7 +14,9 @@ import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.engine.TexturedModel;
 import site.root3287.sudo2.engine.font.FontText;
 import site.root3287.sudo2.engine.font.GUIText;
+import site.root3287.sudo2.engine.gui.GuiTexture;
 import site.root3287.sudo2.engine.shader.programs.EntityShader;
+import site.root3287.sudo2.engine.shader.programs.Shader2D;
 import site.root3287.sudo2.entities.Camera;
 import site.root3287.sudo2.entities.Entity;
 import site.root3287.sudo2.entities.Light;
@@ -30,12 +32,16 @@ public class Render {
 	private Matrix4f viewMatrix;
 	
 	private List<Light> lights = new ArrayList<>();
+	private List<GuiTexture> guis = new ArrayList<>();
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<>();
 
 	// Start the shader
 	// Init render varible.
 	EntityShader entityShader = new EntityShader();
 	EntityRender entityRender;
+	
+	Shader2D guiShader = new Shader2D();
+	Render2D guiRender;
 
 	FontText fontRender;
 
@@ -45,6 +51,7 @@ public class Render {
 		this.orthographicMatrix = SudoMaths.createOrthoMatrix();
 		this.entityRender = new EntityRender(entityShader, projectionMatrix);
 		this.fontRender = new FontText();
+		this.guiRender = new Render2D(guiShader, projectionMatrix);
 	}
 	
 	public Render(Camera c) {
@@ -55,6 +62,7 @@ public class Render {
 		viewMatrix = SudoMaths.createViewMatrix(camera);
 		this.entityRender = new EntityRender(entityShader, projectionMatrix);
 		this.fontRender = new FontText();
+		this.guiRender = new Render2D(guiShader, orthographicMatrix);
 	}
 
 	public void prepare() {
@@ -78,8 +86,13 @@ public class Render {
 		
 		fontRender.render();
 		
+		guiShader.start();
+		guiRender.render(guis);
+		guiShader.stop();
+		
 		entities.clear();
 		lights.clear();
+		guis.clear();
 	}
 	
 	public void updateCamera(Camera c){
@@ -109,6 +122,10 @@ public class Render {
 		this.fontRender.loadText(text);
 	}
 	
+	public void addGui(GuiTexture text){
+		this.guis.add(text);
+	}
+	
 	public void removeText(int index){
 		this.fontRender.removeText(index);
 	}
@@ -121,6 +138,7 @@ public class Render {
 		// Dispose all the shaders...
 		this.entityShader.dispose();
 		this.fontRender.dispose();
+		this.guiRender.dispose();
 	}
 
 	public static void enableCulling() {

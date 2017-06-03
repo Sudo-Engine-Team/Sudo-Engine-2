@@ -10,6 +10,6 @@ public class ProspectiveCamera extends Camera {
 	
 	@Override
 	public void update(float delta) {
-		getComponent(FirstPersonProspectivePlayerControls.class).update(0.001f);
+		getComponent(FirstPersonProspectivePlayerControls.class).update(delta);
 	}
 }

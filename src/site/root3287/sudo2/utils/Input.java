@@ -81,6 +81,9 @@ public class Input {
 				return;
 			GLFW.glfwSetInputMode(DisplayManager.WINDOW, GLFW.GLFW_CURSOR, (grabbed)?GLFW.GLFW_CURSOR_DISABLED:GLFW.GLFW_CURSOR_NORMAL);;
 		}
+		public static boolean isGrabbed(){
+			return grabbed;
+		}
 	}
 	
 	public static void update(){

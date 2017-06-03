@@ -87,17 +87,25 @@ public class SudoMaths {
 	
 	public static Matrix4f createOrthoMatrix(){
 		Logger.log("Creating Orthographic Matrix");
-		float frustum_length = DisplayManager.FAR_PLANE - DisplayManager.NEAR_PLANE;
-		
-		Matrix4f orthoMatrix = new Matrix4f();
-		orthoMatrix.m00 = 2.0f/DisplayManager.WIDTH;
-		orthoMatrix.m11 = 2.0f/DisplayManager.HEIGHT;
-		orthoMatrix.m22 = -2.0f/frustum_length;
-		orthoMatrix.m30 = -(0)/DisplayManager.WIDTH;
-		orthoMatrix.m31 = -(0)/DisplayManager.HEIGHT;
-		orthoMatrix.m32 =   -(DisplayManager.FAR_PLANE+DisplayManager.NEAR_PLANE)/frustum_length;
-		orthoMatrix.m33 = 1.0f;
-		return orthoMatrix;
+		return ortho(0, DisplayManager.WIDTH, 0, DisplayManager.HEIGHT, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
+	}
+	
+	private static Matrix4f ortho(float right, float left, float top, float bottom, float near, float far){
+		Matrix4f m = new Matrix4f();
+		float x_orth = 2 / (right - left);
+	    float y_orth = 2 / (top - bottom);
+	    float z_orth = -2 / (far - near);
+	    float tx = -(right + left) / (right - left);
+	    float ty = -(top + bottom) / (top - bottom);
+	    float tz = -(far + near) / (far - near);
+	    m.m00 = x_orth;
+	    m.m11 = y_orth;
+	    m.m22 = z_orth;
+	    m.m03 = tx;
+	    m.m13 = ty;
+	    m.m23 = tz;
+	    m.m33 =1;
+	    return m;
 	}
 	
 	public static float barryCentric(Vector3f p1, Vector3f p2, Vector3f p3, Vector2f pos) {
