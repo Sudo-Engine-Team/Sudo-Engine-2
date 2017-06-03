@@ -24,6 +24,8 @@ public class DisplayManager {
 	public static long WINDOW;
 	public static Screen SCREEN;
 	public static boolean fullscreen = false;
+	public static double DELTA;
+	private static double lastTime;
 	
 	public static void init(){
 		init(WIDTH, HEIGHT, TITLE);
@@ -61,6 +63,9 @@ public class DisplayManager {
 	}
 	
 	public static void loop(){
+		double current = currentTimeMillis();
+		DELTA = (current - lastTime)/1000;
+		lastTime = current;
 		SCREEN.update();
 		SCREEN.render();
 		glfwSwapBuffers(WINDOW);
@@ -97,5 +102,9 @@ public class DisplayManager {
 		if(!wasNull){
 			SCREEN.init();
 		}
+	}
+	
+	public static double getDelta(){
+		return DELTA;
 	}
 }

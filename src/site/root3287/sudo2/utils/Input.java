@@ -27,7 +27,9 @@ public class Input {
 	
 	public static class Mouse{
 		
-		private static double prevX, prevY, x, y;
+		private static boolean grabbed, hidden;
+		
+		private static double x,y, dx, dy;
 		
 		private static boolean[] mouse = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
 		
@@ -56,23 +58,28 @@ public class Input {
 		 * @return double
 		 */
 		public static double getDX(){
-			double current = x;
-			double prev = prevX;
-			double res = prev-current;
-			prevX = x;
-			return res;
+			return dx;
 		}
 		
 		public static double getDY(){
-			double current = y;
-			double prev = prevY;
-			double res = prev-current;
-			prevY = y;
-			return res;
+			return dy;
 		}
 		
 		public static void setMousePosition(double x, double y){
 			GLFW.glfwSetCursorPos(DisplayManager.WINDOW, x, y);
+		}
+		
+		public static void setHidden(boolean hide){
+			hidden = hide;
+			if(grabbed)
+				return;
+			GLFW.glfwSetInputMode(DisplayManager.WINDOW, GLFW.GLFW_CURSOR, (hidden)?GLFW.GLFW_CURSOR_HIDDEN:GLFW.GLFW_CURSOR_NORMAL);;
+		}
+		public static void setGrabbed(boolean grab){
+			grabbed = grab;
+			if(hidden)
+				return;
+			GLFW.glfwSetInputMode(DisplayManager.WINDOW, GLFW.GLFW_CURSOR, (grabbed)?GLFW.GLFW_CURSOR_DISABLED:GLFW.GLFW_CURSOR_NORMAL);;
 		}
 	}
 	
@@ -82,8 +89,14 @@ public class Input {
 		
 		GLFW.glfwGetCursorPos(DisplayManager.WINDOW, mouseX, mouseY);
 		
-		Mouse.x = (int) mouseX.get();
-		Mouse.y = (int) mouseY.get();
+		double x = mouseX.get();
+		double y = mouseY.get();
+		
+		Mouse.dx = Mouse.x - x;
+		Mouse.dy = Mouse.y - y;
+		
+		Mouse.x = x;
+		Mouse.y = y;
 		
 		for(int i = 0; i<GLFW.GLFW_KEY_LAST; i++){
 			Keyboard.key[i] = Keyboard.isKeyDown(i);

@@ -5,12 +5,11 @@ import java.util.UUID;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 
-import site.root3287.sudo2.component.Component;
-import site.root3287.sudo2.display.DisplayManager;
+import site.root3287.sudo2.component.EntityComponent;
 import site.root3287.sudo2.entities.Entity;
 import site.root3287.sudo2.utils.Input;
 
-public class FirstPersonProspectivePlayerControls extends Component{
+public class FirstPersonProspectivePlayerControls extends EntityComponent{
 	public boolean isGrabbed = true, 
 			isMouseGrabbedRequest = false, 
 			canFly = false,
@@ -45,8 +44,8 @@ public class FirstPersonProspectivePlayerControls extends Component{
 		}
 		
 		if(isGrabbed){
-			//this.pitch -= Mouse.getDY() * sensitivity;
-			//this.yaw += Mouse.getDX() * sensitivity;
+			this.pitch -= Input.Mouse.getDY() * sensitivity;
+			this.yaw -= Input.Mouse.getDX() * sensitivity;
 			
 			if(this.pitch > 90){
 				this.pitch = 90;
@@ -114,7 +113,7 @@ public class FirstPersonProspectivePlayerControls extends Component{
 			}else{
 				this.isGrabbed = true;
 			}
-			GLFW.glfwSetInputMode(DisplayManager.WINDOW, GLFW.GLFW_CURSOR, (this.isGrabbed)?GLFW.GLFW_CURSOR_HIDDEN:GLFW.GLFW_CURSOR_NORMAL);
+			//GLFW.glfwSetInputMode(DisplayManager.WINDOW, GLFW.GLFW_CURSOR, (this.isGrabbed)?GLFW.GLFW_CURSOR_HIDDEN:GLFW.GLFW_CURSOR_NORMAL);
 		}
 	}
 }
