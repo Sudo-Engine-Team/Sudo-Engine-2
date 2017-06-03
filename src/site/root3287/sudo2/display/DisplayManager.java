@@ -1,6 +1,26 @@
 package site.root3287.sudo2.display;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 
 import java.nio.IntBuffer;
 
@@ -19,7 +39,7 @@ public class DisplayManager {
 	public static float HEIGHT = WIDTH/16*9;
 	public static final float FOV = 90;
 	public static final float NEAR_PLANE = 0.1f;
-	public static final float FAR_PLANE = 10000f;
+	public static final float FAR_PLANE = 100f;
 	public static Vector4f BACKGROUND_COLOUR = new Vector4f(0.5f, 0.5f, 0.5f, 1);
 	public static long WINDOW;
 	public static Screen SCREEN;

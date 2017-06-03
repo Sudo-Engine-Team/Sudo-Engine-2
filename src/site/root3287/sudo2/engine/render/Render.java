@@ -27,7 +27,8 @@ public class Render {
 	
 	private Matrix4f projectionMatrix;
 	private Matrix4f orthographicMatrix;
-
+	private Matrix4f viewMatrix;
+	
 	private List<Light> lights = new ArrayList<>();
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<>();
 
@@ -45,6 +46,16 @@ public class Render {
 		this.entityRender = new EntityRender(entityShader, projectionMatrix);
 		this.fontRender = new FontText();
 	}
+	
+	public Render(Camera c) {
+		this.camera = c;
+		enableCulling();
+		this.projectionMatrix = SudoMaths.createProjectionMatrix();
+		this.orthographicMatrix = SudoMaths.createOrthoMatrix();
+		viewMatrix = SudoMaths.createViewMatrix(camera);
+		this.entityRender = new EntityRender(entityShader, projectionMatrix);
+		this.fontRender = new FontText();
+	}
 
 	public void prepare() {
 		Logger.log(LogLevel.DEBUG_RENDER, "Preparing render");
@@ -56,8 +67,8 @@ public class Render {
 
 	public void render() {
 		prepare();
-
-		Matrix4f viewMatrix = SudoMaths.createViewMatrix(camera);
+		
+		viewMatrix = SudoMaths.createViewMatrix(camera);
 		
 		entityShader.start();
 		entityShader.loadViewMatrix(viewMatrix);
@@ -125,5 +136,13 @@ public class Render {
 
 	public Matrix4f getOrthographicMatrix() {
 		return this.orthographicMatrix;
+	}
+	
+	public Matrix4f getProspectiveMatrix() {
+		return this.projectionMatrix;
+	}
+	
+	public Matrix4f getViewMatrix() {
+		return this.viewMatrix;
 	}
 }
