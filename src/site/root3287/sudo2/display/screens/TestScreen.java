@@ -47,7 +47,7 @@ public class TestScreen implements Screen {
 			allEntity.add(cube);
 		}
 		
-		GuiTexture texture = new GuiTexture(Loader.getInstance().loadTexture("res/image/white.png"), new Vector2f(-3f, -3f), new Vector2f(3f, 3f));
+		GuiTexture texture = new GuiTexture(Loader.getInstance().loadTexture("res/image/white.png"), new Vector2f(0.5f, 0.5f), new Vector2f(1f, 1f));
 		allTexture.add(texture);
 		
 		Matrix4f pv = new Matrix4f();
