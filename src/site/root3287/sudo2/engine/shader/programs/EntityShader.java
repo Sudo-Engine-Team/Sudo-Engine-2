@@ -5,6 +5,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import site.root3287.sudo2.component.functions.ColourComponent;
 import site.root3287.sudo2.component.functions.TransposeComponent;
 import site.root3287.sudo2.engine.shader.Shader;
 import site.root3287.sudo2.entities.Light;
@@ -70,7 +71,7 @@ public class EntityShader extends Shader{
     	for(int i =0; i<light.size(); i++){
     		if(i < MAX_LIGHT){
     			super.loadVector(location_lightPosition[i], light.get(i).getComponent(TransposeComponent.class).position);
-            	super.loadVector(location_lightColour[i], light.get(i).getComponent(TransposeComponent.class).position);
+            	super.loadVector(location_lightColour[i], light.get(i).getComponent(ColourComponent.class).colour);
     		}else{
     			super.loadVector(location_lightPosition[i], new Vector3f(0,0,0));
     			super.loadVector(location_lightColour[i], new Vector3f(0,0,0));

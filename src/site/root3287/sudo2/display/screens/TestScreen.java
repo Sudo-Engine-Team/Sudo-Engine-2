@@ -38,7 +38,7 @@ public class TestScreen implements Screen {
 	public void init() {
 		this.camera = new ProspectiveCamera();
 		this.render = new Render(camera);
-		this.light = new Light(new Vector3f(0,10,0), new Vector4f(1, 1, 1, 1));
+		this.light = new Light(new Vector3f(0,10,0), new Vector4f(100, 100, 100, 0));
 		Input.Mouse.setGrabbed(true);
 		
 		for (int i=0; i<200; i++){
@@ -47,8 +47,13 @@ public class TestScreen implements Screen {
 			allEntity.add(cube);
 		}
 		
-		GuiTexture texture = new GuiTexture(Loader.getInstance().loadTexture("res/image/white.png"), new Vector2f(0.5f, 0.5f), new Vector2f(1f, 1f));
-		allTexture.add(texture);
+		GuiTexture crosshairX = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, 0f), new Vector2f(10f, 1f));
+		GuiTexture crosshairY = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, 0f), new Vector2f(1f, 10f));
+		GuiTexture inventoryBar = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, DisplayManager.HEIGHT/2.25f), new Vector2f(DisplayManager.WIDTH/4f, 25f));
+		
+		allTexture.add(crosshairX);
+		allTexture.add(crosshairY);
+		allTexture.add(inventoryBar);
 		
 		Matrix4f pv = new Matrix4f();
 		Matrix4f.mul(render.getProspectiveMatrix(), render.getViewMatrix(), pv);
@@ -57,6 +62,7 @@ public class TestScreen implements Screen {
 
 	@Override
 	public void update() {
+		System.out.println(DisplayManager.WIDTH);
 		for(Entity e:allEntity){
 			e.update((float) DisplayManager.getDelta());
 		}
@@ -73,6 +79,9 @@ public class TestScreen implements Screen {
 	
 	@Override
 	public void render() {
+		if(DisplayManager.hasResized()){
+			this.render.resetOrthographicMatrix();
+		}
 		this.render.updateCamera(camera);
 		for(Entity e : allEntity){
 			if(e.hasComponent(AABBComponent.class) && frustum.isAABBinFrustum(e.getComponent(AABBComponent.class).aabbBox)){

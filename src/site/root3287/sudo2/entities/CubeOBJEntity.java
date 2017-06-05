@@ -21,7 +21,6 @@ public class CubeOBJEntity extends Entity{
 		ModelData data = OBJFileLoader.loadOBJ("res/model/Cube/cube.obj");
 		getComponent(ModelComponet.class).model = new TexturedModel(Loader.getInstance().loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices()), new ModelTexture(Loader.getInstance().loadTexture("res/image/white.png")));
 		getComponent(TransposeComponent.class).scale = 0.25f;
-		
 		addComponent(new AABBComponent());
 		getComponent(AABBComponent.class).aabbBox = new AABB(getComponent(TransposeComponent.class).position, new Vector3f(1, 1, 1));
 	}

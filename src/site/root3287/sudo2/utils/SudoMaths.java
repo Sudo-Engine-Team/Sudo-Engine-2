@@ -9,7 +9,6 @@ import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.entities.Camera;
 import site.root3287.sudo2.logger.LogLevel;
 import site.root3287.sudo2.logger.Logger;
-import sun.java2d.x11.X11SurfaceData.X11PixmapSurfaceData;
 
 public class SudoMaths {
 	public static Matrix4f createTransformationMatrix(Vector3f translation) {
@@ -89,25 +88,7 @@ public class SudoMaths {
 	public static Matrix4f createOrthoMatrix(){
 		Logger.log("Creating Orthographic Matrix");
 		//return ortho2(0, DisplayManager.WIDTH, 0, DisplayManager.HEIGHT, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
-		return ortho(DisplayManager.WIDTH, 0, DisplayManager.HEIGHT, 0, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
-	}
-	
-	private static Matrix4f ortho2(float right, float left, float top, float bottom, float near, float far){
-		Matrix4f m = new Matrix4f();
-		float x_orth = 1 / right;
-	    float y_orth = 1 / top;
-	    float z_orth = -2 / (far - near);
-	    float tx = 0;
-	    float ty = 0;
-	    float tz = -(far + near) / (far - near);
-	    m.m00 = x_orth;
-	    m.m11 = y_orth;
-	    m.m22 = z_orth;
-	    m.m03 = tx;
-	    m.m13 = ty;
-	    m.m23 = tz;
-	    m.m33 =1;
-	    return m;
+		return ortho(-DisplayManager.WIDTH/2, DisplayManager.WIDTH/2, -DisplayManager.HEIGHT/2, DisplayManager.HEIGHT/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
 	}
 	
 	private static Matrix4f ortho(float right, float left, float top, float bottom, float near, float far){

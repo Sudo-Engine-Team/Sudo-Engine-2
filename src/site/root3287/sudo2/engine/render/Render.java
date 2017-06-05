@@ -27,8 +27,8 @@ import site.root3287.sudo2.utils.SudoMaths;
 public class Render {
 	private Camera camera;
 	
-	private Matrix4f projectionMatrix;
-	private Matrix4f orthographicMatrix;
+	private static Matrix4f projectionMatrix;
+	private static Matrix4f orthographicMatrix;
 	private Matrix4f viewMatrix;
 	
 	private List<Light> lights = new ArrayList<>();
@@ -47,8 +47,8 @@ public class Render {
 
 	public Render() {
 		enableCulling();
-		this.projectionMatrix = SudoMaths.createProjectionMatrix();
-		this.orthographicMatrix = SudoMaths.createOrthoMatrix();
+		projectionMatrix = SudoMaths.createProjectionMatrix();
+		orthographicMatrix = SudoMaths.createOrthoMatrix();
 		this.entityRender = new EntityRender(entityShader, projectionMatrix);
 		this.fontRender = new FontText();
 		this.guiRender = new Render2D(guiShader, projectionMatrix);
@@ -57,8 +57,8 @@ public class Render {
 	public Render(Camera c) {
 		this.camera = c;
 		enableCulling();
-		this.projectionMatrix = SudoMaths.createProjectionMatrix();
-		this.orthographicMatrix = SudoMaths.createOrthoMatrix();
+		projectionMatrix = SudoMaths.createProjectionMatrix();
+		orthographicMatrix = SudoMaths.createOrthoMatrix();
 		viewMatrix = SudoMaths.createViewMatrix(camera);
 		this.entityRender = new EntityRender(entityShader, projectionMatrix);
 		this.fontRender = new FontText();
@@ -151,13 +151,17 @@ public class Render {
 		Logger.log(LogLevel.DEBUG_RENDER, "Disabling Culling");
 		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
+	
+	public void resetOrthographicMatrix() {
+		
+	}
 
-	public Matrix4f getOrthographicMatrix() {
-		return this.orthographicMatrix;
+	public static void setOrthographicMatrix() {
+		orthographicMatrix = SudoMaths.createOrthoMatrix();
 	}
 	
 	public Matrix4f getProspectiveMatrix() {
-		return this.projectionMatrix;
+		return projectionMatrix;
 	}
 	
 	public Matrix4f getViewMatrix() {

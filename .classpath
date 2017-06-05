@@ -188,5 +188,6 @@
 	<classpathentry kind="lib" path="lib/slick-util.jar"/>
 	<classpathentry kind="lib" path="lib/SoundSystemJPCT.jar"/>
 	<classpathentry kind="lib" path="lib/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="lib/PNGDecoder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
