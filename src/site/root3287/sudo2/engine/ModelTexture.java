@@ -9,6 +9,8 @@ public class ModelTexture {
     private boolean hasTranspancy = false;
     private boolean useFakeLight = false;
     
+    private int rows = 1;
+    
     public ModelTexture(int texture){
         this.textureID = texture;
     }
@@ -41,5 +43,11 @@ public class ModelTexture {
 	}
 	public void setFakeLight(boolean useFakeLight) {
 		this.useFakeLight = useFakeLight;
+	}
+	public int getRows() {
+		return rows;
+	}
+	public void setRows(int rows) {
+		this.rows = rows;
 	}
 }

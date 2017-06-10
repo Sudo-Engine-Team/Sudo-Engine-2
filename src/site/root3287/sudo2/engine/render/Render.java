@@ -153,11 +153,11 @@ public class Render {
 	}
 	
 	public void resetOrthographicMatrix() {
-		
-	}
-
-	public static void setOrthographicMatrix() {
 		orthographicMatrix = SudoMaths.createOrthoMatrix();
+	}
+	
+	public void resetProspectiveMatrix(){
+		projectionMatrix = SudoMaths.createProjectionMatrix();
 	}
 	
 	public Matrix4f getProspectiveMatrix() {
