@@ -35,7 +35,9 @@ public class Render2D {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		for(GuiTexture gui : guis){
-			shader.loadTransformation(SudoMaths.createTransformationMatrix(gui.position, gui.scale));
+			shader.useTextureAtlas(gui.textureAtlas, gui.rows, gui.offset);
+			shader.useProjection(gui.useProjection);
+			shader.loadTransformation(SudoMaths.createTransformationMatrix(gui.position, gui.scale, gui.rotation));
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, gui.getTexture());
 			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, model.getVertexCount());

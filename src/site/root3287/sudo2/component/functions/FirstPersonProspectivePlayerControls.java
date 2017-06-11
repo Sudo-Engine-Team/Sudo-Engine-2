@@ -16,7 +16,7 @@ public class FirstPersonProspectivePlayerControls extends EntityComponent {
 	private Vector3f position, /* rotation, */ velocity;
 	private float pauseCooldown = 0;
 	private UUID id;
-	public float sensitivity = 0.25f, pitch, yaw, distance = 20f, dy = 0, flySpeed = 1f;
+	public float sensitivity = 0.1f, pitch, yaw, distance = 20f, dy = 0, flySpeed = 0.25f;
 	private int direction;
 
 	public FirstPersonProspectivePlayerControls(UUID id) {

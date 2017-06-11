@@ -16,11 +16,18 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform vec3 lightPosition[maxLight];
 
+uniform float useTextureAtlas;
+uniform float textureAtlasRows;
+uniform vec2 textureAtlasOffset;
+
 void main() {
 
 	vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
 	gl_Position = projectionMatrix * viewMatrix * worldPosition;
 	pass_textureCoords = textureCoords;
+	if(useTextureAtlas > 0){
+		pass_textureCoords = (pass_textureCoords / textureAtlasRows) + textureAtlasOffset;
+	}
 	
 	surfaceNormal = (transformationMatrix * vec4(normal, 0.0)).xyz;
 	for(int i=0; i<maxLight; i++){

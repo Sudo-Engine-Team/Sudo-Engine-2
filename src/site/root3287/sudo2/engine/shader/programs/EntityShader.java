@@ -3,6 +3,7 @@ package site.root3287.sudo2.engine.shader.programs;
 import java.util.List;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import site.root3287.sudo2.component.functions.ColourComponent;
@@ -23,6 +24,9 @@ public class EntityShader extends Shader{
     private int location_fogDensity;
     private int location_fogGradient;
     private int location_skyColour;
+    private int location_useTextureAtlas;
+	private int location_textureAtlasRows;
+	private int location_textureAtlasOffset;
     
     private static final int MAX_LIGHT = 4;
 	
@@ -101,5 +105,11 @@ public class EntityShader extends Shader{
     public void loadSkyColour(float r, float g, float b){
     	super.loadVector(location_skyColour, new Vector3f(r,g,b));
     }
-
+    public void useTextureAtlas(boolean useAtlas, int rows, Vector2f offset){
+		super.loadBoolean(location_useTextureAtlas, useAtlas);
+		if(useAtlas && rows > 0 && offset !=null){
+			super.loadFloat(location_textureAtlasRows, rows);
+			super.loadVector(location_textureAtlasOffset, offset);
+		}
+	}
 }

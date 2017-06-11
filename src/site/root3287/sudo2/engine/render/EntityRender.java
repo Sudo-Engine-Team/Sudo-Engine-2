@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import site.root3287.sudo2.component.functions.ModelComponet;
 import site.root3287.sudo2.component.functions.TransposeComponent;
 import site.root3287.sudo2.engine.ModelTexture;
 import site.root3287.sudo2.engine.RawModel;
@@ -83,7 +84,7 @@ public class EntityRender {
 		float scale = entity.getComponent(TransposeComponent.class).scale;
 		Matrix4f transformationMatrix = SudoMaths.createTransformationMatrix(position, rotation, scale);
 		shader.loadTransformationMatrix(transformationMatrix);
-		
+		shader.useTextureAtlas(entity.getComponent(ModelComponet.class).model.isTextureAtlas(), entity.getComponent(ModelComponet.class).model.getTexture().getRows(), entity.getComponent(ModelComponet.class).model.getOffset());
 		Logger.log(LogLevel.DEBUG_RENDER, "Rendering Entity");
 	}
 }

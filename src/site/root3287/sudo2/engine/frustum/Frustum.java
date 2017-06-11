@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import site.root3287.sudo2.engine.physics.collision.AABB;
+import sun.font.CreatedFontTracker;
 
 public class Frustum {
 	private static int NEAR = 0, FAR = 1, TOP =2, BOTTOM=3, LEFT=4, RIGHT=5;
@@ -13,8 +14,18 @@ public class Frustum {
 		for(int i = 0; i < 6; i++){
 			planes[i] = new FrustumPlane();
 		}
+		createPlanes(projectionMatrix);
 	}
 	
+	public Frustum(Matrix4f prospectiveMatrix, Matrix4f viewMatrix) {
+		Matrix4f pv = new Matrix4f();
+		Matrix4f.mul(prospectiveMatrix, viewMatrix, pv);
+		for(int i = 0; i < 6; i++){
+			planes[i] = new FrustumPlane();
+		}
+		createPlanes(pv);
+	}
+
 	public void update(Matrix4f projectionMatrix){
 		createPlanes(projectionMatrix);
 	}

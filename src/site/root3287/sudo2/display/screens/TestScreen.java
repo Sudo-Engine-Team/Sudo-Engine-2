@@ -16,6 +16,7 @@ import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.display.Screen;
 import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.frustum.Frustum;
+import site.root3287.sudo2.engine.gui.Button;
 import site.root3287.sudo2.engine.gui.GuiTexture;
 import site.root3287.sudo2.engine.render.Render;
 import site.root3287.sudo2.entities.Camera;
@@ -51,13 +52,21 @@ public class TestScreen implements Screen {
 		GuiTexture crosshairY = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, 0f), new Vector2f(0.5f, 5f));
 		GuiTexture inventoryBar = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, DisplayManager.HEIGHT/2.25f), new Vector2f(DisplayManager.WIDTH/4f, 25f));
 		
-		allTexture.add(crosshairX);
-		allTexture.add(crosshairY);
-		allTexture.add(inventoryBar);
+		Button b = new Button();
 		
-		Matrix4f pv = new Matrix4f();
-		Matrix4f.mul(render.getProspectiveMatrix(), render.getViewMatrix(), pv);
-		frustum  = new Frustum(pv);
+		//GuiTexture test = new GuiTexture(Loader.getInstance().loadTexture("res/image/GUIAtlas.png"), new Vector2f(0, 0), new Vector2f(200, 50));
+		//test.rows = 64;
+		//test.textureAtlas = true;
+	//	allTexture.add(test);
+		
+		allTexture.addAll(b.getAllButtons());
+		
+		//allTexture.add(crosshairX);
+		//allTexture.add(crosshairY);
+		//allTexture.add(inventoryBar);
+		//allTexture.add(guiTop);
+		
+		frustum  = new Frustum(render.getProspectiveMatrix(), render.getViewMatrix());
 	}
 
 	@Override
