@@ -51,14 +51,12 @@ public class TestScreen implements Screen {
 		GuiTexture crosshairX = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, 0f), new Vector2f(5f, 0.5f));
 		GuiTexture crosshairY = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, 0f), new Vector2f(0.5f, 5f));
 		GuiTexture inventoryBar = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, DisplayManager.HEIGHT/2.25f), new Vector2f(DisplayManager.WIDTH/4f, 25f));
-		
 		Button b = new Button();
 		
 		//GuiTexture test = new GuiTexture(Loader.getInstance().loadTexture("res/image/GUIAtlas.png"), new Vector2f(0, 0), new Vector2f(200, 50));
 		//test.rows = 64;
 		//test.textureAtlas = true;
-	//	allTexture.add(test);
-		
+		//allTexture.add(test);
 		allTexture.addAll(b.getAllButtons());
 		
 		//allTexture.add(crosshairX);

@@ -51,5 +51,13 @@ public class GuiTexture {
 	public boolean isAtlas() {
 		return textureAtlas;
 	}
-	
+	public GuiTexture copy(){
+		GuiTexture texture = new GuiTexture(this.texture, this.position, this.scale);
+		texture.offset = this.offset;
+		texture.rotation = this.rotation;
+		texture.rows = this.rows;
+		texture.textureAtlas = this.textureAtlas;
+		texture.useProjection = this.useProjection;
+		return texture;
+	}
 }
