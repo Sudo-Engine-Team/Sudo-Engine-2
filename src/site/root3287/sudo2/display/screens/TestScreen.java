@@ -16,7 +16,6 @@ import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.display.Screen;
 import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.frustum.Frustum;
-import site.root3287.sudo2.engine.gui.Button;
 import site.root3287.sudo2.engine.gui.GuiTexture;
 import site.root3287.sudo2.engine.gui.components.GuiPanel;
 import site.root3287.sudo2.engine.render.Render;
@@ -56,7 +55,7 @@ public class TestScreen implements Screen {
 		allTexture.addAll(panel.getNinePatch().getNinePatch());
 		allTexture.add(crosshairX);
 		allTexture.add(crosshairY);
-		//allTexture.add(inventoryBar);
+		allTexture.add(inventoryBar);
 		//allTexture.add(guiTop);
 		
 		frustum  = new Frustum(render.getProspectiveMatrix(), render.getViewMatrix());

@@ -12,12 +12,12 @@ import site.root3287.sudo2.utils.Input;
 public class FirstPersonProspectivePlayerControls extends EntityComponent {
 	public boolean isGrabbed = true, isMouseGrabbedRequest = false, canFly = false, gravity = true, isInAir = false,
 			canDoubleJump = false;
-	private final float GRAVITY = (float) (-30f), JUMP = 10, CAMERA_HEIGHT = 3.5f;
-	private Vector3f position, /* rotation, */ velocity;
+	//private final float GRAVITY = (float) (-30f), JUMP = 10, CAMERA_HEIGHT = 3.5f;
+	private Vector3f position; /* rotation, */// velocity;
 	private float pauseCooldown = 0;
 	private UUID id;
 	public float sensitivity = 0.1f, pitch, yaw, distance = 20f, dy = 0, flySpeed = 0.25f;
-	private int direction;
+	///private int direction;
 
 	public FirstPersonProspectivePlayerControls(UUID id) {
 		this.id = id;
@@ -27,8 +27,8 @@ public class FirstPersonProspectivePlayerControls extends EntityComponent {
 		this.position = Entity.getComponent(this.id, TransposeComponent.class).position;
 		this.pitch = Entity.getComponent(this.id, TransposeComponent.class).pitch;
 		this.yaw = Entity.getComponent(this.id, TransposeComponent.class).yaw;
-		this.direction = Entity.getComponent(this.id, TransposeComponent.class).direction;
-		this.velocity = Entity.getComponent(this.id, TransposeComponent.class).velocity;
+		//this.direction = Entity.getComponent(this.id, TransposeComponent.class).direction;
+		//this.velocity = Entity.getComponent(this.id, TransposeComponent.class).velocity;
 
 		if (pauseCooldown < 0) {
 			this.pauseCooldown = 0;
@@ -54,7 +54,7 @@ public class FirstPersonProspectivePlayerControls extends EntityComponent {
 			}
 		}
 
-		this.direction = ((int) (this.yaw / 90));
+	//	this.direction = ((int) (this.yaw / 90));
 
 		float finalDistance = Math.abs(this.distance * delta * flySpeed);
 

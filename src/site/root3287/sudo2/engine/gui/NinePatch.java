@@ -22,8 +22,8 @@ public class NinePatch {
 	 * @param size 		- The size in pixels per square.
 	 */
 	public NinePatch(String file, Vector2f position, Vector2f scale, Vector2f offset, int rows, int size){
-		this.file = file;
-		this.offset = offset;
+		this.setFile(file);
+		this.setOffset(offset);
 		position = new Vector2f();
 		scale = new Vector2f();
 		
@@ -120,9 +120,9 @@ public class NinePatch {
 	 * @param size			- The size of each box in pixels.
 	 */
 	public NinePatch(String file, Vector2f postion, Vector2f scale, Vector2f corrner, Vector2f edge, Vector2f background, int rows, int size){
-		this.file = file;
+		this.setFile(file);
 		this.position = postion;
-		this.scale = scale;
+		this.setScale(scale);
 		
 		int textureID = Loader.getInstance().loadTexture(file);
 		
@@ -232,5 +232,29 @@ public class NinePatch {
 		buttons.add(LEFT);
 		buttons.add(RIGHT);
 		return buttons;
+	}
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
+
+	public Vector2f getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Vector2f offset) {
+		this.offset = offset;
+	}
+
+	public Vector2f getScale() {
+		return scale;
+	}
+
+	public void setScale(Vector2f scale) {
+		this.scale = scale;
 	}
 }
