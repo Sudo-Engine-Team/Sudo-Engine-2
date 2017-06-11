@@ -6,6 +6,7 @@ import static org.lwjgl.glfw.Callbacks.*;
 import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -73,6 +74,14 @@ public class DisplayManager {
 				HEIGHT = height;
 				resized= true;
 				GL11.glViewport(0, 0, width, height);
+			}
+		});
+		
+		glfwSetScrollCallback(WINDOW, new GLFWScrollCallback() {
+			
+			@Override
+			public void invoke(long window, double xoffset, double yoffset) {
+				Input.Mouse.setDWheel(yoffset);
 			}
 		});
 

@@ -176,6 +176,50 @@ public class NinePatch {
 		BOTTOM_RIGHT.setPosition(new Vector2f(postion.x - scale.x, postion.y + scale.y));
 	}
 	
+	public NinePatch(Vector2f position, Vector2f scale, String background, String edge, String corners, int size){
+		int backgroundID = Loader.getInstance().loadTexture(background);
+		int edgeID = Loader.getInstance().loadTexture(edge);
+		int corrnerID = Loader.getInstance().loadTexture(corners);
+		
+		BACKGROUND = new GuiTexture(backgroundID, position, scale);
+		GuiTexture edgeTexture = new GuiTexture(edgeID, position, new Vector2f(size, size));
+		GuiTexture corrnerTexture = new GuiTexture(corrnerID, position, new Vector2f(size, size));
+		
+		TOP = edgeTexture.copy();
+		TOP.setPosition(new Vector2f(position.x, position.y - scale.y));
+		TOP.setScale(new Vector2f(size, scale.x));
+		TOP.setRotation(-90);
+		
+		BOTTOM = edgeTexture.copy();
+		BOTTOM.setPosition(new Vector2f(position.x, position.y + scale.y));
+		BOTTOM.setRotation(90);
+		BOTTOM.setScale(new Vector2f(size, scale.x));
+		
+		LEFT = edgeTexture.copy();
+		LEFT.setPosition(new Vector2f(position.x + scale.x, position.y));
+		LEFT.setScale(new Vector2f(size, scale.y));
+		
+		RIGHT = edgeTexture.copy();
+		RIGHT.setPosition(new Vector2f(position.x - scale.x, position.y));
+		RIGHT.setScale(new Vector2f(size, scale.y));
+		RIGHT.setRotation(180);
+		
+		TOP_LEFT = corrnerTexture.copy();
+		TOP_LEFT.setPosition(new Vector2f(position.x + scale.x, position.y - scale.y));
+		
+		BOTTOM_LEFT = TOP_LEFT.copy();
+		BOTTOM_LEFT.setRotation(90);
+		BOTTOM_LEFT.setPosition(new Vector2f(position.x + scale.x, position.y + scale.y));
+		
+		TOP_RIGHT = corrnerTexture.copy();
+		TOP_RIGHT.setPosition(new Vector2f(position.x - scale.x, position.y - scale.y));
+		TOP_RIGHT.setRotation(-90);
+		
+		BOTTOM_RIGHT = TOP_RIGHT.copy();
+		BOTTOM_RIGHT.setRotation(-180);
+		BOTTOM_RIGHT.setPosition(new Vector2f(position.x - scale.x, position.y + scale.y));
+	}
+	
 	public List<GuiTexture> getNinePatch(){
 		List<GuiTexture> buttons = new ArrayList<>();
 		buttons.add(BACKGROUND);

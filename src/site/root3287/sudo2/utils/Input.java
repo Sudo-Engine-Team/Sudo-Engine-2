@@ -33,6 +33,8 @@ public class Input {
 		
 		private static boolean[] mouse = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
 		
+		private static double DWheel;
+		
 		public static boolean isMouseDown(int key){
 			return GLFW.glfwGetMouseButton(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE?true:false;
 		}
@@ -52,11 +54,7 @@ public class Input {
 		public static double getY(){
 			return y;
 		}
-		/**
-		 * getDX
-		 * movement since last DX call.
-		 * @return double
-		 */
+
 		public static double getDX(){
 			return dx;
 		}
@@ -67,6 +65,14 @@ public class Input {
 		
 		public static void setMousePosition(double x, double y){
 			GLFW.glfwSetCursorPos(DisplayManager.WINDOW, x, y);
+		}
+		
+		public static void setDWheel(double y){
+			DWheel = y;
+		}
+		
+		public static double getDWheel(){
+			return DWheel;
 		}
 		
 		public static void setHidden(boolean hide){
@@ -107,5 +113,7 @@ public class Input {
 		for(int i = 0; i<GLFW.GLFW_MOUSE_BUTTON_LAST; i++){
 			Mouse.mouse[i] = Mouse.isMouseDown(i);
 		}
+		
+		Mouse.setDWheel(0);
 	}
 }
