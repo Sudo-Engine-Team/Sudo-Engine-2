@@ -1,8 +1,11 @@
 package site.root3287.sudo2.engine.gui;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 public class GuiTexture {
+	
+	
 	public Vector2f position, scale;
 	public int texture;
 	public float rotation = 0;
@@ -11,6 +14,46 @@ public class GuiTexture {
 	public Vector2f offset = new Vector2f(0, 0);
 	public int rows = 1;
 	public boolean textureAtlas = true;
+	
+	public boolean isColoured = false;
+	public Vector4f colour = new Vector4f(0, 0, 0, 0);
+	
+	public GuiTexture(int texture, Vector2f position, Vector2f scale) {
+		super();
+		this.position = position;
+		this.scale = scale;
+		this.texture = texture;
+	}
+	
+	public GuiTexture(Vector2f position, Vector2f scale, Vector4f colour) {
+		super();
+		this.position = position;
+		this.scale = scale;
+		this.colour = colour;
+		this.isColoured = true;
+	}
+	
+	public boolean isColoured() {
+		return isColoured;
+	}
+
+	public void setColoured(boolean isColoured) {
+		this.isColoured = isColoured;
+	}
+
+	public Vector4f getColour() {
+		return colour;
+	}
+
+	public void setColour(Vector4f colour) {
+		this.colour = colour;
+	}
+	
+	public GuiTexture(Vector2f position, Vector2f scale) {
+		super();
+		this.position = position;
+		this.scale = scale;
+	}
 	
 	public float getRotation() {
 		return rotation;
@@ -24,12 +67,7 @@ public class GuiTexture {
 	public void setUseProjection(boolean useProjection) {
 		this.useProjection = useProjection;
 	}
-	public GuiTexture(int texture, Vector2f position, Vector2f scale) {
-		super();
-		this.position = position;
-		this.scale = scale;
-		this.texture = texture;
-	}
+	
 	public Vector2f getPosition() {
 		return position;
 	}

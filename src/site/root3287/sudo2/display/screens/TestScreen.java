@@ -34,6 +34,7 @@ public class TestScreen implements Screen {
 	private Frustum frustum;
 	private List<Entity> allEntity = new ArrayList<>();
 	private List<GuiTexture> allTexture = new ArrayList<>();
+	private GuiPanel panel;
 	
 	@Override
 	public void init() {
@@ -45,24 +46,57 @@ public class TestScreen implements Screen {
 		for (int i=0; i<200; i++){
 			CubeOBJEntity cube = new CubeOBJEntity();
 			cube.getComponent(TransposeComponent.class).position = new Vector3f(new Random().nextFloat() * 100, new Random().nextFloat() *100, new Random().nextFloat() *100);
+			cube.getComponent(TransposeComponent.class).scale = 2;
 			allEntity.add(cube);
 		}
 		
 		GuiTexture crosshairX = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, 0f), new Vector2f(5f, 0.5f));
 		GuiTexture crosshairY = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, 0f), new Vector2f(0.5f, 5f));
-		GuiTexture inventoryBar = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, DisplayManager.HEIGHT/2.25f), new Vector2f(DisplayManager.WIDTH/4f, 25f));
-		GuiPanel panel = new GuiPanel("res/image/GUIAtlas.png", new Vector2f(-512+128, 0), new Vector2f(32, 128), new Vector2f(3, 0), new Vector2f(4, 0), new Vector2f(5, 0));
+		GuiTexture inventoryBar = new GuiTexture(Loader.getInstance().loadTexture("res/image/ui-grey-1.png"), new Vector2f(0f, -DisplayManager.HEIGHT/2.25f), new Vector2f(DisplayManager.WIDTH/4f, 25f));
+		panel = new GuiPanel("res/image/GUIAtlas.png", new Vector2f(512-128, 0), new Vector2f(32, 128), new Vector2f(3, 0), new Vector2f(4, 0), new Vector2f(5, 0)) {
+			
+			@Override
+			public void whileHovering() {
+				
+			}
+			
+			@Override
+			public void show() {
+				
+			}
+			
+			@Override
+			public void onLeave() {
+				
+			}
+			
+			@Override
+			public void onHover() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onClick() {
+				System.out.println("Clicked");
+			}
+			
+			@Override
+			public void hide() {
+			
+			}
+		};
 		allTexture.addAll(panel.getNinePatch().getNinePatch());
 		allTexture.add(crosshairX);
 		allTexture.add(crosshairY);
 		allTexture.add(inventoryBar);
 		//allTexture.add(guiTop);
-		
 		frustum  = new Frustum(render.getProspectiveMatrix(), render.getViewMatrix());
 	}
 
 	@Override
 	public void update() {
+		panel.update((float) DisplayManager.getDelta());
 		for(Entity e:allEntity){
 			e.update((float) DisplayManager.getDelta());
 		}

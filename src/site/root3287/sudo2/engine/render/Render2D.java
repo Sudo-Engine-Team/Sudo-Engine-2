@@ -37,9 +37,12 @@ public class Render2D {
 		for(GuiTexture gui : guis){
 			shader.useTextureAtlas(gui.textureAtlas, gui.rows, gui.offset);
 			shader.useProjection(gui.useProjection);
+			shader.colouredQuad(gui.isColoured(), gui.getColour());
 			shader.loadTransformation(SudoMaths.createTransformationMatrix(gui.position, gui.scale, gui.rotation));
-			GL13.glActiveTexture(GL13.GL_TEXTURE0);
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, gui.getTexture());
+			if(!gui.isColoured()){
+				GL13.glActiveTexture(GL13.GL_TEXTURE0);
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, gui.getTexture());
+			}
 			GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, model.getVertexCount());
 		}
 		GL11.glEnable(GL11.GL_DEPTH_TEST);

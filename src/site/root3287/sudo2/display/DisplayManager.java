@@ -139,4 +139,8 @@ public class DisplayManager {
 	public static boolean hasResized(){
 		return resized;
 	}
+	
+	public static Vector2f getNormalisedScreen(){
+		return new Vector2f();
+	}
 }

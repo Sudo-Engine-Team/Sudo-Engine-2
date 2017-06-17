@@ -89,23 +89,28 @@ public class SudoMaths {
 		Logger.log("Creating Orthographic Matrix");
 		//return ortho2(0, DisplayManager.WIDTH, 0, DisplayManager.HEIGHT, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
 		return ortho(-DisplayManager.WIDTH/2, DisplayManager.WIDTH/2, -DisplayManager.HEIGHT/2, DisplayManager.HEIGHT/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
+		//return ortho(DisplayManager.WIDTH/2, -DisplayManager.WIDTH/2, DisplayManager.HEIGHT/2, -DisplayManager.HEIGHT/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
 	}
 	
-	private static Matrix4f ortho(float right, float left, float top, float bottom, float near, float far){
+	private static Matrix4f ortho(float left, float right, float bottom, float top, float near, float far){
 		Matrix4f m = new Matrix4f();
+		
+		m.setIdentity();
+		
 		float x_orth = 2 / (right - left);
-	    float y_orth = 2 / (top - bottom);
-	    float z_orth = -2 / (far - near);
-	    float tx = -(right + left) / (right - left);
-	    float ty = -(top + bottom) / (top - bottom);
-	    float tz = -(far + near) / (far - near);
+		float y_orth = 2 / (top - bottom);
+		float z_orth = -2 / (far - near);
+		
+		float tx = -(right + left) / (right - left);
+		float ty = -(top + bottom) / (top - bottom);
+		float tz = -(far + near) / (far - near);
 	    m.m00 = x_orth;
 	    m.m11 = y_orth;
 	    m.m22 = z_orth;
 	    m.m03 = tx;
 	    m.m13 = ty;
 	    m.m23 = tz;
-	    m.m33 =1;
+	    m.m33 = 1;
 	    return m;
 	}
 	

@@ -4,6 +4,7 @@ import java.nio.DoubleBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.util.vector.Vector2f;
 
 import site.root3287.sudo2.display.DisplayManager;
 
@@ -89,6 +90,17 @@ public class Input {
 		}
 		public static boolean isGrabbed(){
 			return grabbed;
+		}
+		public static Vector2f getNormalizedMouseCoords(){
+			float x = (float) (-1.0f + 2.0f * (Mouse.getX()/DisplayManager.WIDTH));
+			float y = (float) (-1.0f + 2.0f * (Mouse.getY()/DisplayManager.HEIGHT));
+			return new Vector2f(x, y);
+		}
+		public static Vector2f getMouse(){
+			return new Vector2f((float)Mouse.getX(), (float)Mouse.getY());
+		}
+		public static Vector2f getTranslatedMouseCorrds(float x, float y){
+			return getMouse().translate(x, y);
 		}
 	}
 	

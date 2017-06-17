@@ -62,8 +62,6 @@ public class FirstPersonProspectivePlayerControls extends EntityComponent {
 		  if(Input.Mouse.getDWheel() != 0){ flySpeed += Input.Mouse.getDWheel()*delta;
 		  if(flySpeed < 0){ flySpeed = 0.00000001f; } }
 		  
-		  System.out.println(flySpeed);
-		 
 
 		if (Input.Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
 			position.x += finalDistance * (float) Math.sin(Math.toRadians(yaw));
