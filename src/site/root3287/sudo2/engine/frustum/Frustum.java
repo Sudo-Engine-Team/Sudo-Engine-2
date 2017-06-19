@@ -9,55 +9,46 @@ public class Frustum {
 	private static int NEAR = 0, FAR = 1, TOP =2, BOTTOM=3, LEFT=4, RIGHT=5;
 	private FrustumPlane[] planes = new FrustumPlane[6];
 	
-	public Frustum(Matrix4f projectionMatrix) {
+	public Frustum(Matrix4f combined) {
 		for(int i = 0; i < 6; i++){
 			planes[i] = new FrustumPlane();
 		}
-		createPlanes(projectionMatrix);
-	}
-	
-	public Frustum(Matrix4f prospectiveMatrix, Matrix4f viewMatrix) {
-		Matrix4f pv = new Matrix4f();
-		Matrix4f.mul(prospectiveMatrix, viewMatrix, pv);
-		for(int i = 0; i < 6; i++){
-			planes[i] = new FrustumPlane();
-		}
-		createPlanes(pv);
+		createPlanes(combined);
 	}
 
-	public void update(Matrix4f projectionMatrix){
-		createPlanes(projectionMatrix);
+	public void update(Matrix4f combined){
+		createPlanes(combined);
 	}
-	private void createPlanes(Matrix4f projectionMatrix){
-		planes[LEFT].normal.x = projectionMatrix.m03 + projectionMatrix.m00;
-		planes[LEFT].normal.y = projectionMatrix.m13 + projectionMatrix.m10;
-		planes[LEFT].normal.z = projectionMatrix.m23 + projectionMatrix.m20;
-		planes[LEFT].distance = projectionMatrix.m33 + projectionMatrix.m30;
+	private void createPlanes(Matrix4f combined){
+		planes[LEFT].normal.x = combined.m03 + combined.m00;
+		planes[LEFT].normal.y = combined.m13 + combined.m10;
+		planes[LEFT].normal.z = combined.m23 + combined.m20;
+		planes[LEFT].distance = combined.m33 + combined.m30;
 		
-		planes[RIGHT].normal.x = projectionMatrix.m03 - projectionMatrix.m00;
-		planes[RIGHT].normal.y = projectionMatrix.m13 - projectionMatrix.m10;
-		planes[RIGHT].normal.z = projectionMatrix.m23 - projectionMatrix.m20;
-		planes[RIGHT].distance = projectionMatrix.m33 - projectionMatrix.m30;
+		planes[RIGHT].normal.x = combined.m03 - combined.m00;
+		planes[RIGHT].normal.y = combined.m13 - combined.m10;
+		planes[RIGHT].normal.z = combined.m23 - combined.m20;
+		planes[RIGHT].distance = combined.m33 - combined.m30;
 		
-		planes[BOTTOM].normal.x = projectionMatrix.m03 + projectionMatrix.m01;
-		planes[BOTTOM].normal.y = projectionMatrix.m13 + projectionMatrix.m11;
-		planes[BOTTOM].normal.z = projectionMatrix.m23 + projectionMatrix.m21;
-		planes[BOTTOM].distance = projectionMatrix.m33 + projectionMatrix.m31;
+		planes[BOTTOM].normal.x = combined.m03 + combined.m01;
+		planes[BOTTOM].normal.y = combined.m13 + combined.m11;
+		planes[BOTTOM].normal.z = combined.m23 + combined.m21;
+		planes[BOTTOM].distance = combined.m33 + combined.m31;
 		
-		planes[TOP].normal.x = projectionMatrix.m03 - projectionMatrix.m01;
-		planes[TOP].normal.y = projectionMatrix.m13 - projectionMatrix.m11;
-		planes[TOP].normal.z = projectionMatrix.m23 - projectionMatrix.m21;
-		planes[TOP].distance = projectionMatrix.m33 - projectionMatrix.m31;
+		planes[TOP].normal.x = combined.m03 - combined.m01;
+		planes[TOP].normal.y = combined.m13 - combined.m11;
+		planes[TOP].normal.z = combined.m23 - combined.m21;
+		planes[TOP].distance = combined.m33 - combined.m31;
 		
-		planes[NEAR].normal.x = projectionMatrix.m03 + projectionMatrix.m02;
-		planes[NEAR].normal.y = projectionMatrix.m13 + projectionMatrix.m12;
-		planes[NEAR].normal.z = projectionMatrix.m23 + projectionMatrix.m22;
-		planes[NEAR].distance = projectionMatrix.m33 + projectionMatrix.m32;
+		planes[NEAR].normal.x = combined.m03 + combined.m02;
+		planes[NEAR].normal.y = combined.m13 + combined.m12;
+		planes[NEAR].normal.z = combined.m23 + combined.m22;
+		planes[NEAR].distance = combined.m33 + combined.m32;
 		
-		planes[FAR].normal.x = projectionMatrix.m03 - projectionMatrix.m02;
-		planes[FAR].normal.y = projectionMatrix.m13 - projectionMatrix.m12;
-		planes[FAR].normal.z = projectionMatrix.m23 - projectionMatrix.m22;
-		planes[FAR].distance = projectionMatrix.m33 - projectionMatrix.m32;
+		planes[FAR].normal.x = combined.m03 - combined.m02;
+		planes[FAR].normal.y = combined.m13 - combined.m12;
+		planes[FAR].normal.z = combined.m23 - combined.m22;
+		planes[FAR].distance = combined.m33 - combined.m32;
 		for(FrustumPlane p : planes){
 			float length = 1/p.normal.length();
 			p.normal.normalise();

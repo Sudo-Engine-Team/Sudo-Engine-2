@@ -4,9 +4,8 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import site.root3287.sudo2.component.functions.TransposeComponent;
 import site.root3287.sudo2.display.DisplayManager;
-import site.root3287.sudo2.entities.Camera;
+import site.root3287.sudo2.engine.camera.Camera;
 import site.root3287.sudo2.logger.LogLevel;
 import site.root3287.sudo2.logger.Logger;
 
@@ -54,9 +53,9 @@ public class SudoMaths {
 	}
 	public static Matrix4f createViewMatrix(Camera camera){
 		Matrix4f viewMatrix = new Matrix4f();
-		float pitch = camera.getComponent(TransposeComponent.class).pitch;
-		float yaw = camera.getComponent(TransposeComponent.class).yaw;
-		Vector3f position = camera.getComponent(TransposeComponent.class).position;
+		float pitch = camera.getPitch();
+		float yaw = camera.getYaw();
+		Vector3f position = camera.getPosition();
         viewMatrix.setIdentity();
         Matrix4f.rotate((float) Math.toRadians(pitch), new Vector3f(1, 0, 0), viewMatrix,
                 viewMatrix);

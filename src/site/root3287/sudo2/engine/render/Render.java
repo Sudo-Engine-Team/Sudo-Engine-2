@@ -12,12 +12,12 @@ import site.root3287.sudo2.component.functions.ModelComponet;
 import site.root3287.sudo2.component.functions.TransposeComponent;
 import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.engine.TexturedModel;
+import site.root3287.sudo2.engine.camera.Camera;
 import site.root3287.sudo2.engine.font.FontText;
 import site.root3287.sudo2.engine.font.GUIText;
 import site.root3287.sudo2.engine.gui.GuiTexture;
 import site.root3287.sudo2.engine.shader.programs.EntityShader;
 import site.root3287.sudo2.engine.shader.programs.Shader2D;
-import site.root3287.sudo2.entities.Camera;
 import site.root3287.sudo2.entities.Entity;
 import site.root3287.sudo2.entities.Light;
 import site.root3287.sudo2.logger.LogLevel;
@@ -27,8 +27,8 @@ import site.root3287.sudo2.utils.SudoMaths;
 public class Render {
 	private Camera camera;
 	
-	private static Matrix4f projectionMatrix;
-	private static Matrix4f orthographicMatrix;
+	private Matrix4f projectionMatrix;
+	private Matrix4f orthographicMatrix;
 	private Matrix4f viewMatrix;
 	
 	private List<Light> lights = new ArrayList<>();
@@ -47,19 +47,14 @@ public class Render {
 
 	public Render() {
 		enableCulling();
-		projectionMatrix = SudoMaths.createProjectionMatrix();
-		orthographicMatrix = SudoMaths.createOrthoMatrix();
-		this.entityRender = new EntityRender(entityShader, projectionMatrix);
-		this.fontRender = new FontText();
-		this.guiRender = new Render2D(guiShader, projectionMatrix);
 	}
 	
 	public Render(Camera c) {
 		this.camera = c;
 		enableCulling();
-		projectionMatrix = SudoMaths.createProjectionMatrix();
-		orthographicMatrix = SudoMaths.createOrthoMatrix();
-		viewMatrix = SudoMaths.createViewMatrix(camera);
+	}
+	
+	public void init(){
 		this.entityRender = new EntityRender(entityShader, projectionMatrix);
 		this.fontRender = new FontText();
 		this.guiRender = new Render2D(guiShader, orthographicMatrix);
@@ -152,19 +147,23 @@ public class Render {
 		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
 	
-	public void resetOrthographicMatrix() {
-		orthographicMatrix = SudoMaths.createOrthoMatrix();
-	}
-	
-	public void resetProspectiveMatrix(){
-		projectionMatrix = SudoMaths.createProjectionMatrix();
-	}
-	
 	public Matrix4f getProspectiveMatrix() {
 		return projectionMatrix;
 	}
-	
-	public Matrix4f getViewMatrix() {
-		return this.viewMatrix;
+
+	public Matrix4f getProjectionMatrix() {
+		return projectionMatrix;
+	}
+
+	public void setProjectionMatrix(Matrix4f projectionMatrix) {
+		this.projectionMatrix = projectionMatrix;
+	}
+
+	public Matrix4f getOrthographicMatrix() {
+		return orthographicMatrix;
+	}
+
+	public void setOrthographicMatrix(Matrix4f orthographicMatrix) {
+		this.orthographicMatrix = orthographicMatrix;
 	}
 }
