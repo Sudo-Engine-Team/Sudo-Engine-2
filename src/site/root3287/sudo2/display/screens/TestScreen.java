@@ -39,6 +39,7 @@ public class TestScreen implements Screen {
 	
 	@Override
 	public void init() {
+		
 		this.prospectiveCamera = new FirstPersonCamera();
 		this.orthographicCamera = new OrthographicCamera();
 		this.render = new Render(prospectiveCamera);
@@ -128,7 +129,7 @@ public class TestScreen implements Screen {
 		this.render.addLight(this.light);
 		this.render.render();
 	}
-
+	
 	@Override
 	public void destory() {
 		this.render.dispose();
