@@ -13,6 +13,7 @@ import site.root3287.sudo2.component.functions.AABBComponent;
 import site.root3287.sudo2.component.functions.TransposeComponent;
 import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.display.Screen;
+import site.root3287.sudo2.engine.FBO;
 import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.camera.Camera;
 import site.root3287.sudo2.engine.camera.FirstPersonCamera;
@@ -37,6 +38,8 @@ public class TestScreen implements Screen {
 	private List<GuiTexture> allTexture = new ArrayList<>();
 	private GuiPanel panel;
 	
+	private int fbo1, fboTexture, fboDepth;
+	
 	@Override
 	public void init() {
 		
@@ -46,7 +49,7 @@ public class TestScreen implements Screen {
 		this.render.setProjectionMatrix(prospectiveCamera.getProjectionMatrix());
 		this.render.setOrthographicMatrix(orthographicCamera.getProjectionMatrix());
 		this.render.init();
-		this.light = new Light(new Vector3f(0,1000,0), new Vector4f(1, 1, 2, 0));
+		this.light = new Light(new Vector3f(10000,10000,10000), new Vector4f(0.5f, 0.5f, 0.75f, 0));
 		Input.Mouse.setGrabbed(true);
 		
 		for (int i=0; i<200; i++){
@@ -96,6 +99,14 @@ public class TestScreen implements Screen {
 		allTexture.add(crosshairX);
 		allTexture.add(crosshairY);
 		allTexture.add(inventoryBar);
+		
+		
+		fbo1 = FBO.createFBO();
+		fboTexture = FBO.createFBOTexture((int)DisplayManager.WIDTH, (int)DisplayManager.HEIGHT);
+		fboDepth = FBO.createFBODepthTexture((int)DisplayManager.WIDTH, (int)DisplayManager.HEIGHT);
+		FBO.unbindFBO();
+		//allTexture.add(new GuiTexture(fboTexture, new Vector2f(0, 0), new  Vector2f(DisplayManager.WIDTH, DisplayManager.HEIGHT)));
+		
 		//allTexture.add(guiTop);
 		frustum  = new Frustum(prospectiveCamera.getCombind());
 	}
@@ -118,6 +129,16 @@ public class TestScreen implements Screen {
 	@Override
 	public void render() {
 		this.render.updateCamera(prospectiveCamera);
+		
+		/*FBO.bindFBO(fbo1, (int)DisplayManager.WIDTH, (int)DisplayManager.HEIGHT);
+		for(Entity e : allEntity){
+			if(e.hasComponent(AABBComponent.class) && frustum.isAABBinFrustum(e.getComponent(AABBComponent.class).aabbBox)){
+				this.render.addEntity(e);
+			}
+		}
+		//this.render.render();
+		FBO.unbindFBO();*/
+		
 		for(Entity e : allEntity){
 			if(e.hasComponent(AABBComponent.class) && frustum.isAABBinFrustum(e.getComponent(AABBComponent.class).aabbBox)){
 				this.render.addEntity(e);
@@ -134,5 +155,6 @@ public class TestScreen implements Screen {
 	public void destory() {
 		this.render.dispose();
 		Loader.getInstance().destory();
+		FBO.dispose();
 	}
 }
