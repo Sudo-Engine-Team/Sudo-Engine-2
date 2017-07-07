@@ -2,192 +2,192 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-assimp.jar" sourcepath="lib/lwjgl/source/lwjgl-assimp-sources.jar">
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-assimp.jar" sourcepath="lib/lwjgl/source/lwjgl-assimp-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-bgfx.jar" sourcepath="lib/lwjgl/source/lwjgl-bgfx-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-bgfx.jar" sourcepath="lib/lwjgl/source/lwjgl-bgfx-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-egl.jar" sourcepath="lib/lwjgl/source/lwjgl-egl-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-egl.jar" sourcepath="lib/lwjgl/source/lwjgl-egl-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-glfw.jar" sourcepath="lib/lwjgl/source/lwjgl-glfw-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-glfw.jar" sourcepath="lib/lwjgl/source/lwjgl-glfw-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-jawt.jar" sourcepath="lib/lwjgl/source/lwjgl-jawt-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-jawt.jar" sourcepath="lib/lwjgl/source/lwjgl-jawt-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-jemalloc.jar" sourcepath="lib/lwjgl/source/lwjgl-jemalloc-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-jemalloc.jar" sourcepath="lib/lwjgl/source/lwjgl-jemalloc-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-lmdb.jar" sourcepath="lib/lwjgl/source/lwjgl-lmdb-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-lmdb.jar" sourcepath="lib/lwjgl/source/lwjgl-lmdb-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-nanovg.jar" sourcepath="lib/lwjgl/source/lwjgl-nanovg-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-nanovg.jar" sourcepath="lib/lwjgl/source/lwjgl-nanovg-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-nfd.jar" sourcepath="lib/lwjgl/source/lwjgl-nfd-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-nfd.jar" sourcepath="lib/lwjgl/source/lwjgl-nfd-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-nuklear.jar" sourcepath="lib/lwjgl/source/lwjgl-nuklear-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-nuklear.jar" sourcepath="lib/lwjgl/source/lwjgl-nuklear-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-openal.jar" sourcepath="lib/lwjgl/source/lwjgl-openal-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-openal.jar" sourcepath="lib/lwjgl/source/lwjgl-openal-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-opencl.jar" sourcepath="lib/lwjgl/source/lwjgl-opencl-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-opencl.jar" sourcepath="lib/lwjgl/source/lwjgl-opencl-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-opengl.jar" sourcepath="lib/lwjgl/source/lwjgl-opengl-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-opengl.jar" sourcepath="lib/lwjgl/source/lwjgl-opengl-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-opengles.jar" sourcepath="lib/lwjgl/source/lwjgl-opengles-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-opengles.jar" sourcepath="lib/lwjgl/source/lwjgl-opengles-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-openvr.jar" sourcepath="lib/lwjgl/source/lwjgl-openvr-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-openvr.jar" sourcepath="lib/lwjgl/source/lwjgl-openvr-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-ovr.jar" sourcepath="lib/lwjgl/source/lwjgl-ovr-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-ovr.jar" sourcepath="lib/lwjgl/source/lwjgl-ovr-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-par.jar" sourcepath="lib/lwjgl/source/lwjgl-par-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-par.jar" sourcepath="lib/lwjgl/source/lwjgl-par-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-sse.jar" sourcepath="lib/lwjgl/source/lwjgl-sse-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-sse.jar" sourcepath="lib/lwjgl/source/lwjgl-sse-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-stb.jar" sourcepath="lib/lwjgl/source/lwjgl-stb-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-stb.jar" sourcepath="lib/lwjgl/source/lwjgl-stb-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-tinyexr.jar" sourcepath="lib/lwjgl/source/lwjgl-tinyexr-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-tinyexr.jar" sourcepath="lib/lwjgl/source/lwjgl-tinyexr-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-tinyfd.jar" sourcepath="lib/lwjgl/source/lwjgl-tinyfd-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-tinyfd.jar" sourcepath="lib/lwjgl/source/lwjgl-tinyfd-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-vulkan.jar" sourcepath="lib/lwjgl/source/lwjgl-vulkan-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-vulkan.jar" sourcepath="lib/lwjgl/source/lwjgl-vulkan-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-xxhash.jar" sourcepath="lib/lwjgl/source/lwjgl-xxhash-sources.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl-yoga.jar" sourcepath="lib/lwjgl/source/lwjgl-yoga-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-xxhash.jar" sourcepath="lib/lwjgl/source/lwjgl-xxhash-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl-yoga.jar" sourcepath="lib/lwjgl/source/lwjgl-yoga-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/lwjgl.jar">
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/lwjgl.jar">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Sudo-Engine-2/lib/lwjgl/natives/windows"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-assimp-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-bgfx-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-glfw-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-jemalloc-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-lmdb-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-nanovg-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-nfd-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-nuklear-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-openal-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-opengl-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-opengles-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-openvr-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-par-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-sse-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-stb-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-tinyexr-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-tinyfd-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-xxhash-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/linux/lwjgl-yoga-natives-linux.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-assimp-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-bgfx-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-glfw-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-jemalloc-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-lmdb-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-nanovg-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-nfd-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-nuklear-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-openal-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-opengl-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-opengles-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-openvr-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-par-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-sse-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-stb-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-tinyexr-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-tinyfd-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-xxhash-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/mac/lwjgl-yoga-natives-macos.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-assimp-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-bgfx-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-glfw-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-jemalloc-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-lmdb-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-nanovg-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-nfd-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-nuklear-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-openal-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-opengl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-opengles-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-openvr-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-ovr-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-par-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-sse-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-stb-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-tinyexr-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-tinyfd-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-xxhash-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl/natives/windows/lwjgl-yoga-natives-windows.jar"/>
-	<classpathentry kind="lib" path="lib/slick-util.jar"/>
-	<classpathentry kind="lib" path="lib/SoundSystemJPCT.jar"/>
-	<classpathentry kind="lib" path="lib/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="lib/PNGDecoder.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-assimp-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-bgfx-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-glfw-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-jemalloc-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-lmdb-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-nanovg-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-nfd-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-nuklear-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-openal-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-opengl-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-opengles-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-openvr-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-par-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-sse-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-stb-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-tinyexr-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-tinyfd-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-xxhash-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/linux/lwjgl-yoga-natives-linux.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-assimp-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-bgfx-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-glfw-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-jemalloc-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-lmdb-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-nanovg-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-nfd-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-nuklear-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-openal-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-opengl-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-opengles-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-openvr-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-par-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-sse-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-stb-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-tinyexr-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-tinyfd-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-xxhash-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/mac/lwjgl-yoga-natives-macos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-assimp-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-bgfx-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-glfw-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-jemalloc-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-lmdb-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-nanovg-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-nfd-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-nuklear-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-openal-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-opengl-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-opengles-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-openvr-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-ovr-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-par-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-sse-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-stb-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-tinyexr-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-tinyfd-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-xxhash-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-yoga-natives-windows.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slick-util.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/SoundSystemJPCT.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/lwjgl_util.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/PNGDecoder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

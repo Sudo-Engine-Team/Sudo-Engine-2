@@ -18,10 +18,12 @@ public class CubeOBJEntity extends Entity{
 		addComponent(new TransposeComponent());
 		getComponent(TransposeComponent.class).position = new Vector3f(0,0,0);
 		addComponent(new ModelComponet());
+		
 		ModelData data = OBJFileLoader.loadOBJ("res/model/Cube/cube.obj");
 		getComponent(ModelComponet.class).model = new TexturedModel(Loader.getInstance().loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices()), new ModelTexture(Loader.getInstance().loadTexture("res/image/white.png")));
 		getComponent(ModelComponet.class).model.getTexture().setReflectivity(1.0f);
 		getComponent(ModelComponet.class).model.getTexture().setShineDamper(0.75f);
+		
 		addComponent(new AABBComponent());
 		float scale = getComponent(TransposeComponent.class).scale;
 		getComponent(AABBComponent.class).aabbBox = new AABB(getComponent(TransposeComponent.class).position, new Vector3f(1*scale+2, 1*scale+2, 1*scale+2));
