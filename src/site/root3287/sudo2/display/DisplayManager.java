@@ -26,7 +26,7 @@ public class DisplayManager {
 	public static final float FAR_PLANE = 100f;
 	public static Vector4f BACKGROUND_COLOUR = new Vector4f(0.25f, 0.25f, 0.25f, 1);
 	public static long WINDOW;
-	public static Screen SCREEN;
+	public static Screen SCREEN = null;
 	public static boolean fullscreen = false;
 	public static double DELTA;
 	private static double lastTime;
@@ -121,13 +121,17 @@ public class DisplayManager {
 	}
 	
 	public static void setScreen(Screen screen){
-		boolean wasNull = false;
-		if(SCREEN != null){
+		setScreen(screen, false, false);
+	}
+	public static void setScreen(Screen screen, boolean init){
+		setScreen(screen, init, false);
+	}
+	public static void setScreen(Screen screen, boolean init, boolean destroy){
+		if(destroy){
 			SCREEN.destory();
-			wasNull = true;
 		}
 		SCREEN = screen;
-		if(!wasNull){
+		if(init){
 			SCREEN.init();
 		}
 	}

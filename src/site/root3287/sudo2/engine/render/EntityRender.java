@@ -1,5 +1,7 @@
 package site.root3287.sudo2.engine.render;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,43 +19,51 @@ import site.root3287.sudo2.engine.RawModel;
 import site.root3287.sudo2.engine.TexturedModel;
 import site.root3287.sudo2.engine.shader.programs.EntityShader;
 import site.root3287.sudo2.entities.Entity;
+import site.root3287.sudo2.entities.Light;
 import site.root3287.sudo2.logger.LogLevel;
 import site.root3287.sudo2.logger.Logger;
 import site.root3287.sudo2.utils.SudoMaths;
 
-public class EntityRender {
+public class EntityRender{
 	private EntityShader shader;
-	public EntityRender(EntityShader shader, Matrix4f projectionMatrix){
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glCullFace(GL11.GL_BACK);
-		this.shader = shader;
-		this.shader.start();
-		this.shader.loadProjectionMatrix(projectionMatrix);
-		this.shader.stop();
+	private Matrix4f projection;
+	private Map<TexturedModel, List<Entity>> entities = new HashMap<>();
+	private List<Light> lights = new ArrayList<>();
+	
+	public EntityRender(){
+		RenderUtils.enableCulling();
+		this.shader = new EntityShader();
 	}
-	public void render(Map<TexturedModel, List<Entity>> entities) {
+	
+	public void loadProjectionMatrix(Matrix4f matrix){
+		this.projection = matrix;
+		shader.start();
+		this.shader.loadProjectionMatrix(projection);
+		shader.stop();
+	}
+	public void loadViewMatrix(Matrix4f matrix){
+		shader.start();
+		shader.loadViewMatrix(matrix);
+		shader.stop();
+	}
+	
+	public void render() {
+		shader.start();
+		shader.loadLight(lights);
+		
 		Logger.log(LogLevel.DEBUG_RENDER, "Rendering a entites");
 		for (TexturedModel model : entities.keySet()) {
 			prepareTexturedModel(model);
 			List<Entity> batch = entities.get(model);
 			for (Entity entity : batch) {
-				prepareTexturedModel(model);
-				boolean render = true;
-				/*if(Render.culler !=null && entity.hasComponent(AABBComponent.class)){
-					if(Render.culler.isAABBinFrustum(entity.getComponent(AABBComponent.class).aabb)){
-						render = true;
-					}
-				}else{
-					render = true;
-				}*/
-				if(render){
-					prepareTexturedModel(model);
-					prepareInstance(entity);
-					GL11.glDrawElements(GL11.GL_TRIANGLES, model.getRawModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
-				}
+				prepareInstance(entity);
+				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getRawModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 				unbindTexturedModel();
 			}
 		}
+		shader.stop();
+		lights.clear();
+		entities.clear();
 	}
 
 	private void prepareTexturedModel(TexturedModel model) {
@@ -86,5 +96,28 @@ public class EntityRender {
 		shader.loadTransformationMatrix(transformationMatrix);
 		shader.useTextureAtlas(entity.getComponent(ModelComponet.class).model.isTextureAtlas(), entity.getComponent(ModelComponet.class).model.getTexture().getRows(), entity.getComponent(ModelComponet.class).model.getOffset());
 		Logger.log(LogLevel.DEBUG_RENDER, "Rendering Entity");
+	}
+	
+	public void addEntity(Entity entity){
+		if(!entity.hasComponent(ModelComponet.class) && !entity.hasComponent(TransposeComponent.class)){
+			return;
+		}
+		TexturedModel entityModel = entity.getComponent(ModelComponet.class).model;
+		List<Entity> batch = entities.get(entityModel);
+		if (batch != null) {
+			batch.add(entity);
+		} else {
+			List<Entity> newBatch = new ArrayList<Entity>();
+			newBatch.add(entity);
+			entities.put(entityModel, newBatch);
+		}
+	}
+	
+	public void addLight(Light light){
+		this.lights.add(light);
+	}
+	
+	public void dispose(){
+		this.shader.dispose();
 	}
 }

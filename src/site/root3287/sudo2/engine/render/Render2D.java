@@ -1,5 +1,6 @@
 package site.root3287.sudo2.engine.render;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -14,20 +15,25 @@ import site.root3287.sudo2.engine.gui.GuiTexture;
 import site.root3287.sudo2.engine.shader.programs.Shader2D;
 import site.root3287.sudo2.utils.SudoMaths;
 
-public class Render2D {
+public class Render2D{
 	private RawModel model;
 	private static final float[] positions = {-1,1,-1,-1,1,1,1,-1};
 	private Shader2D shader;
 	
-	public Render2D(Shader2D shader, Matrix4f projectionMatrix) {
+	private List<GuiTexture> guis = new ArrayList<>();
+	
+	public Render2D() {
 		model = Loader.getInstance().loadToVAO(positions);
-		this.shader = shader;
+		this.shader = new Shader2D();
+	}
+	
+	public void loadProjection(Matrix4f projectionMatrix){
 		this.shader.start();
-		this.shader.loadProjection(projectionMatrix);
+		((Shader2D) this.shader).loadProjection(projectionMatrix);
 		this.shader.stop();
 	}
 	
-	public void render(List<GuiTexture> guis){
+	public void render(){
 		shader.start();
 		GL30.glBindVertexArray(model.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
@@ -35,10 +41,10 @@ public class Render2D {
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		for(GuiTexture gui : guis){
-			shader.useTextureAtlas(gui.textureAtlas, gui.rows, gui.offset);
-			shader.useProjection(gui.useProjection);
-			shader.colouredQuad(gui.isColoured(), gui.getColour());
-			shader.loadTransformation(SudoMaths.createTransformationMatrix(gui.position, gui.scale, gui.rotation));
+			((Shader2D) shader).useTextureAtlas(gui.textureAtlas, gui.rows, gui.offset);
+			((Shader2D) shader).useProjection(gui.useProjection);
+			((Shader2D) shader).colouredQuad(gui.isColoured(), gui.getColour());
+			((Shader2D) shader).loadTransformation(SudoMaths.createTransformationMatrix(gui.position, gui.scale, gui.rotation));
 			if(!gui.isColoured()){
 				GL13.glActiveTexture(GL13.GL_TEXTURE0);
 				GL11.glBindTexture(GL11.GL_TEXTURE_2D, gui.getTexture());
@@ -50,6 +56,12 @@ public class Render2D {
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
 		shader.stop();
+		
+		guis.clear();
+	}
+	
+	public void addGui(GuiTexture t){
+		guis.add(t);
 	}
 
 	public void dispose() {
