@@ -7,26 +7,60 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector2f;
 
 import site.root3287.sudo2.display.DisplayManager;
+import site.root3287.sudo2.events.EventDispatcher;
+import site.root3287.sudo2.events.Listener;
+import site.root3287.sudo2.events.event.KeybaordKeyEvent;
+import site.root3287.sudo2.events.event.MouseClickEvent;
+import site.root3287.sudo2.events.types.KeyboardKeyEventType;
+import site.root3287.sudo2.events.types.MouseClickEventType;
 
 public class Input {
 	
 	public static class Keyboard{
+		private static EventDispatcher keyDispatcher = new EventDispatcher(new KeyboardKeyEventType());
+		
+		public static enum State{
+			KEYBOARD_KEY_DOWN,
+			KEYBOARD_KEY_PRESSED,
+			KEYBOARD_KEY_RELEASED,
+		}
 		private static boolean[] key = new boolean[GLFW.GLFW_KEY_LAST];
 		
 		public static boolean isKeyDown(int key){
+			if(GLFW.glfwGetKey(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE){
+				keyDispatcher.execute(new KeybaordKeyEvent(key, State.KEYBOARD_KEY_DOWN));
+			}
 			return GLFW.glfwGetKey(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE?true:false;
 		}
 		
 		public static boolean isKeyPressed(int currentKey){
+			if(isKeyDown(currentKey) && !key[currentKey]){
+				keyDispatcher.execute(new KeybaordKeyEvent(currentKey, State.KEYBOARD_KEY_PRESSED));
+			}
 			return (isKeyDown(currentKey) && !key[currentKey])?true:false;
 		}
 		
 		public static boolean isKeyReleased(int key){
+			if(!isKeyDown(key) && Input.Keyboard.key[key]){
+				keyDispatcher.execute(new KeybaordKeyEvent(key, State.KEYBOARD_KEY_RELEASED));
+			}
 			return (!isKeyDown(key) && Input.Keyboard.key[key])?true:false;
+		}
+		
+		public static void addKeyListener(Listener l){
+			keyDispatcher.addListener(l);
 		}
 	}
 	
 	public static class Mouse{
+		
+		public static enum State{
+			MOUSE_PRESS,
+			MOUSE_RELEASE,
+			MOUSE_DOWN
+		}
+		
+		private static EventDispatcher clickDispatcher = new EventDispatcher(new MouseClickEventType());
 		
 		private static boolean grabbed, hidden;
 		
@@ -37,14 +71,23 @@ public class Input {
 		private static double DWheel;
 		
 		public static boolean isMouseDown(int key){
+			if(GLFW.glfwGetMouseButton(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE){
+				clickDispatcher.execute(new MouseClickEvent((float)getX(), (float)getY(), key, State.MOUSE_DOWN));
+			}
 			return GLFW.glfwGetMouseButton(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE?true:false;
 		}
 		
 		public static boolean isMousePressed(int key){
+			if(isMouseDown(key) && !Input.Mouse.mouse[key]){
+				clickDispatcher.execute(new MouseClickEvent((float)getX(), (float)getY(), key, State.MOUSE_PRESS));
+			}
 			return (isMouseDown(key) && !Input.Mouse.mouse[key])?true:false;
 		}
 		
 		public static boolean isMouseReleased(int key){
+			if(!isMouseDown(key) && Input.Mouse.mouse[key]){
+				clickDispatcher.execute(new MouseClickEvent((float)getX(), (float)getY(), key, State.MOUSE_RELEASE));
+			}
 			return (!isMouseDown(key) && Input.Mouse.mouse[key])?true:false;
 		}
 		
@@ -101,6 +144,9 @@ public class Input {
 		}
 		public static Vector2f getTranslatedMouseCorrds(float x, float y){
 			return getMouse().translate(x, y);
+		}
+		public static void addClickListener(Listener l){
+			clickDispatcher.addListener(l);
 		}
 	}
 	

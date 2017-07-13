@@ -1,17 +1,27 @@
 package site.root3287.sudo2.events;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EventDispatcher {
-	private Event event;
+	private EventType type;
+	private List<Listener> listeners = new ArrayList<>();
 	
-	public EventDispatcher(Event event) {
-		this.event = event;
+	public EventDispatcher(EventType e){
+		this.type = e;
 	}
 	
-	public void notify(EventType type, EventHandler handler) {
-		if (event.handled)
+	public void addListener(Listener l){
+		this.listeners.add(l);
+	}
+	
+	public void execute(Event e){
+		if(!type.getName().equals(e.getType().getName())){
 			return;
-		
-		if (event.getType() == type)
-			event.handled = handler.onEvent(event);
+		}
+		for(Listener l : listeners){
+			if(!e.hasHandled())
+				e.setHandled(l.onEvent(e));
+		}
 	}
 }

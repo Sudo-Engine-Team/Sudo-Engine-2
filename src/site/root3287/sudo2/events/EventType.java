@@ -1,10 +1,15 @@
 package site.root3287.sudo2.events;
 
-public enum EventType {
-	MOUSE_MOVE,
-	MOUSE_CLICK,
-	MOUSE_SCROLL,
-	KEY_DOWN,
-	KEY_RELEASED,
-	KEY_PRESSED,
+public class EventType {
+	protected String name;
+	public EventType(String name){
+		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return name;
+	}
+	public String getName(){
+		return name;
+	}
 }
