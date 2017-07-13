@@ -18,7 +18,7 @@ public class Shader2D extends Shader{
 	private int location_quadColour;
 	
 	public Shader2D() {
-		super("res/shader/gui/guiVertex.glsl", "res/shader/gui/guiFragment.glsl");
+		super("/shader/gui/guiVertex.glsl", "/shader/gui/guiFragment.glsl");
 		// TODO Auto-generated constructor stub
 	}
 

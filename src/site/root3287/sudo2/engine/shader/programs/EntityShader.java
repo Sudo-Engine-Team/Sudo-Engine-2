@@ -31,7 +31,7 @@ public class EntityShader extends Shader{
     private static final int MAX_LIGHT = 4;
 	
 	public EntityShader() {
-		super("res/shader/Entity/vertexShader.glsl", "res/shader/Entity/fragmentShader.glsl");
+		super("/shader/Entity/vertexShader.glsl", "/shader/Entity/fragmentShader.glsl");
 	}
 
 	@Override

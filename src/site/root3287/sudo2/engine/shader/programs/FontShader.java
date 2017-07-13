@@ -7,8 +7,8 @@ import site.root3287.sudo2.engine.shader.Shader;
 
 public class FontShader extends Shader{
 
-	private static final String VERTEX_FILE = "res/shader/Fonts/fontVertex.glsl";
-	private static final String FRAGMENT_FILE = "res/shader/Fonts/fontFragment.glsl";
+	private static final String VERTEX_FILE = "/shader/Fonts/fontVertex.glsl";
+	private static final String FRAGMENT_FILE = "/shader/Fonts/fontFragment.glsl";
 	
 	private int location_colour;
     private int location_translation;
