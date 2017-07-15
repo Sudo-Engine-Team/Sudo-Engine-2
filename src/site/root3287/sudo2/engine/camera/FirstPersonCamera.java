@@ -11,38 +11,11 @@ public class FirstPersonCamera extends ProspectiveCamera{
 	public boolean isGrabbed = true, isMouseGrabbedRequest = false, canFly = false, gravity = true, isInAir = false,
 			canDoubleJump = false;
 	//private final float GRAVITY = (float) (-30f), JUMP = 10, CAMERA_HEIGHT = 3.5f;
-	public float sensitivity = 0.1f, distance = 20f, dy = 0, flySpeed = 0.25f*0.25f;
+	public float sensitivity = 0.1f, distance = 20f, dy = 0, flySpeed = 0.25f*0.25f, finalDistance;
 	
-	
-	@Override
-	public void update(float delta) {
-		super.update(delta);
-		
-		if (isGrabbed) {
-			this.pitch -= Input.Mouse.getDY() * sensitivity;
-			this.yaw -= Input.Mouse.getDX() * sensitivity;
-			
-			if (this.pitch > 90) {
-				this.pitch = 90;
-			} else if (this.pitch < -90) {
-				this.pitch = -90;
-			}
+	public FirstPersonCamera() {
+		finalDistance = Math.abs(this.distance * flySpeed);
 
-			if (this.yaw > 360) {
-				this.yaw = 0;
-			} else if (this.yaw < 0) {
-				this.yaw = 360 - Math.abs(this.yaw);
-			}
-		}
-
-	//	this.direction = ((int) (this.yaw / 90));
-
-		float finalDistance = Math.abs(this.distance * delta * flySpeed);
-
-		
-		  if(Input.Mouse.getDWheel() != 0){ flySpeed += Input.Mouse.getDWheel()*delta;
-		  if(flySpeed < 0){ flySpeed = 0.00000001f; } }
-		  
 		Input.Keyboard.addKeyListener(new Listener() {
 			
 			@Override
@@ -113,10 +86,6 @@ public class FirstPersonCamera extends ProspectiveCamera{
 				return false;
 			}
 		});
-		
-		if (Input.Keyboard.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
-				this.isMouseGrabbedRequest = true;
-		}
 
 		Input.Keyboard.addKeyListener(new Listener() {
 			
@@ -151,6 +120,39 @@ public class FirstPersonCamera extends ProspectiveCamera{
 				return false;
 			}
 		});
+	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		
+		finalDistance = Math.abs(this.distance * flySpeed * delta);
+		
+		if (Input.Keyboard.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
+			this.isMouseGrabbedRequest = true;
+		}
+		
+		if (isGrabbed) {
+			this.pitch -= Input.Mouse.getDY() * sensitivity;
+			this.yaw -= Input.Mouse.getDX() * sensitivity;
+			
+			if (this.pitch > 90) {
+				this.pitch = 90;
+			} else if (this.pitch < -90) {
+				this.pitch = -90;
+			}
+
+			if (this.yaw > 360) {
+				this.yaw = 0;
+			} else if (this.yaw < 0) {
+				this.yaw = 360 - Math.abs(this.yaw);
+			}
+		}
+
+	//	this.direction = ((int) (this.yaw / 90));
+		
+		  if(Input.Mouse.getDWheel() != 0){ flySpeed += Input.Mouse.getDWheel()*delta;
+		  if(flySpeed < 0){ flySpeed = 0.00000001f; } }
 
 		if (isMouseGrabbedRequest) {
 			isMouseGrabbedRequest = false;
