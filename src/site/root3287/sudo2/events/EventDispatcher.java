@@ -15,6 +15,21 @@ public class EventDispatcher {
 		this.listeners.add(l);
 	}
 	
+	public void removeListener(Listener l){
+		this.listeners.remove(l);
+	}
+	
+	public void removeListener(int l){
+		this.listeners.remove(l);
+	}
+	
+	public boolean hasListener(Listener l){
+		if(listeners.contains(l)){
+			return true;
+		}
+		return false;
+	}
+	
 	public void execute(Event e){
 		if(!type.getName().equals(e.getType().getName())){
 			return;

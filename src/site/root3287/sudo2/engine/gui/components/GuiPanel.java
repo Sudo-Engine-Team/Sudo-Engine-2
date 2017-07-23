@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 import site.root3287.sudo2.engine.gui.NinePatch;
 
+@Deprecated
 public abstract class GuiPanel extends GUIComponent{
 	
 	private NinePatch image;

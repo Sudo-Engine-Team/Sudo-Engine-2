@@ -21,9 +21,11 @@ import site.root3287.sudo2.logger.LogLevel;
 import site.root3287.sudo2.logger.Logger;
 import site.root3287.sudo2.utils.SudoMaths;
 
-public class FontRender extends Renderable{
+public class FontRender{
+	private FontShader shader;
 	private static Map<FontType, List<GUIText>> texts = new HashMap<FontType, List<GUIText>>();
     private static List<GUIText> allText = new ArrayList<>();
+    private Matrix4f projection;
     public FontRender() {
         this.shader = new FontShader();
     }
@@ -34,6 +36,7 @@ public class FontRender extends Renderable{
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         shader.start();
+        shader.loadProjection(projection);
         for(FontType font : texts.keySet()){
         	Logger.log(LogLevel.DEBUG_RENDER, "Preparing to render some text");
             GL13.glActiveTexture(GL13.GL_TEXTURE0);
@@ -96,8 +99,12 @@ public class FontRender extends Renderable{
     public List<GUIText> getAllText(){
     	return allText;
     }
-
+    
 	public void dispose(){
 		shader.dispose();
+	}
+	
+	public void setProjeciton(Matrix4f projection){
+		this.projection = projection;
 	}
 }

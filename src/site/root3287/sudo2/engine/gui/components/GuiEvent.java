@@ -1,5 +1,6 @@
 package site.root3287.sudo2.engine.gui.components;
 
+@Deprecated
 public interface GuiEvent {
 	void onClick();
 	void onHover();

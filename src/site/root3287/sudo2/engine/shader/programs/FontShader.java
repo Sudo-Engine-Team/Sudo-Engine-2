@@ -17,6 +17,7 @@ public class FontShader extends Shader{
     private int location_edge;
     private int location_borderWidth;
     private int location_borderEdge;
+    private int loacation_projection;
      
     public FontShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -31,6 +32,7 @@ public class FontShader extends Shader{
         location_edge = super.getUniformLocation("edge");
         location_borderWidth = super.getUniformLocation("borderWidth");
         location_borderEdge = super.getUniformLocation("borderEdge");
+        loacation_projection = super.getUniformLocation("projection");
     }
  
     @Override
@@ -61,5 +63,7 @@ public class FontShader extends Shader{
     	super.loadFloat(location_borderWidth, width);
 		
 	} 
-
+    public void loadProjection(Matrix4f projection){
+    	super.loadMatrix(loacation_projection, projection);
+    }
 }

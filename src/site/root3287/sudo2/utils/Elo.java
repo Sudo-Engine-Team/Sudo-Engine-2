@@ -5,8 +5,4 @@ public class Elo {
 		int totalMatches = wins+loose;
 		return (otherElo+400*(wins-loose))/totalMatches;
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(elo(316, 84, 10));
-	}
 }

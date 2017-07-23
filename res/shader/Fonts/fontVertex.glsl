@@ -6,6 +6,7 @@ in vec2 textureCoords;
 out vec2 pass_textureCoords;
 
 uniform mat4 translation;
+uniform mat4 projection;
 
 void main(void){
 

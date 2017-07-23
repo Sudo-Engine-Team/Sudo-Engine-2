@@ -1,7 +1,31 @@
 package site.root3287.sudo2.display;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.Callbacks.*;
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MAJOR;
+import static org.lwjgl.glfw.GLFW.GLFW_CONTEXT_VERSION_MINOR;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_LAST;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LAST;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_CORE_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_FORWARD_COMPAT;
+import static org.lwjgl.glfw.GLFW.GLFW_OPENGL_PROFILE;
+import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
+import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
+import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
+import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
+import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
+import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
+import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
+import static org.lwjgl.glfw.GLFW.glfwInit;
+import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetScrollCallback;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowSizeCallback;
+import static org.lwjgl.glfw.GLFW.glfwShowWindow;
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
+import static org.lwjgl.glfw.GLFW.glfwTerminate;
+import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 
 import java.nio.IntBuffer;
 
@@ -9,13 +33,20 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
+import site.root3287.sudo2.events.EventDispatcher;
+import site.root3287.sudo2.events.Listener;
+import site.root3287.sudo2.events.event.KeyboardPressedEvent;
+import site.root3287.sudo2.events.event.KeyboardReleasedEvent;
+import site.root3287.sudo2.events.event.MouseClickEvent;
+import site.root3287.sudo2.events.event.WindowResizeEvent;
+import site.root3287.sudo2.events.types.WindowResizeEventType;
 import site.root3287.sudo2.logger.LogLevel;
 import site.root3287.sudo2.logger.Logger;
 import site.root3287.sudo2.utils.Input;
+import site.root3287.sudo2.utils.Input.Mouse.State;
 
 public class DisplayManager {
 	public static String TITLE = "SUDO-Engine 2";
@@ -31,6 +62,8 @@ public class DisplayManager {
 	public static double DELTA;
 	private static double lastTime;
 	private static boolean resized;
+	
+	private static EventDispatcher resizeDispatcher = new EventDispatcher(new WindowResizeEventType());
 	
 	public static void init(){
 		init(WIDTH, HEIGHT, TITLE);
@@ -64,16 +97,15 @@ public class DisplayManager {
 		glfwSwapInterval(1);
 		glfwShowWindow(WINDOW);
 		
-		GL11.glViewport(0, 0, (int)WIDTH, (int)HEIGHT);
-		
 		glfwSetWindowSizeCallback(WINDOW, new GLFWWindowSizeCallback() {
 			
 			@Override
 			public void invoke(long window, int width, int height) {
 				WIDTH = width;
 				HEIGHT = height;
-				resized= true;
-				GL11.glViewport(0, 0, width, height);
+				resized = true;
+				resizeDispatcher.execute(new WindowResizeEvent(width, height));
+				//GL11.glViewport(0, 0, width, height);
 			}
 		});
 		
@@ -84,6 +116,8 @@ public class DisplayManager {
 				Input.Mouse.setDWheel(yoffset);
 			}
 		});
+		
+		//GL11.glViewport(0, 0, (int)WIDTH, (int)HEIGHT);
 
 		SCREEN.init();
 	}
@@ -92,6 +126,22 @@ public class DisplayManager {
 		double current = currentTimeMillis();
 		DELTA = (current - lastTime)/1000;
 		lastTime = current;
+		for(int i = 0; i < GLFW_KEY_LAST; i++){
+			if(Input.Keyboard.isKeyPressed(i)){
+				Input.Keyboard.keyPressedDispatcher.execute(new KeyboardPressedEvent(i));
+			}
+			if(Input.Keyboard.isKeyReleased(i)){
+				Input.Keyboard.keyReleasedDispatcher.execute(new KeyboardReleasedEvent(i));
+			}
+		}
+		for(int i = 0; i < GLFW_MOUSE_BUTTON_LAST; i++){
+			if(Input.Mouse.isMousePressed(i)){
+				Input.Mouse.clickDispatcher.execute(new MouseClickEvent((float)Input.Mouse.getX(), (float)Input.Mouse.getY(), i, State.MOUSE_PRESS));
+			}
+			if(Input.Mouse.isMouseReleased(i)){
+				Input.Mouse.clickDispatcher.execute(new MouseClickEvent((float)Input.Mouse.getX(), (float)Input.Mouse.getY(), i, State.MOUSE_RELEASE));
+			}
+		}
 		SCREEN.update();
 		SCREEN.render();
 		glfwSwapBuffers(WINDOW);
@@ -146,5 +196,9 @@ public class DisplayManager {
 	
 	public static Vector2f getNormalisedScreen(){
 		return new Vector2f();
+	}
+	
+	public static void addResizeEvent(Listener l){
+		resizeDispatcher.addListener(l);
 	}
 }

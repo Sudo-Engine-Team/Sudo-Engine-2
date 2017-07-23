@@ -4,7 +4,8 @@ import org.lwjgl.glfw.GLFW;
 
 import site.root3287.sudo2.events.Event;
 import site.root3287.sudo2.events.Listener;
-import site.root3287.sudo2.events.event.KeybaordKeyEvent;
+import site.root3287.sudo2.events.event.KeyboardDownEvent;
+import site.root3287.sudo2.events.event.MouseMoveEvent;
 import site.root3287.sudo2.utils.Input;
 
 public class FirstPersonCamera extends ProspectiveCamera{
@@ -16,15 +17,12 @@ public class FirstPersonCamera extends ProspectiveCamera{
 	public FirstPersonCamera() {
 		finalDistance = Math.abs(this.distance * flySpeed);
 
-		Input.Keyboard.addKeyListener(new Listener() {
+		Input.Keyboard.addKeyDownListener(new Listener() {
 			
 			@Override
 			public boolean onEvent(Event e) {
-				if(e instanceof KeybaordKeyEvent){
-					if(((KeybaordKeyEvent) e).getState() != Input.Keyboard.State.KEYBOARD_KEY_DOWN){
-						return false;
-					}
-					if(((KeybaordKeyEvent) e).getKey() == GLFW.GLFW_KEY_W){
+				if(e instanceof KeyboardDownEvent){
+					if(((KeyboardDownEvent) e).getKey() == GLFW.GLFW_KEY_W){
 						position.x += finalDistance * (float) Math.sin(Math.toRadians(yaw));
 						position.z -= finalDistance * (float) Math.cos(Math.toRadians(yaw));
 						return true;
@@ -33,15 +31,12 @@ public class FirstPersonCamera extends ProspectiveCamera{
 				return false;
 			}
 		});
-		Input.Keyboard.addKeyListener(new Listener() {
+		Input.Keyboard.addKeyDownListener(new Listener() {
 			
 			@Override
 			public boolean onEvent(Event e) {
-				if(e instanceof KeybaordKeyEvent){
-					if(((KeybaordKeyEvent) e).getState() != Input.Keyboard.State.KEYBOARD_KEY_DOWN){
-						return false;
-					}
-					if(((KeybaordKeyEvent) e).getKey() == GLFW.GLFW_KEY_S){
+				if(e instanceof KeyboardDownEvent){
+					if(((KeyboardDownEvent) e).getKey() == GLFW.GLFW_KEY_S){
 						position.x -= finalDistance * (float) Math.sin(Math.toRadians(yaw));
 						position.z += finalDistance * (float) Math.cos(Math.toRadians(yaw));
 						return true;
@@ -51,15 +46,12 @@ public class FirstPersonCamera extends ProspectiveCamera{
 			}
 		});
 		
-		Input.Keyboard.addKeyListener(new Listener() {
+		Input.Keyboard.addKeyDownListener(new Listener() {
 			
 			@Override
 			public boolean onEvent(Event e) {
-				if(e instanceof KeybaordKeyEvent){
-					if(((KeybaordKeyEvent) e).getState() != Input.Keyboard.State.KEYBOARD_KEY_DOWN){
-						return false;
-					}
-					if(((KeybaordKeyEvent) e).getKey() == GLFW.GLFW_KEY_A){
+				if(e instanceof KeyboardDownEvent){
+					if(((KeyboardDownEvent) e).getKey() == GLFW.GLFW_KEY_A){
 						position.x -= finalDistance * (float) Math.sin(Math.toRadians(yaw + 90));
 						position.z += finalDistance * (float) Math.cos(Math.toRadians(yaw + 90));
 						return true;
@@ -69,15 +61,12 @@ public class FirstPersonCamera extends ProspectiveCamera{
 			}
 		});
 		
-		Input.Keyboard.addKeyListener(new Listener() {
+		Input.Keyboard.addKeyDownListener(new Listener() {
 			
 			@Override
 			public boolean onEvent(Event e) {
-				if(e instanceof KeybaordKeyEvent){
-					if(((KeybaordKeyEvent) e).getState() != Input.Keyboard.State.KEYBOARD_KEY_DOWN){
-						return false;
-					}
-					if(((KeybaordKeyEvent) e).getKey() == GLFW.GLFW_KEY_D){
+				if(e instanceof KeyboardDownEvent){
+					if(((KeyboardDownEvent) e).getKey() == GLFW.GLFW_KEY_D){
 						position.x -= finalDistance * (float) Math.sin(Math.toRadians(yaw - 90));
 						position.z += finalDistance * (float) Math.cos(Math.toRadians(yaw - 90));
 						return true;
@@ -87,15 +76,12 @@ public class FirstPersonCamera extends ProspectiveCamera{
 			}
 		});
 
-		Input.Keyboard.addKeyListener(new Listener() {
+		Input.Keyboard.addKeyDownListener(new Listener() {
 			
 			@Override
 			public boolean onEvent(Event e) {
-				if(e instanceof KeybaordKeyEvent){
-					if(((KeybaordKeyEvent) e).getState() != Input.Keyboard.State.KEYBOARD_KEY_DOWN){
-						return false;
-					}
-					if(((KeybaordKeyEvent) e).getKey() == GLFW.GLFW_KEY_SPACE){
+				if(e instanceof KeyboardDownEvent){
+					if(((KeyboardDownEvent) e).getKey() == GLFW.GLFW_KEY_SPACE){
 						position.y += finalDistance;
 						return true;
 					}
@@ -104,17 +90,28 @@ public class FirstPersonCamera extends ProspectiveCamera{
 			}
 		});
 		
-		Input.Keyboard.addKeyListener(new Listener() {
+		Input.Keyboard.addKeyDownListener(new Listener() {
 			
 			@Override
 			public boolean onEvent(Event e) {
-				if(e instanceof KeybaordKeyEvent){
-					if(((KeybaordKeyEvent) e).getState() != Input.Keyboard.State.KEYBOARD_KEY_DOWN){
-						return false;
-					}
-					if(((KeybaordKeyEvent) e).getKey() == GLFW.GLFW_KEY_LEFT_SHIFT){
+				if(e instanceof KeyboardDownEvent){
+					if(((KeyboardDownEvent) e).getKey() == GLFW.GLFW_KEY_LEFT_SHIFT){
 						position.y -= finalDistance;
 						return true;
+					}
+				}
+				return false;
+			}
+		});
+		
+		Input.Mouse.addMoveListener(new Listener() {
+			
+			@Override
+			public boolean onEvent(Event e) {
+				if(e instanceof MouseMoveEvent){
+					if (Input.Mouse.isGrabbed()) {
+						pitch -= ((MouseMoveEvent) e).getDy() * sensitivity;
+						yaw -= ((MouseMoveEvent) e).getDx() * sensitivity;
 					}
 				}
 				return false;
@@ -127,29 +124,20 @@ public class FirstPersonCamera extends ProspectiveCamera{
 		super.update(delta);
 		
 		finalDistance = Math.abs(this.distance * flySpeed * delta);
-		
-		if (Input.Keyboard.isKeyPressed(GLFW.GLFW_KEY_ESCAPE)) {
-			this.isMouseGrabbedRequest = true;
-		}
-		
-		if (isGrabbed) {
-			this.pitch -= Input.Mouse.getDY() * sensitivity;
-			this.yaw -= Input.Mouse.getDX() * sensitivity;
-			
-			if (this.pitch > 90) {
-				this.pitch = 90;
-			} else if (this.pitch < -90) {
-				this.pitch = -90;
-			}
-
-			if (this.yaw > 360) {
-				this.yaw = 0;
-			} else if (this.yaw < 0) {
-				this.yaw = 360 - Math.abs(this.yaw);
-			}
-		}
 
 	//	this.direction = ((int) (this.yaw / 90));
+		
+		if (this.pitch > 90) {
+			this.pitch = 90;
+		} else if (this.pitch < -90) {
+			this.pitch = -90;
+		}
+
+		if (this.yaw > 360) {
+			this.yaw = 0;
+		} else if (this.yaw < 0) {
+			this.yaw = 360 - Math.abs(this.yaw);
+		}
 		
 		  if(Input.Mouse.getDWheel() != 0){ flySpeed += Input.Mouse.getDWheel()*delta;
 		  if(flySpeed < 0){ flySpeed = 0.00000001f; } }

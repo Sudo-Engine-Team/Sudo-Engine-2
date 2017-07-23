@@ -11,7 +11,7 @@ public class NinePatch {
 	private Vector2f offset, position, scale;
 	private String file;
 	private GuiTexture BACKGROUND, TOP, BOTTOM, LEFT, RIGHT, TOP_LEFT, BOTTOM_LEFT, TOP_RIGHT, BOTTOM_RIGHT; 
-	
+	private int size;
 	/**
 	 * Generate a Nine Stiched texture using a X*X size texture atlas that have at least a 3*3 grid.
 	 * 
@@ -24,8 +24,9 @@ public class NinePatch {
 	public NinePatch(String file, Vector2f position, Vector2f scale, Vector2f offset, int rows, int size){
 		this.setFile(file);
 		this.setOffset(offset);
-		position = new Vector2f();
-		scale = new Vector2f();
+		this.position = position;
+		this.scale = scale;
+		this.size = size;
 		
 		int textureID = Loader.getInstance().loadTexture(file);
 		
@@ -256,5 +257,9 @@ public class NinePatch {
 
 	public void setScale(Vector2f scale) {
 		this.scale = scale;
+	}
+	
+	public int getTextureSize(){
+		return size;
 	}
 }

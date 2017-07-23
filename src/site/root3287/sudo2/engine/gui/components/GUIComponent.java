@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector2f;
 import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.utils.Input;
 
+@Deprecated
 public abstract class GUIComponent implements GuiEvent{
 	protected Vector2f position, scale;
 	

@@ -9,15 +9,21 @@ import org.lwjgl.util.vector.Vector2f;
 import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.events.EventDispatcher;
 import site.root3287.sudo2.events.Listener;
-import site.root3287.sudo2.events.event.KeybaordKeyEvent;
+import site.root3287.sudo2.events.event.KeyboardDownEvent;
 import site.root3287.sudo2.events.event.MouseClickEvent;
-import site.root3287.sudo2.events.types.KeyboardKeyEventType;
+import site.root3287.sudo2.events.event.MouseMoveEvent;
+import site.root3287.sudo2.events.types.KeyboardDownEventType;
+import site.root3287.sudo2.events.types.KeyboardPressedEventType;
+import site.root3287.sudo2.events.types.KeyboardReleaseEventType;
 import site.root3287.sudo2.events.types.MouseClickEventType;
+import site.root3287.sudo2.events.types.MouseMoveEventType;
 
 public class Input {
 	
 	public static class Keyboard{
-		private static EventDispatcher keyDispatcher = new EventDispatcher(new KeyboardKeyEventType());
+		public static EventDispatcher keyDownDispatcher = new EventDispatcher(new KeyboardDownEventType());
+		public static EventDispatcher keyReleasedDispatcher = new EventDispatcher(new KeyboardReleaseEventType());
+		public static EventDispatcher keyPressedDispatcher = new EventDispatcher(new KeyboardPressedEventType());
 		
 		public static enum State{
 			KEYBOARD_KEY_DOWN,
@@ -27,28 +33,32 @@ public class Input {
 		private static boolean[] key = new boolean[GLFW.GLFW_KEY_LAST];
 		
 		public static boolean isKeyDown(int key){
+			boolean finalReturn = false;
 			if(GLFW.glfwGetKey(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE){
-				keyDispatcher.execute(new KeybaordKeyEvent(key, State.KEYBOARD_KEY_DOWN));
+				finalReturn = true;
 			}
-			return GLFW.glfwGetKey(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE?true:false;
+			if(finalReturn){
+				keyDownDispatcher.execute(new KeyboardDownEvent(key));
+			}
+			return finalReturn;
 		}
 		
 		public static boolean isKeyPressed(int currentKey){
-			if(isKeyDown(currentKey) && !key[currentKey]){
-				keyDispatcher.execute(new KeybaordKeyEvent(currentKey, State.KEYBOARD_KEY_PRESSED));
-			}
-			return (isKeyDown(currentKey) && !key[currentKey])?true:false;
+			return ((GLFW.glfwGetKey(DisplayManager.WINDOW, currentKey) == GLFW.GLFW_TRUE)?true:false) && !key[currentKey];
 		}
 		
 		public static boolean isKeyReleased(int key){
-			if(!isKeyDown(key) && Input.Keyboard.key[key]){
-				keyDispatcher.execute(new KeybaordKeyEvent(key, State.KEYBOARD_KEY_RELEASED));
-			}
-			return (!isKeyDown(key) && Input.Keyboard.key[key])?true:false;
+			return !((GLFW.glfwGetKey(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE)?true:false) && Input.Keyboard.key[key];
 		}
 		
-		public static void addKeyListener(Listener l){
-			keyDispatcher.addListener(l);
+		public static void addKeyDownListener(Listener l){
+			keyDownDispatcher.addListener(l);
+		}
+		public static void addKeyReleasedListener(Listener l){
+			keyReleasedDispatcher.addListener(l);
+		}
+		public static void addKeyPressedListener(Listener l){
+			keyPressedDispatcher.addListener(l);
 		}
 	}
 	
@@ -60,7 +70,8 @@ public class Input {
 			MOUSE_DOWN
 		}
 		
-		private static EventDispatcher clickDispatcher = new EventDispatcher(new MouseClickEventType());
+		public static EventDispatcher clickDispatcher = new EventDispatcher(new MouseClickEventType());
+		public static EventDispatcher moveDispatcher = new EventDispatcher(new MouseMoveEventType());
 		
 		private static boolean grabbed, hidden;
 		
@@ -78,16 +89,10 @@ public class Input {
 		}
 		
 		public static boolean isMousePressed(int key){
-			if(isMouseDown(key) && !Input.Mouse.mouse[key]){
-				clickDispatcher.execute(new MouseClickEvent((float)getX(), (float)getY(), key, State.MOUSE_PRESS));
-			}
 			return (isMouseDown(key) && !Input.Mouse.mouse[key])?true:false;
 		}
 		
 		public static boolean isMouseReleased(int key){
-			if(!isMouseDown(key) && Input.Mouse.mouse[key]){
-				clickDispatcher.execute(new MouseClickEvent((float)getX(), (float)getY(), key, State.MOUSE_RELEASE));
-			}
 			return (!isMouseDown(key) && Input.Mouse.mouse[key])?true:false;
 		}
 		
@@ -148,6 +153,10 @@ public class Input {
 		public static void addClickListener(Listener l){
 			clickDispatcher.addListener(l);
 		}
+
+		public static void addMoveListener(Listener listener) {
+			moveDispatcher.addListener(listener);
+		}
 	}
 	
 	public static void update(){
@@ -162,6 +171,10 @@ public class Input {
 		Mouse.dx = Mouse.x - x;
 		Mouse.dy = Mouse.y - y;
 		
+		if(x != Mouse.x || y != Mouse.y){
+			Mouse.moveDispatcher.execute(new MouseMoveEvent((float)x, (float)y, (float)Mouse.dx, (float)Mouse.dy));
+		}
+		
 		Mouse.x = x;
 		Mouse.y = y;
 		
@@ -171,7 +184,6 @@ public class Input {
 		for(int i = 0; i<GLFW.GLFW_MOUSE_BUTTON_LAST; i++){
 			Mouse.mouse[i] = Mouse.isMouseDown(i);
 		}
-		
 		Mouse.setDWheel(0);
 	}
 }

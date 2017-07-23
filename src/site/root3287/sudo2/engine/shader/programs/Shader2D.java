@@ -18,8 +18,12 @@ public class Shader2D extends Shader{
 	private int location_quadColour;
 	
 	public Shader2D() {
-		super("/shader/gui/guiVertex.glsl", "/shader/gui/guiFragment.glsl");
+		super("/shader/Shader2D/guiVertex.glsl", "/shader/Shader2D/guiFragment.glsl");
 		// TODO Auto-generated constructor stub
+	}
+	
+	protected Shader2D(String vs, String fs){
+		super(vs, fs);
 	}
 
 	@Override
