@@ -17,8 +17,6 @@ import site.root3287.sudo2.engine.font.FontType;
 import site.root3287.sudo2.engine.font.GUIText;
 import site.root3287.sudo2.engine.font.TextMeshData;
 import site.root3287.sudo2.engine.shader.programs.FontShader;
-import site.root3287.sudo2.logger.LogLevel;
-import site.root3287.sudo2.logger.Logger;
 import site.root3287.sudo2.utils.SudoMaths;
 
 public class FontRender{
@@ -38,11 +36,9 @@ public class FontRender{
         shader.start();
         shader.loadProjection(projection);
         for(FontType font : texts.keySet()){
-        	Logger.log(LogLevel.DEBUG_RENDER, "Preparing to render some text");
             GL13.glActiveTexture(GL13.GL_TEXTURE0);
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, font.getTextureAtlas());
             for(GUIText text : texts.get(font)){
-            	Logger.log(LogLevel.DEBUG_RENDER, "Rendering Text");
             	 GL30.glBindVertexArray(text.getMesh());
                  GL20.glEnableVertexAttribArray(0);
                  GL20.glEnableVertexAttribArray(1);

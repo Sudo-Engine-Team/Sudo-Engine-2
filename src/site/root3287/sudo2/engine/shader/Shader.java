@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
+import java.util.logging.Level;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -15,8 +16,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.logger.LogLevel;
-import site.root3287.sudo2.logger.Logger;
+import site.root3287.sudo2.display.DisplayManager;
 
 public abstract class Shader {
 	private int programID;
@@ -59,17 +59,15 @@ public abstract class Shader {
     }
      
     public void start(){
-    	Logger.log(LogLevel.DEBUG_RENDER, "Starting Shader");
         GL20.glUseProgram(programID);
     }
      
     public void stop(){
-    	Logger.log(LogLevel.DEBUG_RENDER, "Stopping Shader");
         GL20.glUseProgram(0);
     }
      
     public void dispose(){
-    	Logger.log(LogLevel.INFO, "Disposing Shader");
+    	DisplayManager.LOGGER.log(Level.INFO, "Disposing Shader");
         stop();
         GL20.glDetachShader(programID, vertexShaderID);
         GL20.glDetachShader(programID, fragmentShaderID);

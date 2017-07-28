@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -19,8 +20,7 @@ import org.lwjgl.opengl.GL30;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
-import site.root3287.sudo2.logger.LogLevel;
-import site.root3287.sudo2.logger.Logger;
+import site.root3287.sudo2.display.DisplayManager;
 
 public class Loader {
 	private static Loader _instance = null;
@@ -78,30 +78,7 @@ public class Loader {
 		return new RawModel(vaoID, indices.length);
 	}
 	public int loadText(float[] position, float[] textureCoords){
-		int vaoID = GL30.glGenVertexArrays();
-		GL30.glBindVertexArray(vaoID);
-		List<Integer> vboBatch = new ArrayList<>();
-		
-		//StoreDataInAttibArray
-		int vboPosition = GL15.glGenBuffers();
-		vboBatch.add(vboPosition);
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboPosition);
-		FloatBuffer positionBuffer = storeDataInFloatBuffer(position);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, positionBuffer, GL15.GL_STATIC_DRAW);
-		GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT, false, 0, 0);
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-		
-		int vboTextureCoords = GL15.glGenBuffers();
-		vboBatch.add(vboTextureCoords);
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboTextureCoords);
-		FloatBuffer textureBuffer = storeDataInFloatBuffer(textureCoords);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, textureBuffer, GL15.GL_STATIC_DRAW);
-		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 0, 0);
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);		
-		unbindVAO();
-		
-		vaoText.put(vaoID, vboBatch);
-		
+		int vaoID = loadToVAO(position, textureCoords);
 		return vaoID;
 	}
 	private int createVAO(){
@@ -168,15 +145,10 @@ public class Loader {
 		return textureID;
 	}
 	public void removeTextFromMemory(int vao){
-		Logger.log(LogLevel.DEBUG_RENDER, "Removing Text from memory");
-		List<Integer> vbos = vaoText.remove(vao); 
-		for (int vbo : vbos){
-			GL15.glDeleteBuffers(vbo);
-		}
-		GL30.glDeleteVertexArrays(vao);
+		removeVAO(vao);
 	}
 	public void removeVAO(int vaoID){
-		Logger.log("Removing VAO from memory: "+vaoID);
+		DisplayManager.LOGGER.log(Level.INFO,"Removing VAO from memory: "+vaoID);
 		List<Integer> vbos = vaos.remove(vaoID);
 		for(int vbo : vbos){
 			GL15.glDeleteBuffers(vbo);
@@ -184,12 +156,12 @@ public class Loader {
 		GL30.glDeleteVertexArrays(vaoID);
 	}
 	public void removeTexture(int textureID){
-		Logger.log("Removing Texture form memory "+textureID);
+		DisplayManager.LOGGER.log(Level.INFO,"Removing Texture form memory "+textureID);
 		GL11.glDeleteTextures(textureID);
 		textures.remove(new Integer(textureID));
 	}
 	public void destory(){
-		Logger.log(LogLevel.INFO, "Disposing Loader");
+		DisplayManager.LOGGER.log(Level.INFO, "Disposing Loader");
 		int vboSize = 0;
 		int vaoSize = 0;
 		for(int vao : vaos.keySet()){
@@ -200,26 +172,14 @@ public class Loader {
 			GL30.glDeleteVertexArrays(vao);
 			vaoSize++;
 		}
-		Logger.log("Deleted "+vaoSize+" VAOS");
-		Logger.log(LogLevel.INFO, "Deleted "+vboSize+" VBOS");
-		
-		vaoSize = 0;
-		vboSize = 0;
-		for(List<Integer> textVBO : vaoText.values()){
-			for(int textvbo : textVBO){
-				GL15.glDeleteBuffers(textvbo);
-				vboSize++;
-			}
-			vaoSize++;
-		}
-		Logger.log(LogLevel.INFO, "Deleted "+vaoSize+" Text VAOS");
-		Logger.log("Deleted "+vboSize+" Text VBOS");
+		DisplayManager.LOGGER.log(Level.INFO,"Deleted "+vaoSize+" VAOS");
+		DisplayManager.LOGGER.log(Level.INFO, "Deleted "+vboSize+" VBOS");
 		
 		int texturesSize = 0;
 		for(int texture:textures){
 			GL11.glDeleteTextures(texture);
 			texturesSize++;
 		}
-		Logger.log("Deleted "+texturesSize+" textures");
+		DisplayManager.LOGGER.log(Level.INFO,"Deleted "+texturesSize+" textures");
 	} 
 }

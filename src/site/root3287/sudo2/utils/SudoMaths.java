@@ -1,13 +1,13 @@
 package site.root3287.sudo2.utils;
 
+import java.util.logging.Level;
+
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.engine.camera.Camera;
-import site.root3287.sudo2.logger.LogLevel;
-import site.root3287.sudo2.logger.Logger;
 
 public class SudoMaths {
 	public static Matrix4f createTransformationMatrix(Vector3f translation) {
@@ -66,7 +66,7 @@ public class SudoMaths {
         return viewMatrix;
 	}
 	public static Matrix4f createProjectionMatrix(){
-		Logger.log(LogLevel.INFO, "Creating projection Matrix");
+		DisplayManager.LOGGER.log(Level.INFO, "Creating projection Matrix");
 		Vector2f size = DisplayManager.getCurrentWindowSize();
 		float aspectRatio = (float) size.x/size.y;
 		float y_scale = (float) ((1f / Math.tan(Math.toRadians(DisplayManager.FOV/ 2f))) * aspectRatio);
@@ -84,14 +84,27 @@ public class SudoMaths {
 		return projectionMatrix;
 	}
 	
-	public static Matrix4f createOrthoMatrix(){
-		Logger.log("Creating Orthographic Matrix");
-		//return ortho2(0, DisplayManager.WIDTH, 0, DisplayManager.HEIGHT, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
+	public static Matrix4f ortho(){
 		return ortho(-DisplayManager.WIDTH/2, DisplayManager.WIDTH/2, -DisplayManager.HEIGHT/2, DisplayManager.HEIGHT/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
-		//return ortho(DisplayManager.WIDTH/2, -DisplayManager.WIDTH/2, DisplayManager.HEIGHT/2, -DisplayManager.HEIGHT/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
 	}
 	
-	private static Matrix4f ortho(float left, float right, float bottom, float top, float near, float far){
+	/**
+	 * Create Orthographic Matrix
+	 * @param left
+	 * 		Recommend: -DisplayManager.WIDTH/2
+	 * @param right
+	 * 		Recommend: DisplayManager.WIDTH/2
+	 * @param bottom
+	 * 		Recommend: -DisplayManager.HEIGHT/2
+	 * @param top
+	 * 		Recommend: DisplayManager.HEIGHT/2
+	 * @param near
+	 * 		Recommend: DisplayManager.NEAR_PLANE
+	 * @param far
+	 * 		Recommend: DisplayManager.FAR_PLANE);
+	 * @return Orthographic matrix.
+	 */
+	public static Matrix4f ortho(float left, float right, float bottom, float top, float near, float far){
 		Matrix4f m = new Matrix4f();
 		
 		m.setIdentity();

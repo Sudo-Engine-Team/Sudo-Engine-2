@@ -20,8 +20,6 @@ import site.root3287.sudo2.engine.TexturedModel;
 import site.root3287.sudo2.engine.shader.programs.EntityShader;
 import site.root3287.sudo2.entities.Entity;
 import site.root3287.sudo2.entities.Light;
-import site.root3287.sudo2.logger.LogLevel;
-import site.root3287.sudo2.logger.Logger;
 import site.root3287.sudo2.utils.SudoMaths;
 
 public class EntityRender{
@@ -51,7 +49,6 @@ public class EntityRender{
 		shader.start();
 		shader.loadLight(lights);
 		
-		Logger.log(LogLevel.DEBUG_RENDER, "Rendering a entites");
 		for (TexturedModel model : entities.keySet()) {
 			prepareTexturedModel(model);
 			List<Entity> batch = entities.get(model);
@@ -68,7 +65,6 @@ public class EntityRender{
 	}
 
 	private void prepareTexturedModel(TexturedModel model) {
-		Logger.log(LogLevel.DEBUG_RENDER, "Preparing the texture model");
 		RawModel rawModel = model.getRawModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
@@ -81,7 +77,6 @@ public class EntityRender{
 	}
 
 	private void unbindTexturedModel() {
-		Logger.log(LogLevel.DEBUG_RENDER, "Unbinding model");
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
 		GL20.glDisableVertexAttribArray(2);
@@ -89,14 +84,12 @@ public class EntityRender{
 	}
 
 	private void prepareInstance(Entity entity) {
-		Logger.log(LogLevel.DEBUG_RENDER, "Preparing entity to be rendered");
 		Vector3f position = entity.getComponent(TransposeComponent.class).position;
 		Vector3f rotation = entity.getComponent(TransposeComponent.class).rotation;
 		float scale = entity.getComponent(TransposeComponent.class).scale;
 		Matrix4f transformationMatrix = SudoMaths.createTransformationMatrix(position, rotation, scale);
 		shader.loadTransformationMatrix(transformationMatrix);
 		shader.useTextureAtlas(entity.getComponent(ModelComponet.class).model.isTextureAtlas(), entity.getComponent(ModelComponet.class).model.getTexture().getRows(), entity.getComponent(ModelComponet.class).model.getOffset());
-		Logger.log(LogLevel.DEBUG_RENDER, "Rendering Entity");
 	}
 	
 	public void addEntity(Entity entity){

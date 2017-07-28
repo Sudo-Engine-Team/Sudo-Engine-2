@@ -7,7 +7,7 @@ import site.root3287.sudo2.utils.SudoMaths;
 public class OrthographicCamera extends Camera{
 
 	public OrthographicCamera() {
-		this.projectionMatrix = SudoMaths.createOrthoMatrix();
+		this.projectionMatrix = SudoMaths.ortho();
 		this.viewMatrix = SudoMaths.createViewMatrix(this);
 		Matrix4f.mul(projectionMatrix, viewMatrix, combind);
 	}

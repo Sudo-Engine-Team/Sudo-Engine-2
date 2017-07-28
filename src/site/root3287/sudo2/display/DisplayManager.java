@@ -28,6 +28,8 @@ import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 
 import java.nio.IntBuffer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWScrollCallback;
@@ -43,8 +45,7 @@ import site.root3287.sudo2.events.event.KeyboardReleasedEvent;
 import site.root3287.sudo2.events.event.MouseClickEvent;
 import site.root3287.sudo2.events.event.WindowResizeEvent;
 import site.root3287.sudo2.events.types.WindowResizeEventType;
-import site.root3287.sudo2.logger.LogLevel;
-import site.root3287.sudo2.logger.Logger;
+import site.root3287.sudo2.utils.ConsoleHandler;
 import site.root3287.sudo2.utils.Input;
 import site.root3287.sudo2.utils.Input.Mouse.State;
 
@@ -62,6 +63,7 @@ public class DisplayManager {
 	public static double DELTA;
 	private static double lastTime;
 	private static boolean resized;
+	public static Logger LOGGER = Logger.getLogger("SUDO");
 	
 	private static EventDispatcher resizeDispatcher = new EventDispatcher(new WindowResizeEventType());
 	
@@ -69,13 +71,15 @@ public class DisplayManager {
 		init(WIDTH, HEIGHT, TITLE);
 	}
 	public static void init(float width, float height, String title){
-		Logger.log(LogLevel.INFO, "Loading LWJGL natives for "+System.getProperty("os.name"));
-		Logger.log(LogLevel.INFO, "System.getProperty('os.name') == " + System.getProperty("os.name"));
-		Logger.log(LogLevel.INFO, "System.getProperty('os.version') == " + System.getProperty("os.version"));
-		Logger.log(LogLevel.INFO, "System.getProperty('os.arch') == " + System.getProperty("os.arch"));
-		Logger.log(LogLevel.INFO, "System.getProperty('java.version') == " + System.getProperty("java.version"));
-		Logger.log(LogLevel.INFO, "System.getProperty('java.vendor') == " + System.getProperty("java.vendor"));
-		Logger.log(LogLevel.INFO, "System.getProperty('sun.arch.data.model') == " + System.getProperty("sun.arch.data.model"));
+		LOGGER.setUseParentHandlers(false);
+		LOGGER.addHandler(new ConsoleHandler());
+		LOGGER.log(Level.INFO, "Loading LWJGL natives for "+System.getProperty("os.name"));
+		LOGGER.log(Level.INFO, "System.getProperty('os.name') == " + System.getProperty("os.name"));
+		LOGGER.log(Level.INFO, "System.getProperty('os.version') == " + System.getProperty("os.version"));
+		LOGGER.log(Level.INFO, "System.getProperty('os.arch') == " + System.getProperty("os.arch"));
+		LOGGER.log(Level.INFO, "System.getProperty('java.version') == " + System.getProperty("java.version"));
+		LOGGER.log(Level.INFO, "System.getProperty('java.vendor') == " + System.getProperty("java.vendor"));
+		LOGGER.log(Level.INFO, "System.getProperty('sun.arch.data.model') == " + System.getProperty("sun.arch.data.model"));
 		
 		if(!glfwInit())
 			throw new IllegalStateException("Cannot start GLFW");
