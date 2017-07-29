@@ -61,7 +61,7 @@ public class Loader {
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
 		vbos.add(storeDataInAttributeList(0, 2, positions));
-		vbos.add(storeDataInAttributeList(0, 2, textureCoords));
+		vbos.add(storeDataInAttributeList(1, 2, textureCoords));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
 		return vaoID;
