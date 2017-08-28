@@ -4,9 +4,13 @@ import java.nio.DoubleBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.display.DisplayManager;
+import site.root3287.sudo2.engine.camera.Camera;
 import site.root3287.sudo2.events.EventDispatcher;
 import site.root3287.sudo2.events.Listener;
 import site.root3287.sudo2.events.event.KeyboardDownEvent;
@@ -139,9 +143,9 @@ public class Input {
 		public static boolean isGrabbed(){
 			return grabbed;
 		}
-		public static Vector2f getNormalizedMouseCoords(){
-			float x = (float) (-1.0f + 2.0f * (Mouse.getX()/DisplayManager.WIDTH));
-			float y = (float) (-1.0f + 2.0f * (Mouse.getY()/DisplayManager.HEIGHT));
+		private static Vector2f getNormalizedMouseCoords(){
+			float x = (float) ((getX()) / DisplayManager.WIDTH);
+			float y = (float) ((getY()) / DisplayManager.HEIGHT);
 			return new Vector2f(x, y);
 		}
 		public static Vector2f getMouse(){
@@ -153,9 +157,26 @@ public class Input {
 		public static void addClickListener(Listener l){
 			clickDispatcher.addListener(l);
 		}
-
+		
 		public static void addMoveListener(Listener listener) {
 			moveDispatcher.addListener(listener);
+		}
+		
+		public static Vector3f getMouseProjection(Camera c) {
+			Vector2f nmc = getNormalizedMouseCoords();
+			Vector4f pmc = new Vector4f(nmc.x, nmc.y, -1, 1);
+			Vector4f emc = getEyeCoords(c.getProjectionMatrix(), pmc);
+			return getWorld(c.getViewMatrix(), emc);
+		}
+		private static Vector4f getEyeCoords(Matrix4f proj, Vector4f clip) {
+			Matrix4f invProj = Matrix4f.invert(proj, null);
+			Vector4f clip2 = Matrix4f.transform(invProj, clip, null);
+			return new Vector4f(clip2.x, clip2.y, -1, 0);
+		}
+		private static Vector3f getWorld(Matrix4f view, Vector4f eye) {
+			Matrix4f iView = Matrix4f.invert(view, null);
+			Vector4f rayWorld = Matrix4f.transform(iView, eye, null);
+			return new Vector3f(rayWorld.x , rayWorld.y, rayWorld.z);
 		}
 	}
 	

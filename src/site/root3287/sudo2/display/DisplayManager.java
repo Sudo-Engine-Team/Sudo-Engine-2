@@ -146,7 +146,7 @@ public class DisplayManager {
 				Input.Mouse.clickDispatcher.execute(new MouseClickEvent((float)Input.Mouse.getX(), (float)Input.Mouse.getY(), i, State.MOUSE_RELEASE));
 			}
 		}
-		SCREEN.update();
+		SCREEN.update((float)DisplayManager.getDelta());
 		SCREEN.render();
 		glfwSwapBuffers(WINDOW);
 		Input.update();

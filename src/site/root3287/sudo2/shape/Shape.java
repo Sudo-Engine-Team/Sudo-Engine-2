@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector4f;
 import site.root3287.sudo2.engine.model.Model;
 
 public abstract class Shape {
-	protected Vector2f position = new Vector2f(10, 100), scale = new Vector2f(50f,50f);
+	protected Vector2f position = new Vector2f(0,0), scale = new Vector2f(50f,50f);
 	protected Model model;
 	protected Vector4f colour = new Vector4f(1, 0, 0, 1);
 	
