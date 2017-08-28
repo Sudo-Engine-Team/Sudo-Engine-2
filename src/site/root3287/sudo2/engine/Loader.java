@@ -43,16 +43,16 @@ public class Loader {
 	public RawModel loadToVAO(float[] positions){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
-		vbos.add(storeDataInAttributeList(0, 2, positions));
+		vbos.add(storeDataInAttributeList(0, 3, positions));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
-		return new RawModel(vaoID, positions.length/2);
+		return new RawModel(vaoID, positions.length/3);
 	}
 	public RawModel loadToVAO(float[] positions, int[] indices){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
 		vbos.add(bindIndicesBuffer(indices));
-		vbos.add(storeDataInAttributeList(0, 2, positions));
+		vbos.add(storeDataInAttributeList(0, 3, positions));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
 		return new RawModel(vaoID, indices.length);
