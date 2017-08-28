@@ -75,7 +75,8 @@ public class FontRender{
         return allText.size();
     }
     
-    public static void removeText(int index){
+    @SuppressWarnings("unlikely-arg-type")
+	public static void removeText(int index){
     	GUIText text = allText.get(index);
         List<GUIText> textBatch = texts.get(text.getFont());
         textBatch.remove(text);

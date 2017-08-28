@@ -21,6 +21,7 @@ import org.lwjgl.opengl.GL30;
 import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 import site.root3287.sudo2.display.DisplayManager;
+import site.root3287.sudo2.engine.model.Model;
 
 public class Loader {
 	private static Loader _instance = null;
@@ -40,22 +41,22 @@ public class Loader {
 		return _instance;
 	}
 	
-	public RawModel loadToVAO(float[] positions){
+	public Model loadToVAO(float[] positions){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
 		vbos.add(storeDataInAttributeList(0, 2, positions));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
-		return new RawModel(vaoID, positions.length/2);
+		return new Model(vaoID, positions.length/2);
 	}
-	public RawModel loadToVAO(float[] positions, int[] indices){
+	public Model loadToVAO(float[] positions, int[] indices){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
 		vbos.add(bindIndicesBuffer(indices));
 		vbos.add(storeDataInAttributeList(0, 2, positions));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
-		return new RawModel(vaoID, indices.length);
+		return new Model(vaoID, indices.length);
 	}
 	public int loadToVAO(float[] positions, float[] textureCoords){
 		int vaoID = createVAO();
@@ -66,7 +67,7 @@ public class Loader {
 		unbindVAO();
 		return vaoID;
 	}
-	public RawModel loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices){ //3d models
+	public Model loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices){ //3d models
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
 		vbos.add(bindIndicesBuffer(indices));
@@ -75,7 +76,7 @@ public class Loader {
 		vbos.add(storeDataInAttributeList(2, 3, normals));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
-		return new RawModel(vaoID, indices.length);
+		return new Model(vaoID, indices.length);
 	}
 	public int loadText(float[] position, float[] textureCoords){
 		int vaoID = loadToVAO(position, textureCoords);

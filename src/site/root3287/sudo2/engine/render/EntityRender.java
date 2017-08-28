@@ -14,9 +14,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import site.root3287.sudo2.component.functions.ModelComponet;
 import site.root3287.sudo2.component.functions.TransposeComponent;
-import site.root3287.sudo2.engine.ModelTexture;
-import site.root3287.sudo2.engine.RawModel;
-import site.root3287.sudo2.engine.TexturedModel;
+import site.root3287.sudo2.engine.model.Model;
+import site.root3287.sudo2.engine.model.TexturedModel;
 import site.root3287.sudo2.engine.shader.programs.EntityShader;
 import site.root3287.sudo2.entities.Entity;
 import site.root3287.sudo2.entities.Light;
@@ -55,7 +54,7 @@ public class EntityRender{
 			for (Entity entity : batch) {
 				prepareInstance(entity);
 				GL11.glLineWidth(0.5f);
-				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getRawModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 				unbindTexturedModel();
 			}
 		}
@@ -65,13 +64,12 @@ public class EntityRender{
 	}
 
 	private void prepareTexturedModel(TexturedModel model) {
-		RawModel rawModel = model.getRawModel();
+		Model rawModel = model.getModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
-		ModelTexture texture = model.getTexture();
-		shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
+		shader.loadShineVariables(model.getShineDamper(), model.getReflectivity());
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().getTextureID());
 	}
@@ -89,7 +87,7 @@ public class EntityRender{
 		float scale = entity.getComponent(TransposeComponent.class).scale;
 		Matrix4f transformationMatrix = SudoMaths.createTransformationMatrix(position, rotation, scale);
 		shader.loadTransformationMatrix(transformationMatrix);
-		shader.useTextureAtlas(entity.getComponent(ModelComponet.class).model.isTextureAtlas(), entity.getComponent(ModelComponet.class).model.getTexture().getRows(), entity.getComponent(ModelComponet.class).model.getOffset());
+		shader.useTextureAtlas(entity.getComponent(ModelComponet.class).model.getTexture().isTextureAtlas(), entity.getComponent(ModelComponet.class).model.getTexture().getRows(), entity.getComponent(ModelComponet.class).model.getTexture().getOffset());
 	}
 	
 	public void addEntity(Entity entity){

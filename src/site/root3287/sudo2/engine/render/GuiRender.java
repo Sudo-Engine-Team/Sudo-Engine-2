@@ -10,8 +10,8 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
 import site.root3287.sudo2.engine.Loader;
-import site.root3287.sudo2.engine.RawModel;
 import site.root3287.sudo2.engine.gui.GuiTexture;
+import site.root3287.sudo2.engine.model.Model;
 import site.root3287.sudo2.engine.shader.programs.GuiShader;
 import site.root3287.sudo2.gui.GuiWidget;
 import site.root3287.sudo2.utils.SudoMaths;
@@ -20,7 +20,7 @@ public class GuiRender {
 	private GuiShader shader;
 	private Matrix4f projection;
 	private List<GuiWidget> guis = new ArrayList<>();
-	private RawModel model;
+	private Model model;
 	private static final float[] positions = {-1,1,-1,-1,1,1,1,-1};
 	
 	public GuiRender() {

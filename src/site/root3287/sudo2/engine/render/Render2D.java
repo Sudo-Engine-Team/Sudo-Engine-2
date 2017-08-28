@@ -10,13 +10,13 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
 import site.root3287.sudo2.engine.Loader;
-import site.root3287.sudo2.engine.RawModel;
 import site.root3287.sudo2.engine.gui.GuiTexture;
+import site.root3287.sudo2.engine.model.Model;
 import site.root3287.sudo2.engine.shader.programs.Shader2D;
 import site.root3287.sudo2.utils.SudoMaths;
 
 public class Render2D{
-	private RawModel model;
+	private Model model;
 	private static final float[] positions = {-1,1,-1,-1,1,1,1,-1};
 	private Shader2D shader;
 	
