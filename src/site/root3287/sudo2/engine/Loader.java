@@ -44,7 +44,7 @@ public class Loader {
 	public Model loadToVAO(float[] positions){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
-		vbos.add(storeDataInAttributeList(0, 2, positions));
+		vbos.add(storeDataInAttributeList(0, 3, positions));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
 		return new Model(vaoID, positions.length/2);
@@ -53,7 +53,7 @@ public class Loader {
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
 		vbos.add(bindIndicesBuffer(indices));
-		vbos.add(storeDataInAttributeList(0, 2, positions));
+		vbos.add(storeDataInAttributeList(0, 3, positions));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
 		return new Model(vaoID, indices.length);
@@ -62,7 +62,7 @@ public class Loader {
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
 		vbos.add(storeDataInAttributeList(0, 2, positions));
-		vbos.add(storeDataInAttributeList(0, 2, textureCoords));
+		vbos.add(storeDataInAttributeList(1, 2, textureCoords));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
 		return vaoID;
