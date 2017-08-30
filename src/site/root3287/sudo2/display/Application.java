@@ -4,10 +4,10 @@ import org.lwjgl.glfw.GLFW;
 
 public class Application{
 	public Application(String title) {
-		DisplayManager.TITLE = title;
+		DisplayManager.setTitle(title);
 	}
 	public Application(String title, float width, float height) {
-		DisplayManager.TITLE = title;
+		DisplayManager.setTitle(title);
 		DisplayManager.WIDTH = width;
 		DisplayManager.HEIGHT = height;
 	}

@@ -52,7 +52,7 @@ import site.root3287.sudo2.utils.Input;
 import site.root3287.sudo2.utils.Input.Mouse.State;
 
 public class DisplayManager {
-	public static String TITLE = "SUDO-Engine 2";
+	private static String TITLE = "SUDO-Engine 2";
 	public static float WIDTH = 900;
 	public static float HEIGHT = WIDTH/16*9;
 	public static final float FOV = 90;
@@ -215,6 +215,7 @@ public class DisplayManager {
 	
 	public static void setTitle(String title){
 		DisplayManager.TITLE = title;
+		if(WINDOW != 0)
 		GLFW.glfwSetWindowTitle(WINDOW, title);
 	}
 }
