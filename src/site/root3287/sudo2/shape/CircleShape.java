@@ -3,14 +3,16 @@ package site.root3287.sudo2.shape;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.Loader;
 
 public class CircleShape extends Shape{
 	public CircleShape() {
+		this.scale = new Vector2f(100, 100);
 		CircleGenerator g = new CircleGenerator();
-		g.generateCircle(1f, 50);
+		g.generateCircle(1f, 360);
 		float[] pos = new float[g.pos.size()];
 		int i= 0;
 		for(float p : g.pos){
