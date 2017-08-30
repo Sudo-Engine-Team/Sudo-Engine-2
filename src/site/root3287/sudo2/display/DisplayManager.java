@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
@@ -204,5 +205,10 @@ public class DisplayManager {
 	
 	public static void addResizeEvent(Listener l){
 		resizeDispatcher.addListener(l);
+	}
+	
+	public static void setTitle(String title){
+		DisplayManager.TITLE = title;
+		GLFW.glfwSetWindowTitle(WINDOW, title);
 	}
 }
