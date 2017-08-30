@@ -1,4 +1,4 @@
-package site.root3287.sudo2.engine;
+package site.root3287.sudo2.engine.render;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

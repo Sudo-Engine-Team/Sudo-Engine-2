@@ -6,11 +6,11 @@ import org.lwjgl.util.vector.Vector4f;
 import site.root3287.sudo2.engine.model.Model;
 
 public abstract class Shape {
-	protected Vector2f position = new Vector2f(0,0), scale = new Vector2f(50f,50f);
+	protected Vector2f position = new Vector2f(0,0), scale = new Vector2f(20f,20f);
 	protected Model model;
 	protected Vector4f colour = new Vector4f(1, 0, 0, 1);
 	
-	public abstract void update(float d);
+	public abstract void update(float delta);
 	
 	public Vector2f getPosition() {
 		return position;

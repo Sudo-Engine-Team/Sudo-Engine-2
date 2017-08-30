@@ -36,6 +36,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -106,11 +107,14 @@ public class DisplayManager {
 			
 			@Override
 			public void invoke(long window, int width, int height) {
-				WIDTH = width;
-				HEIGHT = height;
+				int[] w = new int[1], h = new int[1];
+				GLFW.glfwGetFramebufferSize(window, w, h);
+				LOGGER.log(Level.INFO, "The window has been resized to "+w[0] +", "+h[0]);
+				WIDTH = w[0];
+				HEIGHT = h[0];
 				resized = true;
 				resizeDispatcher.execute(new WindowResizeEvent(width, height));
-				//GL11.glViewport(0, 0, width, height);
+				GL11.glViewport(0, 0, (int)w[0], (int)h[0]);
 			}
 		});
 		
@@ -122,7 +126,9 @@ public class DisplayManager {
 			}
 		});
 		
-		//GL11.glViewport(0, 0, (int)WIDTH, (int)HEIGHT);
+		int[] w = new int[1], h = new int[1];
+		GLFW.glfwGetFramebufferSize(WINDOW, w, h);
+		GL11.glViewport(0, 0, w[0], h[0]);
 
 		SCREEN.init();
 	}

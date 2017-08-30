@@ -9,12 +9,12 @@ public class ProspectiveCamera extends Camera {
 	public ProspectiveCamera() {
 		this.projectionMatrix = SudoMaths.createProjectionMatrix();
 		this.viewMatrix = SudoMaths.createViewMatrix(this);
-		this.combind = Matrix4f.mul(projectionMatrix, viewMatrix, combind);
+		this.combind = Matrix4f.mul(projectionMatrix, viewMatrix, null);
 	}
 	
 	@Override
 	public void update(float delta) {
 		this.viewMatrix = SudoMaths.createViewMatrix(this);
-		this.combind = Matrix4f.mul(projectionMatrix, viewMatrix, combind);
+		this.combind = Matrix4f.mul(projectionMatrix, viewMatrix, null);
 	}
 }
