@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 
-import site.root3287.sudo2.engine.Loader;
-
 public class CircleShape extends Shape{
 	float radius;
 	int lod;
@@ -65,9 +63,6 @@ public class CircleShape extends Shape{
 			ind.add(0);
 			ind.add((int)(pos.size()/3f)-1);
 			ind.add(1);
-			
-			System.out.println(pos);
-			System.out.println(ind);
 		}
 		private void getIndices(int start, int end){
 			if(start+2 <= end){

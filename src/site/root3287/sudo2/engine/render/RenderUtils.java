@@ -6,6 +6,8 @@ import org.lwjgl.util.vector.Vector4f;
 import site.root3287.sudo2.display.DisplayManager;
 
 public class RenderUtils {
+	private static boolean wireframe = false;
+	
 	public static void enableCulling(){
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
@@ -21,5 +23,17 @@ public class RenderUtils {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(colour.x, colour.y,
 				colour.z, colour.w);
+	}
+	public static void toggleWireframe(){
+		if(wireframe){
+			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+			wireframe = false;
+		}else{
+			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+			wireframe = true;
+		}
+	}
+	public static boolean isWireframe(){
+		return wireframe;
 	}
 }

@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
@@ -57,12 +58,17 @@ public class FBO {
 	public static void bindFBO(int fbo, int width, int height){
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);//To make sure the texture isn't bound
 		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, fbo);
-		GL11.glViewport(0, 0, width, height);
+		int[] w = new int [1], h = new int[1];
+		GLFW.glfwGetFramebufferSize(DisplayManager.WINDOW, w, h);
+		GL11.glViewport(0, 0, w[0], h[0]);
 	}
 	
 	public static void unbindFBO(){
 		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
-		GL11.glViewport(0, 0, (int)DisplayManager.WIDTH, (int)DisplayManager.HEIGHT);
+		
+		int[] w = new int [1], h = new int[1];
+		GLFW.glfwGetFramebufferSize(DisplayManager.WINDOW, w, h);
+		GL11.glViewport(0, 0, w[0], h[0]);
 	}
 	
 	public static void dispose(){

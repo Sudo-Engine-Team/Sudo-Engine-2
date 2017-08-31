@@ -189,5 +189,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/SoundSystemJPCT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/lwjgl_util.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/PNGDecoder.jar"/>
+	<classpathentry kind="lib" path="lib/json-20170516.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
