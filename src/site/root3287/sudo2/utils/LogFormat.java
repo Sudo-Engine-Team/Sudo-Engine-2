@@ -8,7 +8,7 @@ import java.util.logging.LogRecord;
 
 public class LogFormat extends Formatter{
 	//%1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS %1$Tp %2$s%n%4$s: %5$s%6$s%n
-	private static final String format = "[%1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS %1$Tp %4$s] %5$s%6$s%n";
+	private static final String format = "[%1$tb %1$td, %1$tY %1$tl:%1$tM:%1$tS %1$Tp %3$s - %4$s] %5$s%6$s%n";
     private final Date dat = new Date();
 
 	@SuppressWarnings("unused")

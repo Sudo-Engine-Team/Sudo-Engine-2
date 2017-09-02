@@ -19,8 +19,10 @@ public class Client {
 	
 	private DatagramSocket socket;
 	
+	public String user = "root";
+	
 	public Client(String serverAddr, int serverPort){
-		Application.CLIENT_LOGGER.log(Level.INFO, "Creating a client to "+serverAddr+":"+serverPort);
+		Application.getClientLogger().log(Level.INFO, "Creating a client to "+serverAddr+":"+serverPort);
 		this.serverPort = serverPort;
 		try {
 			this.serverAddress = InetAddress.getByName(serverAddr);
@@ -32,7 +34,7 @@ public class Client {
 	}
 	
 	public void connect(){
-		send(new JSONObject().append("type", "CONNECTION"));
+		send(new JSONObject().append("type", "CONNECTION").append("username", user));
 	}
 	
 	public void send(JSONObject data){

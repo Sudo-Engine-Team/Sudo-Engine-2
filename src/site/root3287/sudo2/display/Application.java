@@ -8,8 +8,6 @@ import site.root3287.sudo2.utils.ConsoleHandler;
 
 public class Application{
 	public static Logger LOGGER = DisplayManager.LOGGER;
-	public static Logger CLIENT_LOGGER = Logger.getLogger("SUDO-CLIENT");
-	public static Logger SERVER_LOGGER = Logger.getLogger("SUDO-CLIENT");
 	public Application(String title) {
 		this(title, DisplayManager.WIDTH, DisplayManager.HEIGHT);
 	}
@@ -17,10 +15,6 @@ public class Application{
 		DisplayManager.setTitle(title);
 		DisplayManager.WIDTH = width;
 		DisplayManager.HEIGHT = height;
-		CLIENT_LOGGER.setUseParentHandlers(false);
-		CLIENT_LOGGER.addHandler(new ConsoleHandler());
-		SERVER_LOGGER.setUseParentHandlers(false);
-		SERVER_LOGGER.addHandler(new ConsoleHandler());
 	}
 	public Application setScreen(Screen s){
 		DisplayManager.setScreen(s);
@@ -32,5 +26,17 @@ public class Application{
 			DisplayManager.loop();
 		}
 		DisplayManager.dispose();
+	}
+	public static Logger getServerLogger(){
+		Logger log = Logger.getLogger("SUDO-SERVER");
+		log.setUseParentHandlers(false);
+		log.addHandler(new ConsoleHandler());
+		return log;
+	}
+	public static Logger getClientLogger(){
+		Logger log = Logger.getLogger("SUDO-CLIENT");
+		log.setUseParentHandlers(false);
+		log.addHandler(new ConsoleHandler());
+		return log;
 	}
 }
