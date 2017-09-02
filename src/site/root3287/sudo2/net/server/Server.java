@@ -7,11 +7,19 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 
 import org.json.JSONObject;
 
 import site.root3287.sudo2.display.Application;
+import site.root3287.sudo2.events.Event;
+import site.root3287.sudo2.events.EventDispatcher;
+import site.root3287.sudo2.events.Listener;
+import site.root3287.sudo2.net.event.CommandEvent;
+import site.root3287.sudo2.net.event.CommandEventType;
+import site.root3287.sudo2.net.event.PacketReceiveEvent;
+import site.root3287.sudo2.net.event.PacketReceiveEventType;
 
 public class Server implements Runnable{
 	private int port;
@@ -19,8 +27,9 @@ public class Server implements Runnable{
 	private Thread run, manage, send, receive;
 	private final int MAX_ATTEMPTS = 10;
 	private boolean running;
-	
 	List<ServerClients> clients = new ArrayList<>();
+	EventDispatcher receiveEvent = new EventDispatcher(new PacketReceiveEventType());
+	EventDispatcher serverCommands = new EventDispatcher(new CommandEventType());
 	
 	public Server(int port){
 		Application.getServerLogger().log(Level.INFO, "Creating a server on port "+port);
@@ -30,6 +39,59 @@ public class Server implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		receiveEvent.addListener(new Listener() {
+			
+			@Override
+			public boolean onEvent(Event e) {
+				if(e instanceof PacketReceiveEvent)
+					e = (CommandEvent)e;
+				else 
+					return false;
+				byte[] data = ((PacketReceiveEvent)e).getPacket().getData();
+				if(new JSONObject(new String(data)).getString("type").equalsIgnoreCase("Connection")){
+					System.out.println("Connection");
+					return true;
+				}
+				return false;
+			}
+		});
+		
+		serverCommands.addListener(new Listener() {
+			
+			@Override
+			public boolean onEvent(Event e) {
+				if(e instanceof CommandEvent)
+					e = (CommandEvent)e;
+				else
+					return false;
+				if(((CommandEvent)e).args[0].equalsIgnoreCase("/help")){
+					System.out.println("Help");
+					return true;
+				}
+				return false;
+			}
+		});
+		
+		serverCommands.addListener(new Listener() {
+			
+			@Override
+			public boolean onEvent(Event e) {
+				if(e instanceof CommandEvent)
+					e = (CommandEvent)e;
+				if(((CommandEvent)e).args[0].equalsIgnoreCase("/quit")){
+					try {
+						run.join();
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					return true;
+				}
+				return false;
+			}
+		});
+		
 		run = new Thread(this,"Sudo-Server-main");
 	}
 	
@@ -63,6 +125,12 @@ public class Server implements Runnable{
 		Application.getServerLogger().log(Level.INFO, "Starting server on port "+this.port);
 		manageClients();
 		receive();
+		Scanner in = new Scanner(System.in);
+		while(running){
+			String input = in.nextLine();
+			String[] pass = input.split(" ");
+			serverCommands.execute(new CommandEvent(pass));
+		}
 	}
 	
 	public void manageClients(){
@@ -84,6 +152,7 @@ public class Server implements Runnable{
 					DatagramPacket packet = new DatagramPacket(data, data.length);
 					try {
 						socket.receive(packet);
+						receiveEvent.execute(new PacketReceiveEvent(packet));
 					} catch (SocketException e) {
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -94,8 +163,8 @@ public class Server implements Runnable{
 		};
 	}
 	
-	private void process(DatagramPacket packet) {
-		JSONObject data = new JSONObject(packet.getData());
-		
+	public void start(){
+		run.start();
 	}
+	
 }
