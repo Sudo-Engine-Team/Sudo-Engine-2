@@ -37,7 +37,7 @@ public class ShapeRender extends Renderable{
 		shapes.add(s);
 	}
 	
-	public void destroy(){
+	public void dispose(){
 		this.shader.dispose();
 	}
 }

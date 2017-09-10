@@ -58,14 +58,14 @@ public class Loader {
 		unbindVAO();
 		return new Model(vaoID, indices.length);
 	}
-	public int loadToVAO(float[] positions, float[] textureCoords){
+	public Model loadToVAO(float[] positions, float[] textureCoords){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
-		vbos.add(storeDataInAttributeList(0, 2, positions));
+		vbos.add(storeDataInAttributeList(0, 3, positions));
 		vbos.add(storeDataInAttributeList(1, 2, textureCoords));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
-		return vaoID;
+		return new Model(vaoID, positions.length/3);
 	}
 	public Model loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices){ //3d models
 		int vaoID = createVAO();
@@ -77,10 +77,16 @@ public class Loader {
 		vaos.put(vaoID, vbos);
 		unbindVAO();
 		return new Model(vaoID, indices.length);
-	}
-	public int loadText(float[] position, float[] textureCoords){
-		int vaoID = loadToVAO(position, textureCoords);
-		return vaoID;
+	} 
+	public Model loadToVAO(float[] pos, float[] texture, int[] ind){
+		int vaoID = createVAO();
+		List<Integer> vbos = new ArrayList<>();
+		vbos.add(bindIndicesBuffer(ind));
+		vbos.add(storeDataInAttributeList(0, 3, pos));
+		vbos.add(storeDataInAttributeList(1, 2, texture));
+		vaos.put(vaoID, vbos);
+		unbindVAO();
+		return new Model(vaoID, ind.length);
 	}
 	private int createVAO(){
 		int vaoID = GL30.glGenVertexArrays();

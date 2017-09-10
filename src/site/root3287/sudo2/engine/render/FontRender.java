@@ -16,6 +16,7 @@ import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.font.FontType;
 import site.root3287.sudo2.engine.font.GUIText;
 import site.root3287.sudo2.engine.font.TextMeshData;
+import site.root3287.sudo2.engine.model.Model;
 import site.root3287.sudo2.engine.shader.programs.FontShader;
 import site.root3287.sudo2.utils.SudoMaths;
 
@@ -63,8 +64,8 @@ public class FontRender{
     public static int loadText(GUIText text){
         FontType font = text.getFont();
         TextMeshData data = font.loadText(text);
-        int vao = Loader.getInstance().loadText(data.getVertexPositions(), data.getTextureCoords());
-        text.setMeshInfo(vao, data.getVertexCount());
+        Model vao = Loader.getInstance().loadToVAO(data.getVertexPositions(), data.getTextureCoords());
+        text.setMeshInfo(vao);
         List<GUIText> textBatch = texts.get(font);
         if(textBatch == null){
             textBatch = new ArrayList<GUIText>();
@@ -90,7 +91,7 @@ public class FontRender{
     public static void updateText(int index){
     	 FontType font = allText.get(index).getFont();
          TextMeshData data = font.loadText(allText.get(index));
-         allText.get(index).setMeshInfo(allText.get(index).getMesh(), data.getVertexCount());
+       //  allText.get(index).setMeshInfo(allText.get(index).getMesh());
     }
     
     public List<GUIText> getAllText(){

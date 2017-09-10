@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.Loader;
+import site.root3287.sudo2.engine.model.Model;
 
 /**
  * Represents a piece of text in the game.
@@ -156,9 +157,9 @@ public class GUIText {
 	 * @param verticesCount
 	 *            - the total number of vertices in all of the quads.
 	 */
-	public void setMeshInfo(int vao, int verticesCount) {
-		this.textMeshVao = vao;
-		this.vertexCount = verticesCount;
+	public void setMeshInfo(Model m) {
+		this.textMeshVao = m.getVaoID();
+		this.vertexCount = m.getVertexCount();
 	}
 
 	/**

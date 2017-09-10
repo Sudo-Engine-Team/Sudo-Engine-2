@@ -7,4 +7,5 @@ import site.root3287.sudo2.engine.shader.Shader;
 public abstract class Renderable {
 	public Shader shader;
 	public Matrix4f projection;
+	public abstract void dispose();
 }
