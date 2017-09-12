@@ -12,7 +12,7 @@ public class BitmapFontFile {
 	private Map<String, String> fileInfo = new HashMap<>();
 	private Map<Character, BitmapGlyph> charInfo = new HashMap<>();
 	public BitmapFontFile(String file) {
-		this.file = file;
+		this.file = file; 
 		loadFile();
 	}
 	public void loadFile(){

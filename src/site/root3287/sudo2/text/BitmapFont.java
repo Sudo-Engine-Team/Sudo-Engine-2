@@ -14,7 +14,7 @@ public class BitmapFont {
 	private Model model;
 	private BitmapFontFile bmFile;
 	private String text;
-	private Vector2f positon = new Vector2f(-0.5f,0), scale= new Vector2f(1f, 1f);
+	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(512f, 512f);
 	public BitmapFont(String text, String bmText, String bmImage){
 		bmFile = new BitmapFontFile(bmText);
 		setTexture(new Texture(Loader.getInstance().loadTexture(bmImage)));
@@ -36,21 +36,20 @@ public class BitmapFont {
 			pos.addAll(q.pos);
 			ind.addAll(q.ind);
 			tex.addAll(q.tex);
-			System.out.println(bmFile.getGlyphs().get(c).xAdvance);
 			xLine+=bmFile.getGlyphs().get(c).xAdvance;
 			i++;
 		}
-		System.out.println(tex);
 		this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatArray(pos), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
 	}
 	
 	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, int i){
 		float xx = xLine + glyph.xOffset, yy = yLine + glyph.yOffset;
 		BMQuad quad = new BMQuad();
-		quad.pos.add((xx-glyph.width)/glyph.imgWidth); quad.pos.add((yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f); 	// BOTTOM RIGHT
+		//System.out.println("XLine: "+xLine+" YLine: "+yLine+" xOffset: "+glyph.xOffset+" yOffset: "+glyph.yOffset);
+		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(yy/glyph.imgHeight); quad.pos.add(0f);							//TOP LEFT
 		quad.pos.add(xx/glyph.imgWidth); quad.pos.add((yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f);				//BOTTOM LEFT
 		quad.pos.add((xx-glyph.width)/glyph.imgWidth); quad.pos.add(yy/glyph.imgHeight); quad.pos.add(0f);				//TOP RIGHT
-		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(yy/glyph.imgHeight); quad.pos.add(0f);							//TOP LEFT
+		quad.pos.add((xx-glyph.width)/glyph.imgWidth); quad.pos.add((yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f); 	// BOTTOM RIGHT
 		quad.ind.add(i*4);
 		quad.ind.add(i*4+1);
 		quad.ind.add(i*4+2);
@@ -58,8 +57,8 @@ public class BitmapFont {
 		quad.ind.add(i*4+1);
 		quad.ind.add(i*4+3);
 		quad.tex.add((float) (glyph.x)/glyph.imgWidth); quad.tex.add((float) (glyph.y)/glyph.imgHeight);
-		quad.tex.add((float) (glyph.x+glyph.width)/glyph.imgWidth); quad.tex.add((float) (glyph.y)/glyph.imgHeight);
 		quad.tex.add((float) (glyph.x)/glyph.imgWidth); quad.tex.add((float) (glyph.y+glyph.height)/glyph.imgHeight);
+		quad.tex.add((float) (glyph.x+glyph.width)/glyph.imgWidth); quad.tex.add((float) (glyph.y)/glyph.imgHeight);
 		quad.tex.add((float) (glyph.x+glyph.width)/glyph.imgWidth); quad.tex.add((float) (glyph.y+glyph.height)/glyph.imgHeight);
 		return quad;
 	}
