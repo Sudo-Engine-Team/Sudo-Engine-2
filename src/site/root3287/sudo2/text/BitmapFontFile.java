@@ -46,11 +46,12 @@ public class BitmapFontFile {
 							glyph.xOffset = Integer.parseInt(allPairs[5][1]);
 							glyph.yOffset = Integer.parseInt(allPairs[6][1]);
 							glyph.xAdvance = Integer.parseInt(allPairs[7][1]);
-							glyph.u = glyph.x / Integer.parseInt(fileInfo.get("scaleW"));
-							glyph.v = glyph.y / Integer.parseInt(fileInfo.get("scaleH"));
-							glyph.u2 = (glyph.x+glyph.width) / Integer.parseInt(fileInfo.get("scaleW"));
-							glyph.v2 = (glyph.y+glyph.height) / Integer.parseInt(fileInfo.get("scaleH"));
-							
+							glyph.u = (float) (glyph.x)/ Integer.parseInt(fileInfo.get("scaleW"));
+							glyph.v = (float) (glyph.y)/ Integer.parseInt(fileInfo.get("scaleH"));
+							glyph.u2 = (float) ((glyph.x+glyph.width))/ Integer.parseInt(fileInfo.get("scaleW"));
+							glyph.v2 = (float) ((glyph.y+glyph.height))/ Integer.parseInt(fileInfo.get("scaleH"));
+							glyph.imgWidth = Integer.parseInt(fileInfo.get("scaleW"));
+							glyph.imgHeight = Integer.parseInt(fileInfo.get("scaleH"));
 							charInfo.put((char)glyph.id, glyph);
 						}
 					}

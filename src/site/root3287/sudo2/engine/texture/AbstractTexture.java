@@ -4,15 +4,20 @@ import org.lwjgl.util.vector.Vector2f;
 
 public abstract class AbstractTexture {
 	protected int width, height;
-	
 	protected int textureID;
 	protected boolean textureAtlas = false;
 	protected int rows = 1;
 	protected boolean hasTranspancy = true;
 	protected Vector2f offset;
-
+	
 	public AbstractTexture(int id) {
 		this.textureID = id;
+	}
+	
+	public AbstractTexture(int id, int width, int height) {
+		this.textureID = id;
+		this.width = width; 
+		this.height = height;
 	}
 	
 	public int getTextureID() {

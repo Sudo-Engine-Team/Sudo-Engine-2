@@ -22,8 +22,8 @@ public class TextShader extends Shader{
 
 	@Override
 	protected void bindAttributes() {
-		bindAttribute(0, "position");
-		bindAttribute(1, "textureCoords");
+		bindAttribute(0, "pos");
+		bindAttribute(1, "tc");
 	}
 	
 	public void loadTranslation(Matrix4f translation) {
