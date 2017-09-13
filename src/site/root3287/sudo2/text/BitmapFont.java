@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.model.Model;
@@ -15,13 +16,19 @@ public class BitmapFont {
 	private BitmapFontFile bmFile;
 	private String text;
 	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(256f, 256f);
+	private Vector4f colour;
 	public BitmapFont(String text, String bmText, String bmImage){
 		bmFile = new BitmapFontFile(bmText);
 		setTexture(new Texture(Loader.getInstance().loadTexture(bmImage)));
 		this.setText(text);
+		colour = new Vector4f(1,1,1,1);
 		generateText(text);
 	}
 	
+	public void setColour(Vector4f colour) {
+		this.colour = colour;
+	}
+
 	public void generateText(String text){
 		float xLine = 0; float yLine = 0;
 		int i = 0;
@@ -30,6 +37,10 @@ public class BitmapFont {
 		for(char c : text.toCharArray()){
 			if((int) c == 10 || c == 32){
 				xLine += bmFile.getGlyphs().get(c).xAdvance;
+				if((int)c == 10) {
+					yLine += bmFile.getMaxHeight();
+					xLine = 0;
+				}
 				continue;
 			}
 			BMQuad q = generateQuad(bmFile.getGlyphs().get(c), xLine, yLine, i);
@@ -39,14 +50,12 @@ public class BitmapFont {
 			xLine+=bmFile.getGlyphs().get(c).xAdvance;
 			i++;
 		}
-		System.out.println(pos);
 		this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatArray(pos), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
 	}
 	
 	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, int i){
 		float xx = xLine + glyph.xOffset , yy = yLine + glyph.yOffset;
 		BMQuad quad = new BMQuad();
-		//System.out.println("XLine: "+xLine+" YLine: "+yLine+" xOffset: "+glyph.xOffset+" yOffset: "+glyph.yOffset);
 		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-yy/glyph.imgHeight); quad.pos.add(0f);							//TOP LEFT
 		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-(yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f);				//BOTTOM LEFT
 		quad.pos.add((xx+glyph.width)/glyph.imgWidth); quad.pos.add(-yy/glyph.imgHeight); quad.pos.add(0f);				//TOP RIGHT
@@ -111,5 +120,10 @@ public class BitmapFont {
 			}
 			return ret;
 		}
+	}
+
+	public Vector4f getColour() {
+		// TODO Auto-generated method stub
+		return colour;
 	}
 }

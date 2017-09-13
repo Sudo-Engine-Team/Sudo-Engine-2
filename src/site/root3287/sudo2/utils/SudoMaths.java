@@ -1,5 +1,6 @@
 package site.root3287.sudo2.utils;
 
+import java.util.List;
 import java.util.logging.Level;
 
 import org.lwjgl.util.vector.Matrix4f;
@@ -165,5 +166,15 @@ public class SudoMaths {
 	}
 	public static float degreesToRadians(float degree){
 		return (float) (degree * (Math.PI / 180f));
+	}
+	
+	public static float getMaxFloat(List<Float> list) {
+		float temp = Float.MIN_VALUE;
+		for(float i : list) {
+			if(i > temp) {
+				temp = i;
+			}
+		}
+		return temp;
 	}
 }

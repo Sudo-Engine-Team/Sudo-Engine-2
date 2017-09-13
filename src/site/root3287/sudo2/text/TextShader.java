@@ -1,6 +1,7 @@
 package site.root3287.sudo2.text;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.shader.Shader;
 
@@ -13,11 +14,13 @@ public class TextShader extends Shader{
 
 	int location_projection;
 	int location_translation;
+	int location_colour;
 	
 	@Override
 	protected void getAllUniformLocations() {
 		location_projection = getUniformLocation("projection");
 		location_translation = getUniformLocation("translation");
+		location_colour = getUniformLocation("colour");
 	}
 
 	@Override
@@ -31,6 +34,10 @@ public class TextShader extends Shader{
 	}
 	public void loadProjection(Matrix4f p) {
 		loadMatrix(location_projection, p);
+	}
+	
+	public void loadColour(Vector4f p) {
+		loadVector(location_colour, p);
 	}
 
 }

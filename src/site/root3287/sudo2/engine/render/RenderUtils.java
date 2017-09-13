@@ -15,6 +15,12 @@ public class RenderUtils {
 	public static void disableCulling(){
 		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
+	public static void enableDepthTest() {
+		
+	}
+	public static void disableDepthTest() {
+		
+	}
 	public static void clear(){
 		clear(DisplayManager.BACKGROUND_COLOUR);
 	}

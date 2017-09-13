@@ -26,6 +26,7 @@ public class TextRender extends Renderable {
 			GL20.glEnableVertexAttribArray(1);
 			((TextShader) shader).loadProjection(projection);
 			((TextShader) shader).loadTranslation(SudoMaths.createTransformationMatrix(f.getPosition(), f.getScale()));
+			((TextShader) shader).loadColour(f.getColour());
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, f.getTexture().getTextureID());
 			GL11.glEnable(GL11.GL_BLEND);

@@ -4,8 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import site.root3287.sudo2.utils.SudoMaths;
 
 public class BitmapFontFile {
 	private String file;
@@ -65,5 +69,14 @@ public class BitmapFontFile {
 	}
 	public Map<String, String> getFileInfo() {
 		return fileInfo;
+	}
+	
+	public float getMaxHeight() {
+		List<Float> num = new  ArrayList<>();
+		for(BitmapGlyph b : getGlyphs().values()) {
+			num.add((float) b.height);
+		}
+		
+		return SudoMaths.getMaxFloat(num);
 	}
 }
