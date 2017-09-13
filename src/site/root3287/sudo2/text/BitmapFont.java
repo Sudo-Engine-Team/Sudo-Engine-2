@@ -14,7 +14,7 @@ public class BitmapFont {
 	private Model model;
 	private BitmapFontFile bmFile;
 	private String text;
-	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(512f, 512f);
+	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(256f, 256f);
 	public BitmapFont(String text, String bmText, String bmImage){
 		bmFile = new BitmapFontFile(bmText);
 		setTexture(new Texture(Loader.getInstance().loadTexture(bmImage)));
@@ -39,17 +39,18 @@ public class BitmapFont {
 			xLine+=bmFile.getGlyphs().get(c).xAdvance;
 			i++;
 		}
+		System.out.println(pos);
 		this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatArray(pos), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
 	}
 	
 	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, int i){
-		float xx = xLine + glyph.xOffset, yy = yLine + glyph.yOffset;
+		float xx = xLine + glyph.xOffset , yy = yLine + glyph.yOffset;
 		BMQuad quad = new BMQuad();
 		//System.out.println("XLine: "+xLine+" YLine: "+yLine+" xOffset: "+glyph.xOffset+" yOffset: "+glyph.yOffset);
-		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(yy/glyph.imgHeight); quad.pos.add(0f);							//TOP LEFT
-		quad.pos.add(xx/glyph.imgWidth); quad.pos.add((yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f);				//BOTTOM LEFT
-		quad.pos.add((xx-glyph.width)/glyph.imgWidth); quad.pos.add(yy/glyph.imgHeight); quad.pos.add(0f);				//TOP RIGHT
-		quad.pos.add((xx-glyph.width)/glyph.imgWidth); quad.pos.add((yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f); 	// BOTTOM RIGHT
+		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-yy/glyph.imgHeight); quad.pos.add(0f);							//TOP LEFT
+		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-(yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f);				//BOTTOM LEFT
+		quad.pos.add((xx+glyph.width)/glyph.imgWidth); quad.pos.add(-yy/glyph.imgHeight); quad.pos.add(0f);				//TOP RIGHT
+		quad.pos.add((xx+glyph.width)/glyph.imgWidth); quad.pos.add(-(yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f); 	// BOTTOM RIGHT
 		quad.ind.add(i*4);
 		quad.ind.add(i*4+1);
 		quad.ind.add(i*4+2);

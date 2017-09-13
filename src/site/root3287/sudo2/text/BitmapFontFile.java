@@ -63,4 +63,7 @@ public class BitmapFontFile {
 	public Map<Character, BitmapGlyph> getGlyphs() {
 		return charInfo;
 	}
+	public Map<String, String> getFileInfo() {
+		return fileInfo;
+	}
 }
