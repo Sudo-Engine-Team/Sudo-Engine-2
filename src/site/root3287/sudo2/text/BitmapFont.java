@@ -20,8 +20,8 @@ public class BitmapFont {
 	public BitmapFont(String text, String bmText, String bmImage){
 		bmFile = new BitmapFontFile(bmText);
 		setTexture(new Texture(Loader.getInstance().loadTexture(bmImage)));
-		this.setText(text);
-		colour = new Vector4f(1,1,1,1);
+		this.text = (text);
+		colour = new Vector4f(1,1,1,1f);
 		generateText(text);
 	}
 	
@@ -38,7 +38,7 @@ public class BitmapFont {
 			if((int) c == 10 || c == 32){
 				xLine += bmFile.getGlyphs().get(c).xAdvance;
 				if((int)c == 10) {
-					yLine += bmFile.getMaxHeight();
+					yLine += Float.parseFloat(bmFile.getFileInfo().get("lineHeight"));
 					xLine = 0;
 				}
 				continue;
@@ -105,6 +105,7 @@ public class BitmapFont {
 
 	public void setText(String text) {
 		this.text = text;
+		Loader.getInstance().removeTextFromMemory(this.model.getVaoID());
 		generateText(text);
 	}
 
@@ -132,5 +133,9 @@ public class BitmapFont {
 	public Vector4f getColour() {
 		// TODO Auto-generated method stub
 		return colour;
+	}
+	
+	public BitmapFontFile getFile(){
+		return bmFile;
 	}
 }

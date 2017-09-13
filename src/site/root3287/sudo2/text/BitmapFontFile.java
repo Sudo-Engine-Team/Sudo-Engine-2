@@ -4,14 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import site.root3287.sudo2.entities.Entity;
-import site.root3287.sudo2.utils.SudoMaths;
 
 public class BitmapFontFile {
 	private String file;
@@ -93,14 +87,6 @@ public class BitmapFontFile {
 		return fileInfo;
 	}
 	
-	public float getMaxHeight() {
-		List<Float> num = new  ArrayList<>();
-		for(BitmapGlyph b : getGlyphs().values()) {
-			num.add((float) b.height);
-		}
-		
-		return SudoMaths.getMaxFloat(num);
-	}
 	public Map<Character, Map<Character, Float>> getKernings(){
 		return kerningInfo;
 	}

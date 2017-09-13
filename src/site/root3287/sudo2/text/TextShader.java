@@ -15,12 +15,24 @@ public class TextShader extends Shader{
 	int location_projection;
 	int location_translation;
 	int location_colour;
+	int location_isDF;
+	int location_width;
+	int location_edge;
+	int location_borderWidth;
+	int location_borderEdge;
+	int location_outlineColour;
 	
 	@Override
 	protected void getAllUniformLocations() {
 		location_projection = getUniformLocation("projection");
 		location_translation = getUniformLocation("translation");
 		location_colour = getUniformLocation("colour");
+		location_isDF = getUniformLocation("isDF");
+		location_width = getUniformLocation("width");
+		location_edge = getUniformLocation("edge");
+		location_borderWidth = getUniformLocation("borderWidth");
+		location_borderEdge = getUniformLocation("borderEdge");
+		location_outlineColour = getUniformLocation("outlineColour");
 	}
 
 	@Override
@@ -38,6 +50,19 @@ public class TextShader extends Shader{
 	
 	public void loadColour(Vector4f p) {
 		loadVector(location_colour, p);
+	}
+
+	public void loadDistanceField(boolean df, float width, float edge, float borderWidth, float borderEdge, Vector4f outlineColour) {
+		if(df){
+			loadBoolean(location_isDF, df);
+			loadFloat(location_width, width);
+			loadFloat(location_edge, edge);
+			loadFloat(location_borderWidth, borderWidth);
+			loadFloat(location_borderEdge, borderEdge);
+			loadVector(location_outlineColour, outlineColour);
+		}else{
+			loadBoolean(location_isDF, df);
+		}
 	}
 
 }
