@@ -43,7 +43,13 @@ public class BitmapFont {
 				}
 				continue;
 			}
-			BMQuad q = generateQuad(bmFile.getGlyphs().get(c), xLine, yLine, i);
+			float kerning = 0;
+			if(i < text.toCharArray().length-1 && text.toCharArray()[i+1] != (char) 0){
+				if(bmFile.getKernings().containsKey(c) && bmFile.getKernings().get(c).containsKey(text.toCharArray()[i+1])){
+					kerning = bmFile.getKernings().get(c).get(text.toCharArray()[i+1]);
+				}
+			}
+			BMQuad q = generateQuad(bmFile.getGlyphs().get(c), xLine, yLine, kerning, i);
 			pos.addAll(q.pos);
 			ind.addAll(q.ind);
 			tex.addAll(q.tex);
@@ -53,7 +59,7 @@ public class BitmapFont {
 		this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatArray(pos), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
 	}
 	
-	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, int i){
+	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, float kerning, int i){
 		float xx = xLine + glyph.xOffset , yy = yLine + glyph.yOffset;
 		BMQuad quad = new BMQuad();
 		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-yy/glyph.imgHeight); quad.pos.add(0f);							//TOP LEFT
@@ -99,6 +105,7 @@ public class BitmapFont {
 
 	public void setText(String text) {
 		this.text = text;
+		generateText(text);
 	}
 
 	private static class BMQuad{
