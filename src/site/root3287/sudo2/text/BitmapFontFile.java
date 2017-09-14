@@ -71,14 +71,15 @@ public class BitmapFontFile {
 						}else{
 							pairs = new HashMap<>();
 							pairs.put((char)Integer.parseInt(allPairs[1][1]), Float.parseFloat(allPairs[2][1]));
-							kerningInfo.put((char)Integer.parseInt(allPairs[0][1]), pairs);
 						}
+						kerningInfo.put((char)Integer.parseInt(allPairs[0][1]), pairs);
 					}
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		// printKerning();
 	}
 	public Map<Character, BitmapGlyph> getGlyphs() {
 		return charInfo;
@@ -89,5 +90,19 @@ public class BitmapFontFile {
 	
 	public Map<Character, Map<Character, Float>> getKernings(){
 		return kerningInfo;
+	}
+	
+	@SuppressWarnings("unused")
+	private void printKerning() {
+		int size  = 0;
+		for(Character x : kerningInfo.keySet()) {
+			System.out.println(x);
+			for(char y : kerningInfo.get(x).keySet()) {
+				System.out.println("\t"+y);
+				System.out.println("\t\t"+kerningInfo.get(x).get(y));
+				size++;
+			}
+		}
+		System.out.println("size: "+size);
 	}
 }

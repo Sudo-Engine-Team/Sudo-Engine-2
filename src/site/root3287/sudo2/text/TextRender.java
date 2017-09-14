@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import site.root3287.sudo2.engine.render.RenderUtils;
 import site.root3287.sudo2.engine.render.Renderable;
 import site.root3287.sudo2.utils.SudoMaths;
 
@@ -32,6 +33,7 @@ public class TextRender extends Renderable {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, f.getTexture().getTextureID());
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			RenderUtils.enableDepthTest();
 			GL11.glDrawElements(GL11.GL_TRIANGLES, f.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			GL20.glDisableVertexAttribArray(0);
 			GL20.glDisableVertexAttribArray(1);

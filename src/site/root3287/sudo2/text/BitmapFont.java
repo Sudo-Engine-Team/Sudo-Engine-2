@@ -35,20 +35,20 @@ public class BitmapFont {
 		List<Float> pos = new ArrayList<>(), tex = new ArrayList<>();
 		List<Integer> ind = new ArrayList<>();
 		for(char c : text.toCharArray()){
-			if((int) c == 10 || c == 32){
+			if((int) c == 10 || (int)c == 32 || (int) c == 9){
+				if((int)c == 9) {
+					xLine+= bmFile.getGlyphs().get((char) 32).xAdvance*3;
+					continue;
+				}
 				xLine += bmFile.getGlyphs().get(c).xAdvance;
 				if((int)c == 10) {
 					yLine += Float.parseFloat(bmFile.getFileInfo().get("lineHeight"));
 					xLine = 0;
 				}
+				
 				continue;
 			}
-			float kerning = 0;
-			if(i < text.toCharArray().length-1 && text.toCharArray()[i+1] != (char) 0){
-				if(bmFile.getKernings().containsKey(c) && bmFile.getKernings().get(c).containsKey(text.toCharArray()[i+1])){
-					kerning = bmFile.getKernings().get(c).get(text.toCharArray()[i+1]);
-				}
-			}
+			float kerning = getKerningAt(i);
 			BMQuad q = generateQuad(bmFile.getGlyphs().get(c), xLine, yLine, kerning, i);
 			pos.addAll(q.pos);
 			ind.addAll(q.ind);
@@ -60,7 +60,8 @@ public class BitmapFont {
 	}
 	
 	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, float kerning, int i){
-		float xx = xLine + glyph.xOffset , yy = yLine + glyph.yOffset;
+		float xx = xLine + kerning + glyph.xOffset , yy = yLine + glyph.yOffset;
+		//System.out.println(xx);
 		BMQuad quad = new BMQuad();
 		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-yy/glyph.imgHeight); quad.pos.add(0f);							//TOP LEFT
 		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-(yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f);				//BOTTOM LEFT
@@ -137,5 +138,21 @@ public class BitmapFont {
 	
 	public BitmapFontFile getFile(){
 		return bmFile;
+	}
+	private float getKerningAt(int index) {
+		float res = 0;
+		if(index+1 > text.length()) {
+			return res;
+		}
+		char letter = text.charAt(index);
+		char letterAhead = text.charAt(index+1);
+		if(!bmFile.getKernings().containsKey(letter)) {
+			return res;
+		}
+		if(!bmFile.getKernings().get(letter).containsKey(letterAhead)) {
+			return res;
+		}
+		res = bmFile.getKernings().get(letter).get(letterAhead);
+		return res;
 	}
 }

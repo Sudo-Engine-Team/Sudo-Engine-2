@@ -18,6 +18,9 @@ const float borderWidth = 1;
 const float borderEdge = 0.5;
 void main(){
 	vec4 img = texture(image, ptc);
+	if(img.a < 0.5){
+		discard;
+	}
 	if(isDF == 0){
 		out_colour =vec4(colour.rgb, mix(colour.a, img.a, 1));
 	}else{

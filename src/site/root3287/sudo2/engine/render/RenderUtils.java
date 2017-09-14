@@ -16,10 +16,10 @@ public class RenderUtils {
 		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
 	public static void enableDepthTest() {
-		
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
 	public static void disableDepthTest() {
-		
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
 	public static void clear(){
 		clear(DisplayManager.BACKGROUND_COLOUR);
