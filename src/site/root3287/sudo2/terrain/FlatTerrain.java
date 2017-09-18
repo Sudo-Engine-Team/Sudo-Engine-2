@@ -8,12 +8,12 @@ public class FlatTerrain extends Terrain{
 
 	public FlatTerrain(int x , int z, int size, int lod) {
 		this.x = x*size;
-		this.z = z*size;
+		this.y = z*size;
 		this.lod = lod;
 		this.size = size;
 		FlatTerrainGenerator g = new FlatTerrainGenerator();
 		g.generate(size, lod);
-		this.model = Loader.getInstance().loadToVAO()
+		//this.model = Loader.getInstance().loadToVAO()
 	}
 	
 	private static class FlatTerrainGenerator{

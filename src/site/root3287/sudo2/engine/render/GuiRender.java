@@ -4,27 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
-import site.root3287.sudo2.engine.Loader;
-import site.root3287.sudo2.engine.gui.GuiTexture;
-import site.root3287.sudo2.engine.model.Model;
 import site.root3287.sudo2.engine.shader.programs.GuiShader;
 import site.root3287.sudo2.gui.GuiWidget;
-import site.root3287.sudo2.utils.SudoMaths;
 
 public class GuiRender {
 	private GuiShader shader;
 	private Matrix4f projection;
 	private List<GuiWidget> guis = new ArrayList<>();
-	private Model model;
-	private static final float[] positions = {-1,1,-1,-1,1,1,1,-1};
 	
 	public GuiRender() {
-		model = Loader.getInstance().loadToVAO(positions);
 		shader = new GuiShader();
 	}
 	
@@ -56,27 +48,25 @@ public class GuiRender {
 	
 	public void render(){
 		shader.start();
-		GL30.glBindVertexArray(model.getVaoID());
-		GL20.glEnableVertexAttribArray(0);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		for(GuiWidget gui : guis){
-			for(GuiTexture textures: gui.getTexture().getNinePatch()){
-				((GuiShader) shader).useTextureAtlas(textures.textureAtlas, textures.rows, textures.offset);
-				((GuiShader) shader).useProjection((this.projection !=null)?true:false);
-				//((GuiShader) shader).colouredQuad(gui.isColoured(), gui.getColour());
-				((GuiShader) shader).loadTransformation(SudoMaths.createTransformationMatrix(textures.getPosition(), textures.getScale(), textures.getRotation()));
-				GL13.glActiveTexture(GL13.GL_TEXTURE0);
-				GL11.glBindTexture(GL11.GL_TEXTURE_2D, textures.getTexture());
-				GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, model.getVertexCount());
+		for(GuiWidget g : guis){
+			GL30.glBindVertexArray(g.getModel().getVaoID());
+			GL20.glEnableVertexAttribArray(0);
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			if(g.getTextures() != null && g.getTextures().size() > 1) { 
+				for(int i = 0; i < g.getTextures().size(); i++) {
+					RenderUtils.bindTexture(i, g.getTextures().get(i).getTextureID());
+				}
+			}else {
+				RenderUtils.bindTexture(0, g.getTexture().getTextureID());
 			}
+			GL11.glDrawElements(GL11.GL_TRIANGLES, g.getModel().getVaoID(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glDisable(GL11.GL_BLEND);
+			GL20.glDisableVertexAttribArray(0);
+			GL30.glBindVertexArray(0);
 		}
-		
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_BLEND);
-		GL20.glDisableVertexAttribArray(0);
-		GL30.glBindVertexArray(0);
 		shader.stop();
 		
 		guis.clear();

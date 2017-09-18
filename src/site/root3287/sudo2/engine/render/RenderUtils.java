@@ -1,6 +1,7 @@
 package site.root3287.sudo2.engine.render;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.display.DisplayManager;
@@ -42,4 +43,17 @@ public class RenderUtils {
 	public static boolean isWireframe(){
 		return wireframe;
 	}
+	public static void bindTexture(int index, int textureID) {
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+	}
+	public static void unbindTexture(int index, int textureID) {
+		int base = 0x84c0;
+		if(index > 31) {
+			return;
+		}
+		GL13.glActiveTexture(base+index);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+	}
+	
 }

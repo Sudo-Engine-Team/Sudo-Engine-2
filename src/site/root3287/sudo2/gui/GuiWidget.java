@@ -6,12 +6,13 @@ import java.util.UUID;
 
 import org.lwjgl.util.vector.Vector2f;
 
-import site.root3287.sudo2.engine.gui.NinePatch;
+import site.root3287.sudo2.engine.model.Model;
+import site.root3287.sudo2.engine.texture.AbstractTexture;
 
 public abstract class GuiWidget {
 	protected GuiWidget parent = null;
-	protected UUID id = UUID.randomUUID();
-	protected Vector2f position = new Vector2f(), size, fixedSize;
+	protected final UUID id = UUID.randomUUID();
+	protected Vector2f position = new Vector2f(), size = new Vector2f(), fixedSize = new Vector2f();
 	protected boolean visable = true, enabled = true, focused = false;
 	protected String tooltip = "";
 	protected float fontSize = 1;
@@ -19,7 +20,7 @@ public abstract class GuiWidget {
 	protected GuiLayout layout;
 	protected GuiTheme theme;
 	protected float rotation = 0;
-	protected NinePatch texture;
+	protected Model model;
 	
 	public GuiWidget getParent() {
 		return parent;
@@ -129,11 +130,8 @@ public abstract class GuiWidget {
 	public int childIndex(GuiWidget w){
 		return 0;
 	}
-	public UUID getId() {
+	public UUID getID() {
 		return id;
-	}
-	public void setId(UUID id) {
-		this.id = id;
 	}
 	public boolean isEnabled() {
 		return enabled;
@@ -169,12 +167,11 @@ public abstract class GuiWidget {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
-	public NinePatch getTexture() {
-		return texture;
-	}
-	public void setTexture(NinePatch texture) {
-		this.texture = texture;
+	public Model getModel() {
+		return model;
 	}
 	
 	public abstract void update(float delta);
+	public abstract AbstractTexture getTexture();
+	public abstract List<AbstractTexture> getTextures();
 }
