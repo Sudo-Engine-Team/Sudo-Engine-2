@@ -8,6 +8,8 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
+import site.root3287.sudo2.engine.Loader;
+import site.root3287.sudo2.engine.model.Model;
 import site.root3287.sudo2.engine.shader.programs.GuiShader;
 import site.root3287.sudo2.gui.GuiWidget;
 
@@ -15,7 +17,8 @@ public class GuiRender {
 	private GuiShader shader;
 	private Matrix4f projection;
 	private List<GuiWidget> guis = new ArrayList<>();
-	
+	private Model cachedModelTextured = Loader.getInstance().loadToVAO(new float[]{-1,1,-1,-1,1,1,1,-1}, new float[]{0,0, 0,1, 1,0,1,1}, new int[] {0,1,2,2,1,3});
+	private Model cachedModel = Loader.getInstance().loadToVAO(new float[]{-1,1,-1,-1,1,1,1,-1}, new int[] {0,1,2,2,1,3});
 	public GuiRender() {
 		shader = new GuiShader();
 	}
@@ -41,7 +44,7 @@ public class GuiRender {
 	 */
 	public void addGui(GuiWidget g){
 		guis.add(g);
-		for(GuiWidget gs : g.children()){
+		for(GuiWidget gs : g.getChildren()){
 			addGui(gs);
 		}
 	}
@@ -54,12 +57,8 @@ public class GuiRender {
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
-			if(g.getTextures() != null && g.getTextures().size() > 1) { 
-				for(int i = 0; i < g.getTextures().size(); i++) {
-					RenderUtils.bindTexture(i, g.getTextures().get(i).getTextureID());
-				}
-			}else {
-				RenderUtils.bindTexture(0, g.getTexture().getTextureID());
+			if(!g.hasModel()) {
+				RenderUtils.renderElements(GL11.GL_TRIANGLES, cachedModel.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			}
 			GL11.glDrawElements(GL11.GL_TRIANGLES, g.getModel().getVaoID(), GL11.GL_UNSIGNED_INT, 0);
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
