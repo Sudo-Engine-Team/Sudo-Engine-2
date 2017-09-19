@@ -2,8 +2,6 @@ package site.root3287.sudo2.terrain;
 
 import java.util.List;
 
-import site.root3287.sudo2.engine.Loader;
-
 public class FlatTerrain extends Terrain{
 
 	public FlatTerrain(int x , int z, int size, int lod) {

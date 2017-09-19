@@ -141,7 +141,7 @@ public class BitmapFont {
 	}
 	private float getKerningAt(int index) {
 		float res = 0;
-		if(index+1 > text.length()) {
+		if(index+1 > text.length()-1) {
 			return res;
 		}
 		char letter = text.charAt(index);

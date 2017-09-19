@@ -52,15 +52,12 @@ public class GuiRender {
 	public void render(){
 		shader.start();
 		for(GuiWidget g : guis){
-			GL30.glBindVertexArray(g.getModel().getVaoID());
+			GL30.glBindVertexArray(cachedModelTextured.getVaoID());
 			GL20.glEnableVertexAttribArray(0);
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
-			if(!g.hasModel()) {
-				RenderUtils.renderElements(GL11.GL_TRIANGLES, cachedModel.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
-			}
-			GL11.glDrawElements(GL11.GL_TRIANGLES, g.getModel().getVaoID(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, cachedModelTextured.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			GL11.glDisable(GL11.GL_BLEND);
 			GL20.glDisableVertexAttribArray(0);

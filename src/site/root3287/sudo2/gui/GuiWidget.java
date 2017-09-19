@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import org.lwjgl.util.vector.Vector2f;
 
-import site.root3287.sudo2.engine.model.Model;
-
 public abstract class GuiWidget {
 	protected final UUID id = UUID.randomUUID();
 	protected Vector2f position = new Vector2f();
@@ -18,7 +16,6 @@ public abstract class GuiWidget {
 	protected boolean visable = true;
 	protected List<GuiWidget> children = new ArrayList<>();
 	protected int level = 0;
-	protected Model model = null;
 	
 	public Vector2f getPosition() {
 		return position;
@@ -70,18 +67,6 @@ public abstract class GuiWidget {
 	}
 	public UUID getId() {
 		return id;
-	}
-	public void setModel(Model m) {
-		this.model = m;
-	}
-	public Model getModel(){
-		if(!hasModel()) {
-			return null;
-		}
-		return model;
-	}
-	public boolean hasModel() {
-		return (this.model == null)?false:true;
 	}
 	
 	public void addWidget(GuiWidget w, float relX, float relY, float sizeX, float sizeY) {
