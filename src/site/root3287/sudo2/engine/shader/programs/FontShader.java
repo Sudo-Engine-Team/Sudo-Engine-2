@@ -4,20 +4,24 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.shader.Shader;
+import site.root3287.sudo2.engine.shader.uniforms.UniformBoolean;
+import site.root3287.sudo2.engine.shader.uniforms.UniformFloat;
+import site.root3287.sudo2.engine.shader.uniforms.UniformMatrix;
+import site.root3287.sudo2.engine.shader.uniforms.UniformVector;
 
 public class FontShader extends Shader{
 
 	private static final String VERTEX_FILE = "/shader/Fonts/fontVertex.glsl";
 	private static final String FRAGMENT_FILE = "/shader/Fonts/fontFragment.glsl";
 	
-	private int location_colour;
-    private int location_translation;
-    private int location_distanceField;
-    private int location_width;
-    private int location_edge;
-    private int location_borderWidth;
-    private int location_borderEdge;
-    private int loacation_projection;
+	public UniformVector location_colour;
+	public UniformMatrix location_translation;
+	public UniformBoolean location_distanceField;
+	public UniformFloat location_width;
+	public UniformFloat location_edge;
+	public UniformFloat location_borderWidth;
+	public UniformFloat location_borderEdge;
+    public UniformMatrix loacation_projection;
      
     public FontShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -25,14 +29,14 @@ public class FontShader extends Shader{
  
     @Override
     protected void getAllUniformLocations() {
-        location_colour = super.getUniformLocation("colour");
-        location_translation = super.getUniformLocation("translation");
-        location_distanceField = super.getUniformLocation("isDistanceField");
-        location_width = super.getUniformLocation("width");
-        location_edge = super.getUniformLocation("edge");
-        location_borderWidth = super.getUniformLocation("borderWidth");
-        location_borderEdge = super.getUniformLocation("borderEdge");
-        loacation_projection = super.getUniformLocation("projection");
+        location_colour = new UniformVector(programID, "colour");
+        location_translation = new UniformMatrix(programID, "translation");
+        location_distanceField = new UniformBoolean(programID, "isDistanceField");
+        location_width = new UniformFloat(programID,"width");
+        location_edge = new UniformFloat(programID,"edge");
+        location_borderWidth = new UniformFloat(programID,"borderWidth");
+        location_borderEdge = new UniformFloat(programID,"borderEdge");
+        loacation_projection =  new UniformMatrix(programID, "projection");
     }
  
     @Override
@@ -42,28 +46,28 @@ public class FontShader extends Shader{
     }
      
     public void loadColour(Vector4f colour){
-        super.loadVector(location_colour, colour);
+       location_colour.loadVector(colour);
     }
      
     public void loadTranslation(Matrix4f translation){
-        super.loadMatrix(location_translation, translation);
+        location_translation.loadMatrix(translation);
     }
     
     public void isDistanceField(boolean df){
-    	super.loadBoolean(location_distanceField, df);
+    	location_distanceField.loadBoolean(df);
     }
     
     public void loadDistanceFields(float width, float edge){
-    	super.loadFloat(location_width, width);
-    	super.loadFloat(location_edge, edge);
+    	location_width.loadFloat(width);
+    	location_edge.loadFloat(edge);
     }
     
     public void loadBorderFields(float width, float edge){
-    	super.loadFloat(location_borderEdge, edge);
-    	super.loadFloat(location_borderWidth, width);
+    	location_borderEdge.loadFloat(edge);
+    	location_borderWidth.loadFloat(width);
 		
 	} 
     public void loadProjection(Matrix4f projection){
-    	super.loadMatrix(loacation_projection, projection);
+    	loacation_projection.loadMatrix(projection);
     }
 }

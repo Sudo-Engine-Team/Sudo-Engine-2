@@ -4,27 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.FloatBuffer;
 import java.util.logging.Level;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL32;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.display.DisplayManager;
 
 public abstract class Shader {
-	private int programID;
+	protected int programID;
     private int vertexShaderID;
     private int fragmentShaderID;
     private int geometryShaderID;
-     
-    private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
      
     public Shader(String vertexFile,String fragmentFile){
         vertexShaderID = loadShader(vertexFile,GL20.GL_VERTEX_SHADER);
@@ -53,11 +45,7 @@ public abstract class Shader {
     }
      
     protected abstract void getAllUniformLocations();
-     
-    protected int getUniformLocation(String uniformName){
-        return GL20.glGetUniformLocation(programID,uniformName);
-    }
-     
+    
     public void start(){
         GL20.glUseProgram(programID);
     }
@@ -84,33 +72,7 @@ public abstract class Shader {
      
     protected void bindAttribute(int attribute, String variableName){
         GL20.glBindAttribLocation(programID, attribute, variableName);
-    }
-     
-    protected void loadFloat(int location, float value){
-        GL20.glUniform1f(location, value);
-    }
-     
-    protected void loadVector(int location, Vector3f vector){
-        GL20.glUniform3f(location,vector.x,vector.y,vector.z);
-    }
-    
-    protected void loadVector(int location, Vector4f vector){
-        GL20.glUniform4f(location,vector.x,vector.y,vector.z, vector.w);
-    }
-     
-    protected void loadBoolean(int location, boolean value){
-        float toLoad = 0;
-        if(value){
-            toLoad = 1;
-        }
-        GL20.glUniform1f(location, toLoad);
-    }
-     
-    protected void loadMatrix(int location, Matrix4f matrix){
-        matrix.store(matrixBuffer);
-        matrixBuffer.flip();
-        GL20.glUniformMatrix4fv(location, false, matrixBuffer);
-    }
+    }  
      
     private static int loadShader(String file, int type){
         StringBuilder shaderSource = new StringBuilder();
@@ -136,8 +98,7 @@ public abstract class Shader {
         }
         return shaderID;
     }
-
-	public void loadVector(int loaction, Vector2f vector) {
-		 GL20.glUniform2f(loaction,vector.x,vector.y);
-	}
+    public int getProgramID() {
+    	return programID;
+    }
 }

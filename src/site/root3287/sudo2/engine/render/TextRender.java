@@ -1,4 +1,4 @@
-package site.root3287.sudo2.text;
+package site.root3287.sudo2.engine.render;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +8,8 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import site.root3287.sudo2.engine.render.RenderUtils;
-import site.root3287.sudo2.engine.render.Renderable;
+import site.root3287.sudo2.engine.shader.programs.TextShader;
+import site.root3287.sudo2.text.BitmapFont;
 import site.root3287.sudo2.utils.SudoMaths;
 
 public class TextRender extends Renderable {
