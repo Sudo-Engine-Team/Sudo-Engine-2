@@ -5,11 +5,8 @@ import java.util.List;
 
 import site.root3287.sudo2.engine.Loader;
 
-public class SquareShape extends Shape{
+public abstract class SquareShape extends Shape{
 
-	@Override
-	public void update(float delta) {}
-	
 	public SquareShape() {
 		SquareGenerator g = new SquareGenerator();
 		this.model = Loader.getInstance().loadToVAO(g.getPos(), g.getInd());
@@ -53,4 +50,7 @@ public class SquareShape extends Shape{
 			return pos;
 		}
 	}
+
+	@Override
+	public abstract void update(float delta);
 }

@@ -7,9 +7,9 @@ import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.model.Model;
 
 public abstract class Shape {
-	protected Vector2f position = new Vector2f(0,0), scale = new Vector2f(20f,20f);
+	protected Vector2f position = new Vector2f(0,0), scale = new Vector2f(100f,100f);
 	protected Model model;
-	protected Vector4f colour = new Vector4f(1, 0, 0, 1);
+	protected Vector4f colour = new Vector4f(1, 1, 1, 1);
 	
 	public Shape(){
 		this(new Vector2f(), new Vector2f(), new Vector4f(1,0.5f,0.5f,1));
@@ -49,7 +49,7 @@ public abstract class Shape {
 	}
 	public void setModel(float[] position, int[] ind) {
 		if(this.model != null){
-			Loader.getInstance().removeVAO(this.model.getVaoID());
+			Loader.getInstance().removeVAO(this.model.getVaoID(), true);
 		}
 		this.model = Loader.getInstance().loadToVAO(position, ind);
 	}

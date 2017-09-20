@@ -152,10 +152,14 @@ public class Loader {
 		return textureID;
 	}
 	public void removeTextFromMemory(int vao){
-		removeVAO(vao);
+		removeVAO(vao, false);
 	}
 	public void removeVAO(int vaoID){
-		DisplayManager.LOGGER.log(Level.INFO,"Removing VAO from memory: "+vaoID);
+		removeVAO(vaoID, true);
+	}
+	public void removeVAO(int vaoID, boolean debug){
+		if(debug)
+			DisplayManager.LOGGER.log(Level.INFO,"Removing VAO from memory: "+vaoID);
 		List<Integer> vbos = vaos.remove(vaoID);
 		for(int vbo : vbos){
 			GL15.glDeleteBuffers(vbo);
