@@ -1,23 +1,31 @@
 package site.root3287.sudo2.engine.texture;
 
-import org.lwjgl.util.vector.Vector2f;
-
 public abstract class AbstractTexture {
-	protected int width, height;
+	protected int srcWidth, srcHeight;
 	protected int textureID;
-	protected boolean textureAtlas = false;
-	protected int rows = 1;
 	protected boolean hasTranspancy = true;
-	protected Vector2f offset;
+	protected int x, y, width,height;
 	
 	public AbstractTexture(int id) {
-		this.textureID = id;
+		this(id, 512, 512);
 	}
 	
 	public AbstractTexture(int id, int width, int height) {
+		this(id, 0,0,width, height, width, height);
+	}
+	
+	public AbstractTexture(int id, int x, int y, int width, int height){
+		this(id, x, y, width, height, width, height);
+	}
+	
+	public AbstractTexture(int id, int x, int y, int width, int height, int srcWidth, int srcHeight) {
 		this.textureID = id;
-		this.width = width; 
+		this.x = x;
+		this.y = y;
+		this.width = width;
 		this.height = height;
+		this.srcWidth = srcWidth;
+		this.srcHeight = srcHeight;
 	}
 	
 	public int getTextureID() {
@@ -25,24 +33,6 @@ public abstract class AbstractTexture {
 	}
 	public void setTextureID(int id) {
 		this.textureID = id;
-	}
-	public boolean isTextureAtlas() {
-		return textureAtlas;
-	}
-	protected void setTextureAtlas(boolean textureAtlas) {
-		this.textureAtlas = textureAtlas;
-	}
-	public int getRows() {
-		return rows;
-	}
-	protected void setRows(int rows) {
-		this.rows = rows;
-	}
-	public Vector2f getOffset() {
-		return offset;
-	}
-	protected void setOffset(Vector2f offset) {
-		this.offset = offset;
 	}
 	
 	public void setWidth(int width) {

@@ -87,7 +87,7 @@ public class EntityRender{
 		float scale = entity.getComponent(TransposeComponent.class).scale;
 		Matrix4f transformationMatrix = SudoMaths.createTransformationMatrix(position, rotation, scale);
 		shader.loadTransformationMatrix(transformationMatrix);
-		shader.useTextureAtlas(entity.getComponent(ModelComponet.class).model.getTexture().isTextureAtlas(), entity.getComponent(ModelComponet.class).model.getTexture().getRows(), entity.getComponent(ModelComponet.class).model.getTexture().getOffset());
+		//shader.useTextureAtlas(entity.getComponent(ModelComponet.class).model.getTexture().isTextureAtlas(), entity.getComponent(ModelComponet.class).model.getTexture().getRows(), entity.getComponent(ModelComponet.class).model.getTexture().getOffset());
 	}
 	
 	public void addEntity(Entity entity){

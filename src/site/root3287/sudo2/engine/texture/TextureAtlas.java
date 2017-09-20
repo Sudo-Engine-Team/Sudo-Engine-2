@@ -1,20 +1,25 @@
 package site.root3287.sudo2.engine.texture;
 
-import org.lwjgl.util.vector.Vector2f;
-
 public class TextureAtlas extends AbstractTexture{
+
+	public TextureAtlas(int id, int x, int y, int width, int height, int srcWidth, int srcHeight) {
+		super(id, x, y, width, height, srcWidth, srcHeight);
+		// TODO Auto-generated constructor stub
+	}
+
+	public TextureAtlas(int id, int x, int y, int width, int height) {
+		super(id, x, y, width, height);
+		// TODO Auto-generated constructor stub
+	}
 
 	public TextureAtlas(int id, int width, int height) {
 		super(id, width, height);
-		this.textureAtlas = true;
-		this.offset = new Vector2f();
-		this.rows = 1;
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setRows(int rows) {
-		super.setRows(rows);
+	public TextureAtlas(int id) {
+		super(id);
+		// TODO Auto-generated constructor stub
 	}
-	public void setOffset(Vector2f offset) {
-		super.setOffset(offset);
-	}
+
 }
