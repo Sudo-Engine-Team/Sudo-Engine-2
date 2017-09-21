@@ -1,6 +1,6 @@
 package site.root3287.sudo2.engine.texture;
 
-public abstract class AbstractTexture {
+public class AbstractTexture {
 	protected int srcWidth, srcHeight;
 	protected int textureID;
 	protected boolean hasTranspancy = true;
