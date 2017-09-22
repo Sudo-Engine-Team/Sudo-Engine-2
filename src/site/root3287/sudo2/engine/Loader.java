@@ -22,6 +22,7 @@ import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.engine.model.Model;
+import site.root3287.sudo2.engine.texture.AbstractTexture;
 
 public class Loader {
 	private static Loader _instance = null;
@@ -151,6 +152,35 @@ public class Loader {
 		}
 		return textureID;
 	}
+	
+	public AbstractTexture textureObject(String fileName){
+		PNGDecoder texture = null;
+		int textureID = GL11.glGenTextures();
+		if(!textureCache.containsKey(fileName)){
+			try {
+				texture = new PNGDecoder(new FileInputStream(fileName));
+				ByteBuffer buf = ByteBuffer.allocateDirect(4*texture.getWidth()*texture.getHeight());
+				texture.decode(buf, texture.getWidth()*4, Format.RGBA);
+				buf.flip();
+				GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+				GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, texture.getWidth(), texture.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
+				GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
+				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+				GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.4f);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			textures.add(textureID);
+			textureCache.put(fileName, textureID);
+		}else{
+			textureID = textureCache.get(fileName);
+		}
+		
+		return new AbstractTexture(textureID, texture.getWidth(),texture.getHeight());
+	}
+	
 	public void removeTextFromMemory(int vao){
 		removeVAO(vao, false);
 	}

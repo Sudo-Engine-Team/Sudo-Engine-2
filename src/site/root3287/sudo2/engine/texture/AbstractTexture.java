@@ -1,5 +1,7 @@
 package site.root3287.sudo2.engine.texture;
 
+import site.root3287.sudo2.engine.Loader;
+
 public class AbstractTexture {
 	protected int srcWidth, srcHeight;
 	protected int textureID;
@@ -18,23 +20,11 @@ public class AbstractTexture {
 	 * Constructor 
 	 * Load in one big texture
 	 * @param id 			- OpenGL TextureID
-	 * @param width 		- Source Image Width
-	 * @param height 		- Source Image Height
+	 * @param srcWidth 		- Source Image Width
+	 * @param srcHeight 		- Source Image Height
 	 */
-	public AbstractTexture(int id, int width, int height) {
-		this(id, 0,0,width, height, width, height);
-	}
-	
-	/**
-	 * 
-	 * @param id 		- OpenGL TextureID
-	 * @param x  		- Offset X in pixels to copy
-	 * @param y	 		- Offset Y in pixels to copy
-	 * @param width		- The width of the sprite size
-	 * @param height 	- The height of the sprite size;
-	 */
-	public AbstractTexture(int id, int x, int y, int width, int height){
-		this(id, x, y, width, height, 512, 512);
+	public AbstractTexture(int id, int srcWidth, int srcHeight) {
+		this(id, 0,0,srcWidth, srcHeight, srcWidth, srcHeight);
 	}
 	
 	/**
@@ -47,7 +37,7 @@ public class AbstractTexture {
 	 * @param srcWidth
 	 * @param srcHeight
 	 */
-	public AbstractTexture(int id, int x, int y, int width, int height, int srcWidth, int srcHeight) {
+	public AbstractTexture(int id, int srcWidth, int srcHeight, int x, int y, int width, int height) {
 		this.textureID = id;
 		this.x = x;
 		this.y = y;
@@ -55,6 +45,19 @@ public class AbstractTexture {
 		this.height = height;
 		this.srcWidth = srcWidth;
 		this.srcHeight = srcHeight;
+	}
+	
+	public AbstractTexture(String file){
+		AbstractTexture temp = Loader.getInstance().textureObject(file);
+		this.hasTranspancy= temp.hasTranspancy;
+		this.height = temp.height;
+		this.srcHeight = temp.srcHeight;
+		this.srcWidth = temp.srcWidth;
+		this.textureID = temp.textureID;
+		this.width = this.srcWidth;
+		this.height = this.srcHeight;
+		this.x = temp.x;
+		this.y = temp.y;
 	}
 	
 	public int getTextureID() {

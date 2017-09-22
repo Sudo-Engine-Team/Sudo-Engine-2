@@ -17,17 +17,17 @@ public class ImageModel {
 	private ImageModel() {
 		// TODO Auto-generated constructor stub
 	}
-	public ImageModel(String file,float width, float height,float xOffset, float yOffset, float texX, float texY) {
+	public ImageModel(String file, float width, float height,float xOffset, float yOffset, float texX, float texY) {
 		this.offset = new Vector2f(xOffset, yOffset);
-		this.setTextureSize(new Vector2f(texX,texY));
+		this.setTextureSize(new Vector2f(texX*2,texY*2));
 		this.texture = new AbstractTexture(Loader.getInstance().loadTexture(file));
 		ImageGenerator gen = new  ImageGenerator(width, height);
 		model = Loader.getInstance().loadToVAO(SudoUtils.toFloatArray(gen.pos), SudoUtils.toFloatArray(gen.tc), SudoUtils.toIntegerArray(gen.ind));
 	}
 	public ImageModel(TextureAtlas atlas, float width, float height){
-		this.textureSize = new Vector2f(texture.getWidth(), texture.getHeight());
-		this.offset = new Vector2f(atlas.x, atlas.y);
 		this.texture = atlas;
+		this.textureSize = new Vector2f(atlas.getWidth()*2, atlas.getHeight()*2);
+		this.offset = new Vector2f(atlas.x, atlas.y);
 		ImageGenerator gen = new  ImageGenerator(width, height);
 		model = Loader.getInstance().loadToVAO(SudoUtils.toFloatArray(gen.pos), SudoUtils.toFloatArray(gen.tc), SudoUtils.toIntegerArray(gen.ind));
 	}
