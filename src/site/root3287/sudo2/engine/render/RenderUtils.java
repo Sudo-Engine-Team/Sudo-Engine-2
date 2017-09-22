@@ -2,6 +2,8 @@ package site.root3287.sudo2.engine.render;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
 import org.lwjgl.opengl.GL40;
 import org.lwjgl.util.vector.Vector4f;
@@ -46,16 +48,19 @@ public class RenderUtils {
 		return wireframe;
 	}
 	public static void bindTexture(int index, int textureID) {
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
-	}
-	public static void unbindTexture(int index, int textureID) {
 		int base = 0x84c0;
 		if(index > 31) {
 			return;
 		}
 		GL13.glActiveTexture(base+index);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+	}
+	
+	public static void enableAlpha(){
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+	}
+	public static void disableAlpha(){
+		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
 	 /**
@@ -94,4 +99,18 @@ public class RenderUtils {
 		GL11.glDrawElements(mode, count, type, indices); 
 	}
 	
+	public static void bindVAO(int vao){
+		GL30.glBindVertexArray(vao);
+	}
+	
+	public static void unbindVAO(){
+		bindVAO(0);
+	}
+	
+	public static void enableVertexAttribsArray(int id){
+		GL20.glEnableVertexAttribArray(id);
+	}
+	public static void disableVertexAttribsArray(int id){
+		GL20.glDisableVertexAttribArray(id);
+	}
 }

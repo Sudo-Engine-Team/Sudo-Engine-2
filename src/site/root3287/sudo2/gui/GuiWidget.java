@@ -78,6 +78,4 @@ public abstract class GuiWidget {
 	
 	public abstract void update(float delta);
 	
-	
-	
 }

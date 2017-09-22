@@ -47,7 +47,7 @@ public class Loader {
 		vbos.add(storeDataInAttributeList(0, 3, positions));
 		vaos.put(vaoID, vbos);
 		unbindVAO();
-		return new Model(vaoID, positions.length/2);
+		return new Model(vaoID, positions.length/3);
 	}
 	public Model loadToVAO(float[] positions, int[] indices){
 		int vaoID = createVAO();

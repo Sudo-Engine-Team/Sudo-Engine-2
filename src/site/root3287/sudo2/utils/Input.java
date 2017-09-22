@@ -143,7 +143,7 @@ public class Input {
 		public static boolean isGrabbed(){
 			return grabbed;
 		}
-		private static Vector2f getNormalizedMouseCoords(){
+		public static Vector2f getNormalizedMouseCoords(){
 			float x = (float) (2*getX() / DisplayManager.WIDTH)-1;
 			float y = (float) (2*getY() / DisplayManager.HEIGHT)-1;
 			return new Vector2f(x, y);
@@ -171,6 +171,8 @@ public class Input {
 			Vector4f emc = getEyeCoords(c.getProjectionMatrix(), pmc);
 			//System.out.println("emc: "+emc);
 			Vector3f world = getWorld(c.getViewMatrix(), emc);
+			
+			System.out.println(world);
 			return world;
 		}
 		private static Vector4f getEyeCoords(Matrix4f proj, Vector4f clip) {
