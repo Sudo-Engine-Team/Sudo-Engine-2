@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import site.root3287.sudo2.engine.texture.ImageModel;
+
 public abstract class GuiWidget {
 	protected final UUID id = UUID.randomUUID();
 	protected Vector2f position = new Vector2f();
@@ -16,6 +18,8 @@ public abstract class GuiWidget {
 	protected boolean visable = true;
 	protected List<GuiWidget> children = new ArrayList<>();
 	protected int level = 0;
+	protected boolean autoResize = true;
+	protected List<ImageModel> texture = new ArrayList<>();
 	
 	public Vector2f getPosition() {
 		return position;
@@ -74,6 +78,10 @@ public abstract class GuiWidget {
 		w.setRelativePosition(new Vector2f(relX, relY));
 		w.setRelativeScale(new Vector2f(sizeX, sizeY));
 		children.add(w);
+	}
+	
+	public List<ImageModel> getTextures(){
+		return texture;
 	}
 	
 	public abstract void update(float delta);
