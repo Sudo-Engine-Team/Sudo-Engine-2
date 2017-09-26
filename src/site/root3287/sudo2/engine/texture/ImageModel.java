@@ -3,7 +3,6 @@ package site.root3287.sudo2.engine.texture;
 import org.lwjgl.util.vector.Vector2f;
 
 import site.root3287.sudo2.engine.Loader;
-import site.root3287.sudo2.engine.model.Model;
 
 public class ImageModel {
 	private AbstractTexture texture;

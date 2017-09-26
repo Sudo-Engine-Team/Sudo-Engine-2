@@ -23,10 +23,10 @@ public class Render2D extends Renderable{
 		this.shader = new Shader2D();
 		vaoModel = Loader.getInstance().loadToVAO(
 				new float[]{
-						-1,1,
-						-1,-1,
-						1,1,
-						1,-1
+						-1,1,0,
+						-1,-1,0,
+						1,1,0,
+						1,-1,0
 				}, 
 				new float[]{
 						0,0,
