@@ -11,5 +11,5 @@ out vec2 ptc;
 
 void main(){
 	ptc = (tcTrans*vec4(tc, 0, 1)).xy;
-	gl_Position = trans * proj * vec4(pos, 1.0);
+	gl_Position = proj * trans * vec4(pos, 1.0);
 }

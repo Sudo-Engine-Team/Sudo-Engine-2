@@ -27,7 +27,7 @@ public class Render2D extends Renderable{
 						-1,-1,0,
 						1,1,0,
 						1,-1,0
-				}, 
+				},
 				new float[]{
 						0,0,
 						0,1,

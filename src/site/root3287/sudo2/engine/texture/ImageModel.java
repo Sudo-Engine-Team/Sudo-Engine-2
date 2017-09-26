@@ -12,14 +12,14 @@ public class ImageModel {
 		// TODO Auto-generated constructor stub
 	}
 	public ImageModel(String file, float width, float height,float xOffset, float yOffset, float texX, float texY) {
-		this.offset = new Vector2f(xOffset, yOffset);
-		this.setTextureSize(new Vector2f(texX*2,texY*2));
 		this.texture = new AbstractTexture(Loader.getInstance().loadTexture(file));
+		this.offset = new Vector2f(xOffset, yOffset);
+		this.setTextureSize(new Vector2f(texture.width/(texX/2),texture.height/(texY/2)));
 		this.scale = new Vector2f(width, height);
 	}
 	public ImageModel(TextureAtlas atlas, float width, float height){
 		this.texture = atlas;
-		this.textureSize = new Vector2f(atlas.getWidth()*2, atlas.getHeight()*2);
+		this.textureSize = new Vector2f(atlas.getWidth(), atlas.getHeight());
 		this.offset = new Vector2f(atlas.x, atlas.y);
 		this.scale = new Vector2f(width, height);
 	}
