@@ -9,7 +9,7 @@ public class Shader2D extends Shader{
 
 	public UniformMatrix proj;
 	public UniformMatrix trans;
-	public UniformBoolean useImage; 
+	public UniformBoolean isOverrideColour; 
 	public UniformVector overrideColour;
 	public UniformMatrix tcTrans;
 	public Shader2D() {
@@ -21,7 +21,7 @@ public class Shader2D extends Shader{
 	protected void getAllUniformLocations() {
 		proj = new UniformMatrix(programID, "proj");
 		trans = new UniformMatrix(programID, "trans");
-		useImage = new UniformBoolean(programID, "useImage");
+		isOverrideColour = new UniformBoolean(programID, "isOverideColour");
 		overrideColour = new UniformVector(programID, "overrideColour");
 		tcTrans = new UniformMatrix(programID, "tcTrans");
 	}

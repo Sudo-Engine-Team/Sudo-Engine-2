@@ -63,10 +63,15 @@ public class BitmapFont {
 		float xx = xLine + kerning + glyph.xOffset , yy = yLine + glyph.yOffset;
 		//System.out.println(xx);
 		BMQuad quad = new BMQuad();
-		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-yy/glyph.imgHeight); quad.pos.add(0f);							//TOP LEFT
-		quad.pos.add(xx/glyph.imgWidth); quad.pos.add(-(yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f);				//BOTTOM LEFT
-		quad.pos.add((xx+glyph.width)/glyph.imgWidth); quad.pos.add(-yy/glyph.imgHeight); quad.pos.add(0f);				//TOP RIGHT
-		quad.pos.add((xx+glyph.width)/glyph.imgWidth); quad.pos.add(-(yy+glyph.height)/glyph.imgHeight); quad.pos.add(0f); 	// BOTTOM RIGHT
+		float x1 = (xx/glyph.imgWidth);
+		float x2 = ((xx+glyph.width)/glyph.imgWidth);
+		float y1 = (yy/glyph.imgHeight);
+		float y2 = ((yy+glyph.height)/glyph.imgHeight);
+		
+		quad.pos.add(x1); quad.pos.add(-y1); quad.pos.add(0f);							//TOP LEFT
+		quad.pos.add(x1); quad.pos.add(-y2); quad.pos.add(0f);				//BOTTOM LEFT
+		quad.pos.add(x2); quad.pos.add(-y1); quad.pos.add(0f);				//TOP RIGHT
+		quad.pos.add(x2); quad.pos.add(-y2); quad.pos.add(0f); 	// BOTTOM RIGHT
 		quad.ind.add(i*4);
 		quad.ind.add(i*4+1);
 		quad.ind.add(i*4+2);

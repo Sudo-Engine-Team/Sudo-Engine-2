@@ -1,16 +1,16 @@
 package site.root3287.sudo2.engine.texture;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.Loader;
 
 public class ImageModel {
-	private AbstractTexture texture;
+	private AbstractTexture texture = null;
 	private Vector2f position = new Vector2f(0,0), scale = new Vector2f(1f,1f), offset = new Vector2f(), textureSize = new Vector2f();
 	private float rotation = 0;
-	private ImageModel() {
-		// TODO Auto-generated constructor stub
-	}
+	private boolean overrideColour = false;
+	private Vector4f colour = new Vector4f(1, 1, 1, 1);
 	public ImageModel(String file, float width, float height,float xOffset, float yOffset, float texX, float texY) {
 		this.texture = new AbstractTexture(Loader.getInstance().loadTexture(file));
 		this.offset = new Vector2f(xOffset, yOffset);
@@ -22,6 +22,10 @@ public class ImageModel {
 		this.textureSize = new Vector2f(atlas.getWidth(), atlas.getHeight());
 		this.offset = new Vector2f(atlas.x, atlas.y);
 		this.scale = new Vector2f(width, height);
+	}
+	public ImageModel(Vector4f colour, float width, float height) {
+		this.scale = new Vector2f(width, height);
+		this.setColour(colour);
 	}
 	
 	public Vector2f getOffset() {
@@ -65,16 +69,18 @@ public class ImageModel {
 	public void setTextureSize(Vector2f textureSize) {
 		this.textureSize = textureSize;
 	}
-	
-	@Override
-	public ImageModel clone() throws CloneNotSupportedException {
-		ImageModel temp = new ImageModel();
-		temp.offset = this.offset;
-		temp.position = this.position;
-		temp.rotation = this.rotation;
-		temp.scale = this.scale;
-		temp.texture = this.texture;
-		temp.textureSize = this.textureSize;
-		return temp;
+	public Vector4f getColour() {
+		return colour;
+	}
+	public void setColour(Vector4f colour) {
+		if(this.texture == null) {
+			this.overrideColour = (true);
+		}else {
+			this.overrideColour = (false);
+		}
+		this.colour = colour;
+	}
+	public boolean isOverrideColour() {
+		return overrideColour;
 	}
 }

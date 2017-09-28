@@ -21,6 +21,7 @@ public class TextRender extends Renderable {
 	public void render(){
 		shader.start();
 		//GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+		RenderUtils.disableDepthTest();
 		for(BitmapFont f : fonts){
 			GL30.glBindVertexArray(f.getModel().getVaoID());
 			GL20.glEnableVertexAttribArray(0);
@@ -40,6 +41,7 @@ public class TextRender extends Renderable {
 			GL30.glBindVertexArray(0);
 			GL11.glDisable(GL11.GL_BLEND);
 		}
+		RenderUtils.enableDepthTest();
 		shader.stop();
 		fonts.clear();
 	}
