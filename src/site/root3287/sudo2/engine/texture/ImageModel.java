@@ -14,7 +14,7 @@ public class ImageModel {
 	public ImageModel(String file, float width, float height,float xOffset, float yOffset, float texX, float texY) {
 		this.texture = new AbstractTexture(Loader.getInstance().loadTexture(file));
 		this.offset = new Vector2f(xOffset, yOffset);
-		this.setTextureSize(new Vector2f(texture.width/(texX/2),texture.height/(texY/2)));
+		this.setTextureSize(new Vector2f(texture.width/(texX),texture.height/(texY)));
 		this.scale = new Vector2f(width, height);
 	}
 	public ImageModel(TextureAtlas atlas, float width, float height){

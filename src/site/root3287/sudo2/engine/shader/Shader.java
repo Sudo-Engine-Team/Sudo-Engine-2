@@ -81,7 +81,7 @@ public abstract class Shader {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line;
             while((line = reader.readLine())!=null){
-                shaderSource.append(line).append("//\n");
+                shaderSource.append(line).append("\n");
             }
             reader.close();
         }catch(IOException e){
@@ -96,6 +96,7 @@ public abstract class Shader {
             System.err.println("Could not compile shader in "+file+"!");
             System.exit(-1);
         }
+       DisplayManager.LOGGER.log(Level.INFO, "Loaded Shader: "+file);
         return shaderID;
     }
     public int getProgramID() {

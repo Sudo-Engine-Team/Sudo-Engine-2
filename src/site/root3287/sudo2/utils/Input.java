@@ -172,7 +172,6 @@ public class Input {
 			//System.out.println("emc: "+emc);
 			Vector3f world = getWorld(c.getViewMatrix(), emc);
 			
-			System.out.println(world);
 			return world;
 		}
 		private static Vector4f getEyeCoords(Matrix4f proj, Vector4f clip) {

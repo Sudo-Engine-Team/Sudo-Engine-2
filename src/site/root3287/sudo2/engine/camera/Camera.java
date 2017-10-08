@@ -1,5 +1,6 @@
 package site.root3287.sudo2.engine.camera;
 
+import org.json.JSONObject;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -64,5 +65,14 @@ public abstract class Camera{
 
 	public void setYaw(float yaw) {
 		this.yaw = yaw;
+	}
+	@Override
+	public String toString() {
+		JSONObject obj = new JSONObject();
+		obj.append("position", getPosition());
+		obj.append("pitch", getPitch());
+		obj.append("yaw", getYaw());
+		//obj.append("view", getViewMatrix());
+		return obj.toString();
 	}
 }
