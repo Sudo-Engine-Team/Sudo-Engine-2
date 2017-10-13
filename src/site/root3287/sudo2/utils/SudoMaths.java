@@ -244,5 +244,8 @@ public class SudoMaths {
 		public void setY(float y){
 			this.y = y;
 		}
+		public long getSeed() {
+			return seed;
+		}
 	}
 }
