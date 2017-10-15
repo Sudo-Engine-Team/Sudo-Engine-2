@@ -19,7 +19,7 @@ void main(){
 	vec4 worldPosition = trans * vec4(pos, 1);
 	gl_Position = proj * view * worldPosition;
 	ptc = tc;
-	pn = (inverse(trans) * vec4(pn, 0)).xyz;
+	pn = (inverse(trans) * vec4(norm, 0)).xyz;
 	toLight = lightPosition - worldPosition.xyz;
 	toCam = (inverse(view) * vec4(0,0,0,1) - worldPosition).xyz;
 }

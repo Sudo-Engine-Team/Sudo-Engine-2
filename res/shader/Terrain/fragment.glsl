@@ -30,7 +30,7 @@ void main(){
 	//Specular
 	vec3 viewDir = normalize(toCam);
 	vec3 reflectDir = reflect(-unitLight, unitNormal);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), 128);
 	vec3 finalSpecular = specular * spec * lightColour.xyz;
 
 	//Texture Colour

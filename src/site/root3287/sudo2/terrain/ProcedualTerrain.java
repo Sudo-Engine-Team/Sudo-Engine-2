@@ -4,17 +4,17 @@ import org.lwjgl.util.vector.Vector3f;
 
 import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.texture.AbstractTexture;
-import site.root3287.sudo2.utils.SudoMaths.Perlin;
+import site.root3287.sudo2.utils.PerlinNoise;
 
 public class ProcedualTerrain extends Terrain{
 	private long seed;
-	private Perlin generator;
+	private PerlinNoise generator;
 	public ProcedualTerrain(int x , int z, int size, int lod) {
 		this.x = x*size;
 		this.y = z*size;
 		this.lod = lod;
 		this.size = size;
-		generator = new Perlin();
+		generator = new PerlinNoise(x, z, lod);
 		this.setSeed(generator.getSeed());
 		TerrainGenerator g = new TerrainGenerator(this.x, this.y, generator);
 		g.generate(size, lod);
@@ -27,7 +27,7 @@ public class ProcedualTerrain extends Terrain{
 		this.lod = lod;
 		this.size = size;
 		this.setSeed(seed);
-		generator = new Perlin(seed);
+		generator = new PerlinNoise(x, z, lod, seed);
 		TerrainGenerator g = new TerrainGenerator(this.x, this.y, generator);
 		g.generate(size, lod);
 		this.model = Loader.getInstance().loadToVAO(g.position, g.texture, g.normals, g.ind);
@@ -46,12 +46,9 @@ public class ProcedualTerrain extends Terrain{
 		float[] texture;
 		float[] normals;
 		int[] ind;
-		Perlin generator;
-		float x, y;
-		public TerrainGenerator(float x, float y, Perlin generator) {
+		PerlinNoise generator;
+		public TerrainGenerator(float x, float y, PerlinNoise generator) {
 			this.generator = generator;
-			this.x = x;
-			this.y =y;
 		}
 		
 		public void generate(int size, int lod){
@@ -94,8 +91,6 @@ public class ProcedualTerrain extends Terrain{
 		}
 		
 		private float getHeight(float x, float y){
-			generator.setX(this.x);
-			generator.setY(this.y);
 			return generator.getPerlin(x, y);
 		}
 		

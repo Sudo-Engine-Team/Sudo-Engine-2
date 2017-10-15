@@ -1,7 +1,6 @@
 package site.root3287.sudo2.utils;
 
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 
 import org.lwjgl.util.vector.Matrix4f;
@@ -177,75 +176,5 @@ public class SudoMaths {
 			}
 		}
 		return temp;
-	}
-	
-	public static class Perlin{
-		private Random random;
-		private long seed;
-		private float amplitude, octives, roughness;
-		private float x=0, y=0;
-		public Perlin(){
-			this.seed = new Random().nextLong();
-			this.random = new Random(this.seed);
-		}
-		public Perlin(long seed){
-			this.seed = seed;
-			this.random = new Random(this.seed);
-		}
-		
-		public float getPerlin(float x, float y){
-			 float total = 0;
-		        float d = (float) Math.pow(2, octives-1);
-		        for(int i=0;i<octives;i++){
-		            float freq = (float) (Math.pow(2, i) / d);
-		            float amp = (float) Math.pow(roughness, i) * amplitude;
-		            total += getIntopolatedNoise((x+this.x)*freq, (y + this.y)*freq) * amp;
-		        }
-		        return total;
-		}
-		private float getNoise(float x, float y){
-			random.setSeed((long) (x + y + seed));
-			float f = random.nextFloat() *2f-1;
-			random.setSeed(seed);
-			return f;
-		}
-		private float getSmoothNoise(float x, float y){
-			float corners = (getNoise(x-1, y-1) + getNoise(x-1, y+1) + getNoise(x+1, y-1) + getNoise(x+1, y+1))/16f;
-			float sides = (getNoise(x+1, y) + getNoise(x-1, y) + getNoise(x, y+1) + getNoise(x, y-1))/8f;
-			float center = getNoise(x, y)/4f;
-			return corners+sides+center;
-		}
-		private float cosineInterpolation(float a, float b, float blend){
-			double theta = blend *Math.PI;
-			float f = (float) (1-Math.cos(theta)*0.5f);
-			return a * 1 - f + b *f;
-		}
-		private float getIntopolatedNoise(float x, float y){
-			float fractX = x - (int) x;
-			float fractY = y - (int) y;
-			float v1 = getSmoothNoise((int)x, (int)y);
-			float v2 = getSmoothNoise((int)x+1, (int)y);
-			float v3 = getSmoothNoise((int)x, (int)y+1);
-			float v4 = getSmoothNoise((int)x+1, (int)y+1);
-			float i1 = cosineInterpolation(v1, v2, fractX);
-			float i2 = cosineInterpolation(v3, v4, fractX);
-			return cosineInterpolation(i1, i2, fractY);
-		}
-		
-		public void setAmplitude(float amp){
-			this.amplitude = amp;
-		}
-		public void setOctives(float oct){
-			this.octives = oct;
-		}
-		public void setX(float x){
-			this.x = x;
-		}
-		public void setY(float y){
-			this.y = y;
-		}
-		public long getSeed() {
-			return seed;
-		}
 	}
 }

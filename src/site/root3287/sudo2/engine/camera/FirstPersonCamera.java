@@ -139,7 +139,7 @@ public class FirstPersonCamera extends ProspectiveCamera{
 			this.yaw = 360 - Math.abs(this.yaw);
 		}
 		
-		  if(Input.Mouse.getDWheel() != 0){ flySpeed += Input.Mouse.getDWheel()*delta;
+		  if(Input.Mouse.getDWheel() != 0){ flySpeed += Input.Mouse.getDWheel();
 		  if(flySpeed < 0){ flySpeed = 0.00000001f; } }
 
 		if (isMouseGrabbedRequest) {
