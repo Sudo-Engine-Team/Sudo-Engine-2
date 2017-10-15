@@ -1,14 +1,13 @@
 #version 400 core
 
 in vec2 ptc;
-in vec3 pn;
+flat in vec3 pn;
 in vec3 toLight;
 in vec3 toCam;
 
 uniform sampler2D img;
 uniform float forceColour;
 uniform vec4 fcolour;
-
 out vec4 colour;
 
 //Lighting
