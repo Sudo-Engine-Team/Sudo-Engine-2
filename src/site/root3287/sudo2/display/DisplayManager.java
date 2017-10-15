@@ -57,7 +57,7 @@ public class DisplayManager {
 	public static float HEIGHT = WIDTH/16*9;
 	public static final float FOV = 90;
 	public static final float NEAR_PLANE = 0.1f;
-	public static final float FAR_PLANE = 100f;
+	public static final float FAR_PLANE = 9999f;
 	public static Vector4f BACKGROUND_COLOUR = new Vector4f(0.25f, 0.25f, 0.25f, 1);
 	public static long WINDOW;
 	public static Screen SCREEN = null;

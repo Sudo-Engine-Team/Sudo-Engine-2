@@ -23,6 +23,7 @@ public class TerrainRender extends Renderable{
 		shader.start();
 		((TerrainShader)shader).proj.loadMatrix(projection);
 		((TerrainShader)shader).view.loadMatrix(view);
+		RenderUtils.enableCulling();
 		for(Terrain t : terrains){
 			Matrix4f trans = SudoMaths.createTransformationMatrix(new Vector3f(t.getX(), 0, t.getZ()));
 			((TerrainShader)shader).trans.loadMatrix(trans);
@@ -42,6 +43,7 @@ public class TerrainRender extends Renderable{
 			RenderUtils.disableAlpha();
 			RenderUtils.unbindVAO();
 		}
+		RenderUtils.disableCulling();
 		terrains.clear();
 		shader.stop();
 	}

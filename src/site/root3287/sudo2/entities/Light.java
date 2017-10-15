@@ -1,26 +1,30 @@
 package site.root3287.sudo2.entities;
 
 import org.lwjgl.util.vector.Vector3f;
-import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.component.functions.ColourComponent;
-import site.root3287.sudo2.component.functions.TransposeComponent;
-
-public class Light extends Entity {
+public class Light {
 	
-	public Light(Vector3f position, Vector4f colour) {
-		TransposeComponent tc = new TransposeComponent();
-		tc.position = position;
-		ColourComponent cc = new ColourComponent();
-		cc.colour = colour;
-		addComponent(tc);
-		addComponent(cc);
+	private Vector3f position, colour;
+	
+	public Light(Vector3f position, Vector3f colour) {
+		this.position = position;
+		this.colour = colour;
+	}	
+
+	public Vector3f getPosition() {
+		return position;
 	}
-	
-	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
 
+	public void setPosition(Vector3f position) {
+		this.position = position;
+	}
+
+	public Vector3f getColour() {
+		return colour;
+	}
+
+	public void setColour(Vector3f colour) {
+		this.colour = colour;
 	}
 
 }

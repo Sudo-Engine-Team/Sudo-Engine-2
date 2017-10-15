@@ -10,6 +10,9 @@ public class TerrainShader extends Shader{
 	public UniformMatrix proj, view, trans;
 	public UniformBoolean forceColour;
 	public UniformVector colour;
+	
+	public UniformVector lightPosition;
+	public UniformVector lightColour;
 	public TerrainShader() {
 		super("/shader/Terrain/vertex.glsl", "/shader/Terrain/fragment.glsl");
 		// TODO Auto-generated constructor stub
@@ -22,6 +25,9 @@ public class TerrainShader extends Shader{
 		trans = new UniformMatrix(programID, "trans");
 		forceColour = new UniformBoolean(programID, "forceColour");
 		colour = new UniformVector(programID, "fcolour");
+		
+		lightColour = new UniformVector(programID, "lightColour");
+		lightPosition = new UniformVector(programID, "lightPosition");
 	}
 
 	@Override

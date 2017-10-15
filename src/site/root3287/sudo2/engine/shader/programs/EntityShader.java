@@ -7,8 +7,6 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.component.functions.ColourComponent;
-import site.root3287.sudo2.component.functions.TransposeComponent;
 import site.root3287.sudo2.engine.shader.Shader;
 import site.root3287.sudo2.engine.shader.uniforms.UniformBoolean;
 import site.root3287.sudo2.engine.shader.uniforms.UniformFloat;
@@ -79,8 +77,8 @@ public class EntityShader extends Shader{
     public void loadLight(List<Light> light){
     	for(int i =0; i<light.size(); i++){
     		if(i < MAX_LIGHT){
-    			location_lightPosition[i].loadVector(light.get(i).getComponent(TransposeComponent.class).position);
-            	location_lightColour[i].loadVector(light.get(i).getComponent(ColourComponent.class).colour);
+    			location_lightPosition[i].loadVector(light.get(i).getPosition());
+            	location_lightColour[i].loadVector(light.get(i).getColour());
     		}else{
     			location_lightPosition[i].loadVector(new Vector3f(0, 0, 0));
             	location_lightColour[i].loadVector(new Vector4f(0, 0, 0, 0));
