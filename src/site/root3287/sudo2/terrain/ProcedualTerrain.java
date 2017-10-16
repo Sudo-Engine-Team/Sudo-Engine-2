@@ -10,26 +10,42 @@ public class ProcedualTerrain extends Terrain{
 	private long seed;
 	private PerlinNoise generator;
 	public ProcedualTerrain(int x , int z, int size, int lod) {
+		generator = new PerlinNoise(x, z, lod);
+		this.setSeed(generator.getSeed());
+		TerrainGenerator g = new TerrainGenerator(this.x, this.y, generator);
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				g.generate(size, lod);
+			}
+		});
+		t.run();
+		
 		this.x = x*size;
 		this.y = z*size;
 		this.lod = lod;
 		this.size = size;
-		generator = new PerlinNoise(x, z, lod);
-		this.setSeed(generator.getSeed());
-		TerrainGenerator g = new TerrainGenerator(this.x, this.y, generator);
-		g.generate(size, lod);
 		this.model = Loader.getInstance().loadToVAO(g.position, g.texture, g.normals, g.ind);
 		this.texture = new AbstractTexture(Loader.getInstance().loadTexture("res/image/white.png"));
 	}
 	public ProcedualTerrain(int x , int z, int size, int lod, long seed) {
+		generator = new PerlinNoise(x, z, lod, seed);
+		TerrainGenerator g = new TerrainGenerator(this.x, this.y, generator);
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				g.generate(size, lod);
+			}
+		});
+		t.run();
+		
 		this.x = x*size;
 		this.y = z*size;
 		this.lod = lod;
 		this.size = size;
 		this.setSeed(seed);
-		generator = new PerlinNoise(x, z, lod, seed);
-		TerrainGenerator g = new TerrainGenerator(this.x, this.y, generator);
-		g.generate(size, lod);
 		this.model = Loader.getInstance().loadToVAO(g.position, g.texture, g.normals, g.ind);
 		this.texture = new AbstractTexture(Loader.getInstance().loadTexture("res/image/white.png"));
 	}

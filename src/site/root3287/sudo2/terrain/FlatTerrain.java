@@ -6,12 +6,20 @@ import site.root3287.sudo2.engine.texture.AbstractTexture;
 public class FlatTerrain extends Terrain{
 
 	public FlatTerrain(int x , int z, int size, int lod) {
+		FlatTerrainGenerator g = new FlatTerrainGenerator();
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				g.generate(size, lod);
+				
+			}
+		});
+		t.run();
 		this.x = x*size;
 		this.y = z*size;
 		this.lod = lod;
 		this.size = size;
-		FlatTerrainGenerator g = new FlatTerrainGenerator();
-		g.generate(size, lod);
 		this.model = Loader.getInstance().loadToVAO(g.position, g.texture, g.normals, g.ind);
 		this.texture = new AbstractTexture(Loader.getInstance().loadTexture("res/image/white.png"));
 	}
