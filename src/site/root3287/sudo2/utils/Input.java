@@ -148,6 +148,11 @@ public class Input {
 			float y = (float) (2*getY() / DisplayManager.HEIGHT)-1;
 			return new Vector2f(x, y);
 		}
+		public static Vector2f getNormalizedMouseCoords(float x, float y){
+			float nx = (float) (2*x / DisplayManager.WIDTH)-1;
+			float ny = (float) (2*y / DisplayManager.HEIGHT)-1;
+			return new Vector2f(nx, ny);
+		}
 		public static Vector2f getMouse(){
 			return new Vector2f((float)Mouse.getX(), (float)Mouse.getY());
 		}
@@ -165,6 +170,18 @@ public class Input {
 		public static Vector3f getMouseProjection(Camera c) {
 			//System.out.println("Coords: "+getMouse());
 			Vector2f nmc = getNormalizedMouseCoords();
+			//System.out.println("nmc: "+nmc);
+			Vector4f pmc = new Vector4f(nmc.x, nmc.y, -1, 1);
+			//System.out.println("pmc: "+pmc);
+			Vector4f emc = getEyeCoords(c.getProjectionMatrix(), pmc);
+			//System.out.println("emc: "+emc);
+			Vector3f world = getWorld(c.getViewMatrix(), emc);
+			
+			return world;
+		}
+		public static Vector3f getMouseProjection(Vector2f mousePos, Camera c) {
+			//System.out.println("Coords: "+getMouse());
+			Vector2f nmc = getNormalizedMouseCoords(mousePos.x, mousePos.y);
 			//System.out.println("nmc: "+nmc);
 			Vector4f pmc = new Vector4f(nmc.x, nmc.y, -1, 1);
 			//System.out.println("pmc: "+pmc);
