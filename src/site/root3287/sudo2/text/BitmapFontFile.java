@@ -8,14 +8,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BitmapFontFile {
-	private String file;
+	private String file, image;
 	private Map<String, String> fileInfo = new HashMap<>();
 	private Map<Character, BitmapGlyph> charInfo = new HashMap<>();
 	//First , Second, Ammount
 	private Map<Character, Map<Character, Float>> kerningInfo = new HashMap<>();
-	public BitmapFontFile(String file) {
-		this.file = file; 
+	public BitmapFontFile(String image, String file) {
+		this.file = file;
+		this.image = image;
 		loadFile();
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	public void loadFile(){
 		 try {

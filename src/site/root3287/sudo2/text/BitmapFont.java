@@ -18,8 +18,16 @@ public class BitmapFont {
 	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(256f, 256f);
 	private Vector4f colour;
 	public BitmapFont(String text, String bmText, String bmImage){
-		bmFile = new BitmapFontFile(bmText);
+		bmFile = new BitmapFontFile(bmText, bmImage);
 		setTexture(new Texture(Loader.getInstance().loadTexture(bmImage)));
+		this.text = (text);
+		colour = new Vector4f(1,1,1,1f);
+		generateText(text);
+	}
+	
+	public BitmapFont(String text, BitmapFontFile file){
+		bmFile = file;
+		setTexture(new Texture(Loader.getInstance().loadTexture(file.getImage())));
 		this.text = (text);
 		colour = new Vector4f(1,1,1,1f);
 		generateText(text);

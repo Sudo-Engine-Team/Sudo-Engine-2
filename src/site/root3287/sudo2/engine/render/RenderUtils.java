@@ -1,5 +1,7 @@
 package site.root3287.sudo2.engine.render;
 
+import java.util.logging.Level;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
@@ -8,6 +10,7 @@ import org.lwjgl.opengl.GL32;
 import org.lwjgl.opengl.GL40;
 import org.lwjgl.util.vector.Vector4f;
 
+import site.root3287.sudo2.display.Application;
 import site.root3287.sudo2.display.DisplayManager;
 
 public class RenderUtils {
@@ -80,7 +83,9 @@ public class RenderUtils {
      * @param count the number of vertices after {@code first} to transfer to the GL
      */
 	public static void renderArray(int mode, int first, int count) {
+		clearGLErrors();
 		GL11.glDrawArrays(mode, first, count);
+		assert(checkGLError());
 	}
 	
 	/**
@@ -96,7 +101,9 @@ public class RenderUtils {
      * @param indices the index values
      */
 	public static void renderElements(int mode, int count, int type, long indices) {
-		GL11.glDrawElements(mode, count, type, indices); 
+		clearGLErrors();
+		GL11.glDrawElements(mode, count, type, indices);
+		assert(checkGLError() == false);
 	}
 	
 	public static void bindVAO(int vao){
@@ -112,5 +119,18 @@ public class RenderUtils {
 	}
 	public static void disableVertexAttribsArray(int id){
 		GL20.glDisableVertexAttribArray(id);
+	}
+	
+	public static void clearGLErrors() {
+		while(GL11.glGetError() != GL11.GL_NO_ERROR);
+	}
+	public static boolean checkGLError() {
+		int e;
+		boolean hasError = false;
+		while((e = GL11.glGetError()) != GL11.GL_NO_ERROR) {
+			Application.LOGGER.log(Level.SEVERE, "OpenGl has recieved an Error! (" +e+ ": 0x0" + Integer.toHexString(e)+")");
+			hasError = true;
+		}
+		return hasError;
 	}
 }

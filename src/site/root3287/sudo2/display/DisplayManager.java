@@ -73,6 +73,7 @@ public class DisplayManager {
 		init(WIDTH, HEIGHT, TITLE);
 	}
 	public static void init(float width, float height, String title){
+		LOGGER.setLevel(Level.ALL);
 		LOGGER.setUseParentHandlers(false);
 		LOGGER.addHandler(new ConsoleHandler());
 		LOGGER.log(Level.INFO, "Loading LWJGL natives for "+System.getProperty("os.name"));
