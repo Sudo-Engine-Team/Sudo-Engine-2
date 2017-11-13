@@ -17,6 +17,7 @@ public class BitmapFont {
 	private String text;
 	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(256f, 256f);
 	private Vector4f colour;
+	
 	public BitmapFont(String text, String bmText, String bmImage){
 		bmFile = new BitmapFontFile(bmText, bmImage);
 		setTexture(new Texture(Loader.getInstance().loadTexture(bmImage)));
@@ -76,9 +77,9 @@ public class BitmapFont {
 		float y1 = (yy/glyph.imgHeight);
 		float y2 = ((yy+glyph.height)/glyph.imgHeight);
 		
-		quad.pos.add(x1); quad.pos.add(-y1); quad.pos.add(0f);							//TOP LEFT
-		quad.pos.add(x1); quad.pos.add(-y2); quad.pos.add(0f);				//BOTTOM LEFT
-		quad.pos.add(x2); quad.pos.add(-y1); quad.pos.add(0f);				//TOP RIGHT
+		quad.pos.add(x1); quad.pos.add(-y1); quad.pos.add(0f);	//TOP LEFT
+		quad.pos.add(x1); quad.pos.add(-y2); quad.pos.add(0f);	//BOTTOM LEFT
+		quad.pos.add(x2); quad.pos.add(-y1); quad.pos.add(0f);	//TOP RIGHT
 		quad.pos.add(x2); quad.pos.add(-y2); quad.pos.add(0f); 	// BOTTOM RIGHT
 		quad.ind.add(i*4);
 		quad.ind.add(i*4+1);
@@ -145,7 +146,6 @@ public class BitmapFont {
 	}
 
 	public Vector4f getColour() {
-		// TODO Auto-generated method stub
 		return colour;
 	}
 	

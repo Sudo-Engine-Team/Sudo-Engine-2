@@ -13,7 +13,7 @@ public class BitmapFontFile {
 	private Map<Character, BitmapGlyph> charInfo = new HashMap<>();
 	//First , Second, Ammount
 	private Map<Character, Map<Character, Float>> kerningInfo = new HashMap<>();
-	public BitmapFontFile(String image, String file) {
+	public BitmapFontFile(String file, String image) {
 		this.file = file;
 		this.image = image;
 		loadFile();
