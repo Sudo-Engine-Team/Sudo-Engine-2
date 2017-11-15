@@ -15,7 +15,7 @@ public class BitmapFont {
 	private Model model;
 	private BitmapFontFile bmFile;
 	private String text;
-	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(256f, 256f);
+	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(128f, 128f);
 	private Vector4f colour;
 	
 	public BitmapFont(String text, String bmText, String bmImage){
