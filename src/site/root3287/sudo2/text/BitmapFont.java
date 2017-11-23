@@ -19,9 +19,15 @@ public class BitmapFont {
 	private String text;
 	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(2f, 2f);
 	private Vector4f colour;
+	private boolean isDistanceField;
 	
 	public BitmapFont(String text, String bmText, String bmImage){
 		bmFile = new BitmapFontFile(bmText, bmImage);
+		if(bmFile.getFileInfo().containsKey("distanceField")) {
+			this.isDistanceField = Boolean.parseBoolean(bmFile.getFileInfo().get("distanceField"));
+		}else {
+			this.isDistanceField = false;
+		}
 		setTexture(new Texture(Loader.getInstance().loadTexture(bmImage)));
 		this.text = (text);
 		colour = new Vector4f(1,1,1,1f);
@@ -30,6 +36,11 @@ public class BitmapFont {
 	
 	public BitmapFont(String text, BitmapFontFile file){
 		bmFile = file;
+		if(bmFile.getFileInfo().containsKey("distanceField")) {
+			this.isDistanceField = Boolean.parseBoolean(bmFile.getFileInfo().get("distanceField"));
+		}else {
+			this.isDistanceField = false;
+		}
 		setTexture(new Texture(Loader.getInstance().loadTexture(file.getImage())));
 		this.text = (text);
 		colour = new Vector4f(1,1,1,1f);
@@ -191,5 +202,64 @@ public class BitmapFont {
 
 	public void setPosition(Vector2f pos) {
 		this.positon = pos;
+	}
+	public void setScale(float x, float y) {
+		this.scale = new Vector2f(x, y);
+	}
+	public void setScale(Vector2f s) {
+		this.scale = s;
+	}
+
+	public boolean isDistanceField() {
+		return isDistanceField;
+	}
+
+	public void setDistanceField(boolean isDistanceField) {
+		this.isDistanceField = isDistanceField;
+	}
+	
+	public static class DistanceFieldAttribs{
+		private boolean isDistanceField;
+		private Vector4f outlineColour;
+		private float outlineDistance;
+		private Vector4f dropShadowColour;
+		private Vector2f dropShadowOffset;
+		private float dropShadowSmoothing;
+		public boolean isDistanceField() {
+			return isDistanceField;
+		}
+		public void setDistanceField(boolean isDistanceField) {
+			this.isDistanceField = isDistanceField;
+		}
+		public Vector4f getOutlineColour() {
+			return outlineColour;
+		}
+		public void setOutlineColour(Vector4f outlineColour) {
+			this.outlineColour = outlineColour;
+		}
+		public Vector4f getDropShadowColour() {
+			return dropShadowColour;
+		}
+		public void setDropShadowColour(Vector4f dropShadowColour) {
+			this.dropShadowColour = dropShadowColour;
+		}
+		public Vector2f getDropShadowOffset() {
+			return dropShadowOffset;
+		}
+		public void setDropShadowOffset(Vector2f dropShadowOffset) {
+			this.dropShadowOffset = dropShadowOffset;
+		}
+		public float getDropShadowSmoothing() {
+			return dropShadowSmoothing;
+		}
+		public void setDropShadowSmoothing(float dropShadowSmoothing) {
+			this.dropShadowSmoothing = dropShadowSmoothing;
+		}
+		public float getOutlineDistance() {
+			return outlineDistance;
+		}
+		public void setOutlineDistance(float outlineDistance) {
+			this.outlineDistance = outlineDistance;
+		}
 	}
 }

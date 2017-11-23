@@ -5,7 +5,6 @@ import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.shader.Shader;
 import site.root3287.sudo2.engine.shader.uniforms.UniformBoolean;
-import site.root3287.sudo2.engine.shader.uniforms.UniformFloat;
 import site.root3287.sudo2.engine.shader.uniforms.UniformMatrix;
 import site.root3287.sudo2.engine.shader.uniforms.UniformVector;
 
@@ -20,11 +19,6 @@ public class TextShader extends Shader{
 	public UniformMatrix location_translation;
 	public UniformVector location_colour;
 	public UniformBoolean location_isDF;
-	public UniformFloat location_width;
-	public UniformFloat location_edge;
-	public UniformFloat location_borderWidth;
-	public UniformFloat location_borderEdge;
-	public UniformVector location_outlineColour;
 	
 	@Override
 	protected void getAllUniformLocations() {
@@ -32,11 +26,6 @@ public class TextShader extends Shader{
 		location_translation =new UniformMatrix(programID, "translation");
 		location_colour = new UniformVector(programID, "colour");
 		location_isDF = new UniformBoolean(programID, "isDF");
-		location_width = new UniformFloat(programID, "width");
-		location_edge =new UniformFloat(programID, "edge");
-		location_borderWidth = new UniformFloat(programID, "borderWidth");
-		location_borderEdge = new UniformFloat(programID, "borderEdge");
-		location_outlineColour = new UniformVector(programID, 	"outlineColour");
 	}
 
 	@Override
@@ -54,18 +43,6 @@ public class TextShader extends Shader{
 	
 	public void loadColour(Vector4f p) {
 		location_colour.loadVector(p);
-	}
-
-	public void loadDistanceField(boolean df, float width, float edge, float borderWidth, float borderEdge, Vector4f outlineColour) {
-		location_isDF.loadBoolean(df);
-		if(df){
-			location_isDF.loadBoolean(df);
-			location_width.loadFloat(width);
-			location_edge.loadFloat(edge);
-			location_borderWidth.loadFloat(borderWidth);
-			location_borderEdge.loadFloat(borderEdge);
-			location_outlineColour.loadVector(outlineColour);
-		}
 	}
 
 }

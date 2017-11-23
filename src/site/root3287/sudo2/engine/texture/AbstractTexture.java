@@ -1,5 +1,7 @@
 package site.root3287.sudo2.engine.texture;
 
+import org.lwjgl.opengl.GL11;
+
 import site.root3287.sudo2.engine.Loader;
 
 public class AbstractTexture {
@@ -102,5 +104,9 @@ public class AbstractTexture {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	
+	public void setTexturePrametersi(int pram1, int pram2) {
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, pram1, pram2);
 	}
 }

@@ -135,6 +135,15 @@ public class Loader {
 				ByteBuffer buf = ByteBuffer.allocateDirect(4*texture.getWidth()*texture.getHeight());
 				texture.decode(buf, texture.getWidth()*4, Format.RGBA);
 				buf.flip();
+				/*
+				 * This is the default prameter that I'm going to set
+				 * To change these prameters just use the following code
+				 * 
+				 * GL11.glBindTexture(GL11.GL_TEXTURE_2D. textureID);
+				 * GL11.glTextPrameteri(GL11.GL_TEXTURE_2D, pram1, pram2);
+				 * ...
+				 * GL11.glBindTexture(Gl11.GL_TEXTURE_2D, 0);
+				 */
 				GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 				GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, texture.getWidth(), texture.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
 				GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
