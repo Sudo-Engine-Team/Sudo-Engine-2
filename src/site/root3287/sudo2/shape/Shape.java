@@ -7,7 +7,7 @@ import site.root3287.sudo2.engine.Loader;
 import site.root3287.sudo2.engine.model.Model;
 
 public abstract class Shape {
-	protected Vector2f position = new Vector2f(0,0), scale = new Vector2f(100f,100f);
+	protected Vector2f position = new Vector2f(0,0), scale = new Vector2f(1f,1f);
 	protected Model model;
 	protected Vector4f colour = new Vector4f(1, 1, 1, 1);
 	

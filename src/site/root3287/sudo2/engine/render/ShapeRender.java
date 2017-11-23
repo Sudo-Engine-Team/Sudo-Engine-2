@@ -25,7 +25,9 @@ public class ShapeRender extends Renderable{
 			((ShapeShader) this.shader).loadTrasform(s.getPosition(), s.getScale());
 			((ShapeShader) this.shader).loadProspectiveMatrix(this.projection);
 			((ShapeShader) this.shader).loadColour(s.getColour());
+			RenderUtils.clearGLErrors();
 			GL11.glDrawElements(GL11.GL_TRIANGLES, s.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			assert(RenderUtils.checkGLError());
 			GL20.glDisableVertexAttribArray(0);
 			GL30.glBindVertexArray(0);
 		}

@@ -9,6 +9,6 @@ uniform mat4 translation;
 out vec2 ptc;
 
 void main(){
-	gl_Position = translation*projection*vec4(pos, 1.0);
+	gl_Position = projection*translation*vec4(pos, 1.0);
 	ptc = tc;
 }

@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector4f;
 import site.root3287.sudo2.engine.shader.Shader;
 import site.root3287.sudo2.engine.shader.uniforms.UniformMatrix;
 import site.root3287.sudo2.engine.shader.uniforms.UniformVector;
+import site.root3287.sudo2.utils.SudoMaths;
 
 public class ShapeShader extends Shader {
 	
@@ -14,16 +15,13 @@ public class ShapeShader extends Shader {
 		super("/shader/shape/shapeVertex.glsl", "/shader/shape/shapeFragment.glsl");
 	}
 	
-	UniformMatrix location_prospectiveMatrix;
-	UniformVector location_pos;
-	UniformVector location_scl;
+	UniformMatrix location_prospectiveMatrix, trans;
 	UniformVector location_colour;
 	
 	@Override
 	protected void getAllUniformLocations() {
 		location_prospectiveMatrix = new UniformMatrix(programID, "pmatrix");
-		location_pos = new UniformVector(programID, "pos");
-		location_scl =new UniformVector(programID, "scl");
+		trans = new UniformMatrix(programID, "trans");
 		location_colour = new UniformVector(programID, "col");
 	}
 	
@@ -32,8 +30,8 @@ public class ShapeShader extends Shader {
 	}
 	
 	public void loadTrasform(Vector2f p, Vector2f s){
-		location_pos.loadVector(p);
-		location_scl.loadVector(s);
+		Matrix4f trans = SudoMaths.createTransformationMatrix(p, s);
+		this.trans.loadMatrix(trans);
 	}
 	
 	public void loadColour(Vector4f colour){

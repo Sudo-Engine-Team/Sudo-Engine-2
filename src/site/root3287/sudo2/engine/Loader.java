@@ -168,6 +168,7 @@ public class Loader {
 				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 				GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
 				GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL14.GL_TEXTURE_LOD_BIAS, -0.4f);
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -179,6 +180,11 @@ public class Loader {
 		}
 		
 		return new AbstractTexture(textureID, texture.getWidth(),texture.getHeight());
+	}
+	
+	public static void addTexturePramaters(int tid, int pname, int pram){
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, tid);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, pname, pram);
 	}
 	
 	public void removeTextFromMemory(int vao){

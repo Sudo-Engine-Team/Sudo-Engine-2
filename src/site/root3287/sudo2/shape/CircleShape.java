@@ -11,7 +11,7 @@ public class CircleShape extends Shape{
 	public CircleShape(float radius, int lod) {
 		this.radius = radius;
 		this.lod = lod;
-		this.scale = new Vector2f(100, 100);
+		this.scale = new Vector2f(1, 1);
 		regenerate();
 	}
 	
@@ -37,6 +37,7 @@ public class CircleShape extends Shape{
 
 	public void setRadius(float radius) {
 		this.radius = radius;
+		regenerate();
 	}
 
 	public int getLod() {
@@ -45,6 +46,7 @@ public class CircleShape extends Shape{
 
 	public void setLod(int lod) {
 		this.lod = lod;
+		regenerate();
 	}
 
 	private class CircleGenerator{

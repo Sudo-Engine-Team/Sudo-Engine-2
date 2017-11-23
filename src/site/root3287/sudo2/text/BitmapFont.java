@@ -3,7 +3,9 @@ package site.root3287.sudo2.text;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.Loader;
@@ -15,7 +17,7 @@ public class BitmapFont {
 	private Model model;
 	private BitmapFontFile bmFile;
 	private String text;
-	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(256f, 256f);
+	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(2f, 2f);
 	private Vector4f colour;
 	
 	public BitmapFont(String text, String bmText, String bmImage){
@@ -39,7 +41,7 @@ public class BitmapFont {
 	}
 
 	public void generateText(String text){
-		float xLine = 0; float yLine = 0;
+		float xLine = 0; float yLine = -Float.parseFloat(bmFile.getFileInfo().get("lineHeight"));;
 		int i = 0;
 		List<Float> pos = new ArrayList<>(), tex = new ArrayList<>();
 		List<Integer> ind = new ArrayList<>();
@@ -65,7 +67,8 @@ public class BitmapFont {
 			xLine+=bmFile.getGlyphs().get(c).xAdvance;
 			i++;
 		}
-		this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatArray(pos), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
+		//this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatArray(pos), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
+		this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatTranslatedArray(pos, xLine/Float.parseFloat(bmFile.getFileInfo().get("scaleW")), yLine/Float.parseFloat(bmFile.getFileInfo().get("scaleH"))), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
 	}
 	
 	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, float kerning, int i){
@@ -136,6 +139,23 @@ public class BitmapFont {
 			}
 			return ret;
 		}
+		public static float[] toFloatTranslatedArray(List<Float> toString, float width, float height){
+			float[] temp = new float[toString.size()];
+			if(toString.size() %3 == 0){ // make sure that we have 3 vertices
+				for(int i =0; i < toString.size(); i+=3){
+					Vector4f vec = new Vector4f(toString.get(i), toString.get(i+1), toString.get(i+2), 1);
+					Matrix4f mat = new Matrix4f();
+					mat.setIdentity();
+					mat.translate(new Vector3f(-width/2, height/2, 0));
+					Matrix4f.transform(mat, vec, vec);
+					
+					temp[i] = vec.x;
+					temp[i+1] = vec.y;
+					temp[i+2] = vec.z;
+				}
+			}
+			return temp;
+		}
 		public static int[] toIntegerArray(List<Integer> toString){
 			int[] ret = new int[toString.size()];
 			for(int i = 0; i < toString.size(); i++){
@@ -167,5 +187,9 @@ public class BitmapFont {
 		}
 		res = bmFile.getKernings().get(letter).get(letterAhead);
 		return res;
+	}
+
+	public void setPosition(Vector2f pos) {
+		this.positon = pos;
 	}
 }
