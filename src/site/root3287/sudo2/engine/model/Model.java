@@ -2,6 +2,7 @@ package site.root3287.sudo2.engine.model;
 
 import site.root3287.sudo2.engine.Loader;
 
+@Deprecated
 public class Model {
 	
 	private int vaoID;

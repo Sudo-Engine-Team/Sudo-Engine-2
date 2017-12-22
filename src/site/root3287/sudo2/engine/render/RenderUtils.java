@@ -126,10 +126,14 @@ public class RenderUtils {
 	}
 	public static boolean checkGLError() {
 		int e;
+		int count = 0;
 		boolean hasError = false;
 		while((e = GL11.glGetError()) != GL11.GL_NO_ERROR) {
-			Application.LOGGER.log(Level.SEVERE, "OpenGl has recieved an Error! (" +e+ ": 0x0" + Integer.toHexString(e)+")");
+			if(count < 0)
+				Application.LOGGER.log(Level.SEVERE, "OpenGl has recieved an Error!");
+			Application.LOGGER.log(Level.SEVERE, count+": "+e+ ": 0x0" + Integer.toHexString(e));
 			hasError = true;
+			count++;
 		}
 		return hasError;
 	}

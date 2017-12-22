@@ -42,6 +42,7 @@ public class Loader {
 		return _instance;
 	}
 	
+	@Deprecated
 	public Model loadToVAO(float[] positions){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
@@ -50,6 +51,7 @@ public class Loader {
 		unbindVAO();
 		return new Model(vaoID, positions.length/3);
 	}
+	@Deprecated
 	public Model loadToVAO(float[] positions, int[] indices){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
@@ -59,6 +61,7 @@ public class Loader {
 		unbindVAO();
 		return new Model(vaoID, indices.length);
 	}
+	@Deprecated
 	public Model loadToVAO(float[] positions, float[] textureCoords){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
@@ -68,6 +71,7 @@ public class Loader {
 		unbindVAO();
 		return new Model(vaoID, positions.length/3);
 	}
+	@Deprecated
 	public Model loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices){ //3d models
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
@@ -78,7 +82,8 @@ public class Loader {
 		vaos.put(vaoID, vbos);
 		unbindVAO();
 		return new Model(vaoID, indices.length);
-	} 
+	}
+	@Deprecated
 	public Model loadToVAO(float[] pos, float[] texture, int[] ind){
 		int vaoID = createVAO();
 		List<Integer> vbos = new ArrayList<>();
@@ -99,6 +104,8 @@ public class Loader {
 		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
 		IntBuffer b = storeDataInIntBuffer(indices);
 		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, b, GL15.GL_STATIC_DRAW);
+		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+
 		return vboID;
 	}
 	private int storeDataInAttributeList(int attributeNumber, int coordnateSize, float[] data){

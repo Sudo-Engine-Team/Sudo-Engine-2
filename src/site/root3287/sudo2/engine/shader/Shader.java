@@ -186,7 +186,7 @@ public abstract class Shader {
     			System.err.println("Could not compile shader in "+file+"!");
     			System.exit(-1);
     		}
-    		DisplayManager.LOGGER.log(Level.INFO, "Loaded Shader: "+file);
+    		DisplayManager.LOGGER.log(Level.INFO, "Shader loaded: "+file);
     	}
     	return programs;
     }
@@ -213,7 +213,7 @@ public abstract class Shader {
             System.err.println("Could not compile shader in "+file+"!");
             System.exit(-1);
         }
-       DisplayManager.LOGGER.log(Level.INFO, "Loaded Shader: "+file);
+       DisplayManager.LOGGER.log(Level.INFO, "Shader Loaded: "+file);
         return shaderID;
     }
     public int getProgramID() {
