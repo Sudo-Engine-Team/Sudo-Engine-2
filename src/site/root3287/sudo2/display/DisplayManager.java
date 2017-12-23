@@ -33,16 +33,10 @@ import java.util.logging.Logger;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWErrorCallbackI;
 import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLCapabilities;
-import org.lwjgl.opengl.GLDebugMessageCallback;
-import org.lwjgl.opengl.GLDebugMessageCallbackI;
-import org.lwjgl.opengl.GLUtil;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 

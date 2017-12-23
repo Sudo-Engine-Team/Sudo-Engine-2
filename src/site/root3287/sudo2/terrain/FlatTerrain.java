@@ -1,6 +1,8 @@
 package site.root3287.sudo2.terrain;
 
 import site.root3287.sudo2.engine.Loader;
+import site.root3287.sudo2.engine.VAO;
+import site.root3287.sudo2.engine.VBO;
 import site.root3287.sudo2.engine.texture.AbstractTexture;
 
 public class FlatTerrain extends Terrain{
@@ -20,7 +22,20 @@ public class FlatTerrain extends Terrain{
 		this.y = z*size;
 		this.lod = lod;
 		this.size = size;
-		this.model = Loader.getInstance().loadToVAO(g.position, g.texture, g.normals, g.ind);
+		VBO pos = new VBO();
+		pos.setData(g.position);
+		VBO tc = new VBO();
+		tc.setData(g.texture);
+		VBO norm = new VBO();
+		norm.setData(g.normals);
+		VBO ind = new VBO(true);
+		ind.setData(g.ind);
+		
+		this.model = new VAO();
+		this.model.addVBO(ind);
+		this.model.addVBO(0, 3, pos);
+		this.model.addVBO(1, 2, tc);
+		this.model.addVBO(2, 3, norm);
 		this.texture = new AbstractTexture(Loader.getInstance().loadTexture("res/image/white.png"));
 	}
 	

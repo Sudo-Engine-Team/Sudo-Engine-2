@@ -1,9 +1,10 @@
 package site.root3287.sudo2.engine.model;
 
+import site.root3287.sudo2.engine.VAO;
 import site.root3287.sudo2.engine.texture.AbstractTexture;
 
 public class TexturedModel{
-	private Model model;
+	private VAO model;
 	private AbstractTexture texture;
 	
 	private float shineDamper = 1;
@@ -12,7 +13,7 @@ public class TexturedModel{
     private boolean hasTranspancy = false;
     private boolean useFakeLight = false;
    
-    public TexturedModel(Model model, AbstractTexture texture) {
+    public TexturedModel(VAO model, AbstractTexture texture) {
 		super();
 		this.model = model;
 		this.texture = texture;
@@ -50,10 +51,10 @@ public class TexturedModel{
 		this.useFakeLight = useFakeLight;
 	}
 	
-	public Model getModel() {
+	public VAO getModel() {
 		return model;
 	}
-	public void setModel(Model model) {
+	public void setModel(VAO model) {
 		this.model = model;
 	}
 	public AbstractTexture getTexture() {

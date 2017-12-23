@@ -24,7 +24,7 @@ public class TextRender extends Renderable {
 		RenderUtils.disableDepthTest();
 		for(BitmapFont f : fonts){
 			((TextShader) shader).location_isDF.loadBoolean(f.isDistanceField());
-			GL30.glBindVertexArray(f.getModel().getVaoID());
+			GL30.glBindVertexArray(f.getModel().getID());
 			GL20.glEnableVertexAttribArray(0);
 			GL20.glEnableVertexAttribArray(1);
 			((TextShader) shader).loadProjection(projection);
@@ -38,7 +38,7 @@ public class TextRender extends Renderable {
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			RenderUtils.enableDepthTest();
-			GL11.glDrawElements(GL11.GL_TRIANGLES, f.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, f.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
 			GL20.glDisableVertexAttribArray(0);
 			GL20.glDisableVertexAttribArray(1);
 			GL30.glBindVertexArray(0);

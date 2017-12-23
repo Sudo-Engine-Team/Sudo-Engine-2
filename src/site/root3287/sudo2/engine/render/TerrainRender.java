@@ -30,13 +30,13 @@ public class TerrainRender extends Renderable{
 			((TerrainShader)shader).forceColour.loadBoolean(t.isForceColour());
 			if(t.isForceColour())
 				((TerrainShader) shader).colour.loadVector(t.getColour());
-			RenderUtils.bindVAO(t.getModel().getVaoID());
+			RenderUtils.bindVAO(t.getModel().getID());
 			RenderUtils.enableVertexAttribsArray(0);
 			RenderUtils.enableVertexAttribsArray(1);
 			RenderUtils.enableVertexAttribsArray(2);
 			RenderUtils.bindTexture(0, t.getTexture().getTextureID());
 			RenderUtils.enableAlpha();
-			RenderUtils.renderElements(GL11.GL_TRIANGLES, t.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			RenderUtils.renderElements(GL11.GL_TRIANGLES, t.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
 			RenderUtils.disableVertexAttribsArray(0);
 			RenderUtils.disableVertexAttribsArray(1);
 			RenderUtils.disableVertexAttribsArray(2);

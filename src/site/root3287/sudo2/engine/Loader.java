@@ -3,32 +3,24 @@ package site.root3287.sudo2.engine;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import de.matthiasmann.twl.utils.PNGDecoder;
 import de.matthiasmann.twl.utils.PNGDecoder.Format;
 import site.root3287.sudo2.display.DisplayManager;
-import site.root3287.sudo2.engine.model.Model;
 import site.root3287.sudo2.engine.texture.AbstractTexture;
 
 public class Loader {
 	private static Loader _instance = null;
-	private HashMap<Integer, List<Integer>> vaos= new HashMap<>();
 	private List<Integer> textures = new ArrayList<Integer>();
-	public Map<Integer, List<Integer>> vaoText = new HashMap<>();
 	private Map<String, Integer> textureCache = new HashMap<>();
 	
 	public Loader(){
@@ -41,98 +33,7 @@ public class Loader {
 		}
 		return _instance;
 	}
-	
-	@Deprecated
-	public Model loadToVAO(float[] positions){
-		int vaoID = createVAO();
-		List<Integer> vbos = new ArrayList<>();
-		vbos.add(storeDataInAttributeList(0, 3, positions));
-		vaos.put(vaoID, vbos);
-		unbindVAO();
-		return new Model(vaoID, positions.length/3);
-	}
-	@Deprecated
-	public Model loadToVAO(float[] positions, int[] indices){
-		int vaoID = createVAO();
-		List<Integer> vbos = new ArrayList<>();
-		vbos.add(bindIndicesBuffer(indices));
-		vbos.add(storeDataInAttributeList(0, 3, positions));
-		vaos.put(vaoID, vbos);
-		unbindVAO();
-		return new Model(vaoID, indices.length);
-	}
-	@Deprecated
-	public Model loadToVAO(float[] positions, float[] textureCoords){
-		int vaoID = createVAO();
-		List<Integer> vbos = new ArrayList<>();
-		vbos.add(storeDataInAttributeList(0, 3, positions));
-		vbos.add(storeDataInAttributeList(1, 2, textureCoords));
-		vaos.put(vaoID, vbos);
-		unbindVAO();
-		return new Model(vaoID, positions.length/3);
-	}
-	@Deprecated
-	public Model loadToVAO(float[] positions, float[] textureCoords, float[] normals, int[] indices){ //3d models
-		int vaoID = createVAO();
-		List<Integer> vbos = new ArrayList<>();
-		vbos.add(bindIndicesBuffer(indices));
-		vbos.add(storeDataInAttributeList(0, 3, positions));
-		vbos.add(storeDataInAttributeList(1, 2, textureCoords));
-		vbos.add(storeDataInAttributeList(2, 3, normals));
-		vaos.put(vaoID, vbos);
-		unbindVAO();
-		return new Model(vaoID, indices.length);
-	}
-	@Deprecated
-	public Model loadToVAO(float[] pos, float[] texture, int[] ind){
-		int vaoID = createVAO();
-		List<Integer> vbos = new ArrayList<>();
-		vbos.add(bindIndicesBuffer(ind));
-		vbos.add(storeDataInAttributeList(0, 3, pos));
-		vbos.add(storeDataInAttributeList(1, 2, texture));
-		vaos.put(vaoID, vbos);
-		unbindVAO();
-		return new Model(vaoID, ind.length);
-	}
-	private int createVAO(){
-		int vaoID = GL30.glGenVertexArrays();
-		GL30.glBindVertexArray(vaoID);
-		return vaoID;
-	}
-	private int bindIndicesBuffer(int[] indices){
-		int vboID = GL15.glGenBuffers();
-		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
-		IntBuffer b = storeDataInIntBuffer(indices);
-		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, b, GL15.GL_STATIC_DRAW);
-		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		return vboID;
-	}
-	private int storeDataInAttributeList(int attributeNumber, int coordnateSize, float[] data){
-		int vboID = GL15.glGenBuffers();
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
-		FloatBuffer buffer = storeDataInFloatBuffer(data);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
-		GL20.glVertexAttribPointer(attributeNumber, coordnateSize, GL11.GL_FLOAT, false, 0, 0);
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-		return vboID;
-	}
-	private void unbindVAO(){
-		GL30.glBindVertexArray(0);
-	}
-	
-	private FloatBuffer storeDataInFloatBuffer(float[] data){
-		FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
-		buffer.put(data);
-		buffer.flip();
-		return buffer;
-	}
-	private IntBuffer storeDataInIntBuffer(int[] data){
-		IntBuffer b = BufferUtils.createIntBuffer(data.length);
-		b.put(data);
-		b.flip();
-		return b;
-	}
 	public int loadTexture(String fileName){
 		PNGDecoder texture = null;
 		int textureID = GL11.glGenTextures();
@@ -202,22 +103,6 @@ public class Loader {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, tid);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, pname, pram);
 	}
-	
-	public void removeTextFromMemory(int vao){
-		removeVAO(vao, false);
-	}
-	public void removeVAO(int vaoID){
-		removeVAO(vaoID, true);
-	}
-	public void removeVAO(int vaoID, boolean debug){
-		if(debug)
-			DisplayManager.LOGGER.log(Level.INFO,"Removing VAO from memory: "+vaoID);
-		List<Integer> vbos = vaos.remove(vaoID);
-		for(int vbo : vbos){
-			GL15.glDeleteBuffers(vbo);
-		}
-		GL30.glDeleteVertexArrays(vaoID);
-	}
 	public void removeTexture(int textureID){
 		DisplayManager.LOGGER.log(Level.INFO,"Removing Texture form memory "+textureID);
 		GL11.glDeleteTextures(textureID);
@@ -225,19 +110,6 @@ public class Loader {
 	}
 	public void destory(){
 		DisplayManager.LOGGER.log(Level.INFO, "Disposing Loader");
-		int vboSize = 0;
-		int vaoSize = 0;
-		for(int vao : vaos.keySet()){
-			for(int vbo : vaos.get(vao)){
-				GL15.glDeleteBuffers(vbo);
-				vboSize++;
-			}
-			GL30.glDeleteVertexArrays(vao);
-			vaoSize++;
-		}
-		DisplayManager.LOGGER.log(Level.INFO,"Deleted "+vaoSize+" VAOS");
-		DisplayManager.LOGGER.log(Level.INFO, "Deleted "+vboSize+" VBOS");
-		
 		int texturesSize = 0;
 		for(int texture:textures){
 			GL11.glDeleteTextures(texture);

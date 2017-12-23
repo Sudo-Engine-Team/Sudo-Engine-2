@@ -20,13 +20,13 @@ public class ShapeRender extends Renderable{
 	public void render(){
 		this.shader.start();
 		for(Shape s : shapes){
-			GL30.glBindVertexArray(s.getModel().getVaoID());
+			GL30.glBindVertexArray(s.getModel().getID());
 			GL20.glEnableVertexAttribArray(0);
 			((ShapeShader) this.shader).loadTrasform(s.getPosition(), s.getScale());
 			((ShapeShader) this.shader).loadProspectiveMatrix(this.projection);
 			((ShapeShader) this.shader).loadColour(s.getColour());
 			RenderUtils.clearGLErrors();
-			GL11.glDrawElements(GL11.GL_TRIANGLES, s.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, s.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
 			assert(RenderUtils.checkGLError());
 			GL20.glDisableVertexAttribArray(0);
 			GL30.glBindVertexArray(0);

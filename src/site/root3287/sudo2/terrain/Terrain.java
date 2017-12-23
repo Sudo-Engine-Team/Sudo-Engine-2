@@ -2,21 +2,21 @@ package site.root3287.sudo2.terrain;
 
 import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.engine.model.Model;
+import site.root3287.sudo2.engine.VAO;
 import site.root3287.sudo2.engine.texture.AbstractTexture;
 import site.root3287.sudo2.engine.texture.Texture;
 
 public class Terrain {
 	protected int x, y, size, lod;
-	protected Model model;
+	protected VAO model;
 	protected Vector4f colour;
 	protected boolean forceColour;
 	protected AbstractTexture texture;
 	
-	public Model getModel() {
+	public VAO getModel() {
 		return model;
 	}
-	public void setModel(Model model) {
+	public void setModel(VAO model) {
 		this.model = model;
 	}
 	protected Texture Texture;

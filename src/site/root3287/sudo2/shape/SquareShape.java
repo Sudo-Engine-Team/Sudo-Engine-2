@@ -3,13 +3,20 @@ package site.root3287.sudo2.shape;
 import java.util.ArrayList;
 import java.util.List;
 
-import site.root3287.sudo2.engine.Loader;
+import site.root3287.sudo2.engine.VAO;
+import site.root3287.sudo2.engine.VBO;
 
 public abstract class SquareShape extends Shape{
 
 	public SquareShape() {
 		SquareGenerator g = new SquareGenerator();
-		this.model = Loader.getInstance().loadToVAO(g.getPos(), g.getInd());
+		this.model = new VAO();
+		VBO pos = new VBO();
+		pos.setData(g.getPos());
+		VBO ind = new VBO(true);
+		ind.setData(g.getInd());
+		this.model.addVBO(ind);
+		this.model.addVBO(0, 3, pos);
 	}
 	
 	private static class SquareGenerator{

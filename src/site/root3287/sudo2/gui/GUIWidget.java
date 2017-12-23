@@ -6,7 +6,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.engine.model.Model;
+import site.root3287.sudo2.engine.VAO;
 import site.root3287.sudo2.engine.texture.AbstractTexture;
 import site.root3287.sudo2.text.BitmapFont;
 
@@ -15,7 +15,7 @@ public abstract class GUIWidget {
 	private List<GUIWidget> children;
 	private List<BitmapFont> texts = new ArrayList<>();
 	private GUIWidget parent;
-	private Model model;
+	private VAO model;
 	private AbstractTexture texture;
 	private Vector4f bgcolour = new Vector4f(1, 1, 1, 1);
 
@@ -36,10 +36,10 @@ public abstract class GUIWidget {
 		texture = null;
 	}
 	
-	public Model getModel() {
+	public VAO getModel() {
 		return model;
 	}
-	public void setModel(Model model) {
+	public void setModel(VAO model) {
 		this.model = model;
 	}
 	public AbstractTexture getTexture() {

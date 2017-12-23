@@ -9,12 +9,13 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.Loader;
-import site.root3287.sudo2.engine.model.Model;
+import site.root3287.sudo2.engine.VAO;
+import site.root3287.sudo2.engine.VBO;
 import site.root3287.sudo2.engine.texture.Texture;
 
 public class BitmapFont {
 	private Texture texture;
-	private Model model;
+	private VAO model;
 	private BitmapFontFile bmFile;
 	private String text;
 	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(2f, 2f);
@@ -79,7 +80,18 @@ public class BitmapFont {
 			i++;
 		}
 		//this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatArray(pos), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
-		this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatTranslatedArray(pos, xLine/Float.parseFloat(bmFile.getFileInfo().get("scaleW")), yLine/Float.parseFloat(bmFile.getFileInfo().get("scaleH"))), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
+		VBO posVBO = new VBO();
+		VBO indVBO = new VBO(true);
+		VBO tcVBO = new VBO();
+		
+		indVBO.setData(BMQuad.toIntegerArray(ind));
+		tcVBO.setData(BMQuad.toFloatArray(tex));
+		posVBO.setData(BMQuad.toFloatTranslatedArray(pos, xLine/Float.parseFloat(bmFile.getFileInfo().get("scaleW")), yLine/Float.parseFloat(bmFile.getFileInfo().get("scaleH"))));
+		
+		this.model = new VAO();
+		model.addVBO(indVBO);
+		model.addVBO(0, 3, posVBO);
+		model.addVBO(1,2, tcVBO);
 	}
 	
 	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, float kerning, int i){
@@ -108,7 +120,7 @@ public class BitmapFont {
 		return quad;
 	}
 
-	public Model getModel() {
+	public VAO getModel() {
 		return model;
 	}
 
@@ -134,7 +146,7 @@ public class BitmapFont {
 
 	public void setText(String text) {
 		this.text = text;
-		Loader.getInstance().removeTextFromMemory(this.model.getVaoID());
+		this.model.dispose();
 		generateText(text);
 	}
 

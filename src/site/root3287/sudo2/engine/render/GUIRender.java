@@ -21,9 +21,9 @@ public class GUIRender extends Renderable{
 		shader.start();
 		((GUIShader)shader).proj.loadMatrix(projection);
 		((GUIShader)shader).trans.loadMatrix(SudoMaths.createTransformationMatrix(w.getPosition(), w.getScale()));
-		RenderUtils.bindVAO(w.getModel().getVaoID());
+		RenderUtils.bindVAO(w.getModel().getID());
 		RenderUtils.enableVertexAttribsArray(0);
-		RenderUtils.renderElements(GL11.GL_TRIANGLES, w.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+		RenderUtils.renderElements(GL11.GL_TRIANGLES, w.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
 		RenderUtils.disableVertexAttribsArray(0);
 		RenderUtils.unbindVAO();
 		shader.stop();
@@ -35,9 +35,9 @@ public class GUIRender extends Renderable{
 		for(GUIWidget w : widgets){
 			((GUIShader)shader).trans.loadMatrix(SudoMaths.createTransformationMatrix(w.getPosition(), w.getScale()));
 			((GUIShader)shader).bgColour.loadVector(w.getBackgroundColour());
-			RenderUtils.bindVAO(w.getModel().getVaoID());
+			RenderUtils.bindVAO(w.getModel().getID());
 			RenderUtils.enableVertexAttribsArray(0);
-			RenderUtils.renderElements(GL11.GL_TRIANGLES, w.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			RenderUtils.renderElements(GL11.GL_TRIANGLES, w.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
 			RenderUtils.disableVertexAttribsArray(0);
 		}
 		RenderUtils.unbindVAO();

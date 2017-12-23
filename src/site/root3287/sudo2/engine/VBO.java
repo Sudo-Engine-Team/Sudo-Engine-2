@@ -39,7 +39,7 @@ public class VBO {
 		return new VBO(ind);
 	}
 	
-	private int id;
+	private int id, dataSize;
 	private boolean isInd;
 	private Buffer data;
 	
@@ -87,6 +87,7 @@ public class VBO {
 	}
 	
 	public void setData(float[] data){
+		this.dataSize = data.length;
 		FloatBuffer b = BufferUtils.createFloatBuffer(data.length);
 		b.put(data);
 		b.flip();
@@ -94,11 +95,16 @@ public class VBO {
 		this.data = b;
 	}
 	public void setData(int[] data){
+		this.dataSize = data.length;
 		IntBuffer b = BufferUtils.createIntBuffer(data.length);
 		b.put(data);
 		b.flip();
 		this.isInd = true;
 		this.data = b;
+	}
+	
+	public int getDataSize() {
+		return dataSize;
 	}
 	
 	public void dispose(){

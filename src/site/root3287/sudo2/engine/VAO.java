@@ -66,6 +66,7 @@ public class VAO {
 	}
 	
 	public void addVBO(VBO vbo){
+		this.size = vbo.getDataSize();
 		VAO_VBO.get(this).add(vbo);
 		this.bind();
 		vbo.bind();

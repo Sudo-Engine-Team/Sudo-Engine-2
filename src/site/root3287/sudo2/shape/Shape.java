@@ -3,12 +3,12 @@ package site.root3287.sudo2.shape;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.engine.Loader;
-import site.root3287.sudo2.engine.model.Model;
+import site.root3287.sudo2.engine.VAO;
+import site.root3287.sudo2.engine.VBO;
 
 public abstract class Shape {
 	protected Vector2f position = new Vector2f(0,0), scale = new Vector2f(1f,1f);
-	protected Model model;
+	protected VAO model;
 	protected Vector4f colour = new Vector4f(1, 1, 1, 1);
 	
 	public Shape(){
@@ -44,13 +44,19 @@ public abstract class Shape {
 	public void setColour(Vector4f colour) {
 		this.colour = colour;
 	}
-	public Model getModel() {
+	public VAO getModel() {
 		return model;
 	}
 	public void setModel(float[] position, int[] ind) {
 		if(this.model != null){
-			Loader.getInstance().removeVAO(this.model.getVaoID(), true);
+			model.dispose();
 		}
-		this.model = Loader.getInstance().loadToVAO(position, ind);
+		this.model = new VAO();
+		VBO pos = new VBO();
+		pos.setData(position);
+		VBO indVBO = new VBO(true);
+		indVBO.setData(ind);
+		this.model.addVBO(0,3,pos);
+		this.model.addVBO(indVBO);
 	}
 }

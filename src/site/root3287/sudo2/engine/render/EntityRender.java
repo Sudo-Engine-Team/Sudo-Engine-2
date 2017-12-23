@@ -14,7 +14,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import site.root3287.sudo2.component.functions.ModelComponet;
 import site.root3287.sudo2.component.functions.TransposeComponent;
-import site.root3287.sudo2.engine.model.Model;
+import site.root3287.sudo2.engine.VAO;
 import site.root3287.sudo2.engine.model.TexturedModel;
 import site.root3287.sudo2.engine.shader.programs.EntityShader;
 import site.root3287.sudo2.entities.Entity;
@@ -54,7 +54,7 @@ public class EntityRender{
 			for (Entity entity : batch) {
 				prepareInstance(entity);
 				GL11.glLineWidth(0.5f);
-				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
 				unbindTexturedModel();
 			}
 		}
@@ -64,8 +64,8 @@ public class EntityRender{
 	}
 
 	private void prepareTexturedModel(TexturedModel model) {
-		Model rawModel = model.getModel();
-		GL30.glBindVertexArray(rawModel.getVaoID());
+		VAO rawModel = model.getModel();
+		GL30.glBindVertexArray(rawModel.getID());
 		GL20.glEnableVertexAttribArray(0);
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
