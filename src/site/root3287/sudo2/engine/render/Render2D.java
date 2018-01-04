@@ -16,10 +16,10 @@ import site.root3287.sudo2.utils.SudoMaths;
 public class Render2D extends Renderable{
 	
 	List<ImageModel> images = new ArrayList<>();
-	public static VAO vaoModel;
+	private static VAO vaoModel;
 	
 	public Render2D(){
-		this.shader = new Shader2D();
+		vaoModel = new VAO();
 		VBO pos = new VBO();
 		pos.setData(new float[] {
 				-1,1,0,
@@ -31,9 +31,17 @@ public class Render2D extends Renderable{
 		ind.setData(new int[] {
 				0,1,2,2,1,3
 		});
-		vaoModel = new VAO();
+		VBO tc = new VBO();
+		tc.setData(new float[] {
+				0,0,
+				0,1,
+				1,0,
+				1,1
+		});
 		vaoModel.addVBO(ind);
 		vaoModel.addVBO(0,3,pos);
+		vaoModel.addVBO(1,2,tc);
+		this.shader = new Shader2D();
 	}
 	
 	public void render() {

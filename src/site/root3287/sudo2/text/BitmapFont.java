@@ -80,6 +80,8 @@ public class BitmapFont {
 			i++;
 		}
 		//this.model = Loader.getInstance().loadToVAO(BMQuad.toFloatArray(pos), BMQuad.toFloatArray(tex), BMQuad.toIntegerArray(ind));
+		
+		this.model = new VAO();
 		VBO posVBO = new VBO();
 		VBO indVBO = new VBO(true);
 		VBO tcVBO = new VBO();
@@ -88,10 +90,9 @@ public class BitmapFont {
 		tcVBO.setData(BMQuad.toFloatArray(tex));
 		posVBO.setData(BMQuad.toFloatTranslatedArray(pos, xLine/Float.parseFloat(bmFile.getFileInfo().get("scaleW")), yLine/Float.parseFloat(bmFile.getFileInfo().get("scaleH"))));
 		
-		this.model = new VAO();
 		model.addVBO(indVBO);
 		model.addVBO(0, 3, posVBO);
-		model.addVBO(1,2, tcVBO);
+		model.addVBO(1, 2, tcVBO);
 	}
 	
 	private BMQuad generateQuad(BitmapGlyph glyph, float xLine, float yLine, float kerning, int i){

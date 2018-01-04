@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
 
 import site.root3287.sudo2.engine.shader.programs.TextShader;
 import site.root3287.sudo2.text.BitmapFont;
@@ -20,31 +18,32 @@ public class TextRender extends Renderable {
 	
 	public void render(){
 		shader.start();
-		//GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 		RenderUtils.disableDepthTest();
 		for(BitmapFont f : fonts){
+			RenderUtils.bindVAO(f.getModel().getID());
+			
 			((TextShader) shader).location_isDF.loadBoolean(f.isDistanceField());
-			GL30.glBindVertexArray(f.getModel().getID());
-			GL20.glEnableVertexAttribArray(0);
-			GL20.glEnableVertexAttribArray(1);
 			((TextShader) shader).loadProjection(projection);
 			((TextShader) shader).loadTranslation(SudoMaths.createTransformationMatrix(f.getPosition(), f.getScale()));
 			((TextShader) shader).loadColour(f.getColour());
 			((TextShader) shader).location_isDF.loadBoolean(Boolean.parseBoolean(f.getFile().getFileInfo().get("distanceField")));
+			
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, f.getTexture().getTextureID());
 			if(f.isDistanceField())
 				f.getTexture().setTexturePrametersi(GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+			
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-			RenderUtils.enableDepthTest();
+			RenderUtils.enableVertexAttribsArray(0);
+			RenderUtils.enableVertexAttribsArray(1);
 			GL11.glDrawElements(GL11.GL_TRIANGLES, f.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
-			GL20.glDisableVertexAttribArray(0);
-			GL20.glDisableVertexAttribArray(1);
-			GL30.glBindVertexArray(0);
+			RenderUtils.disableVertexAttribsArray(0);
+			RenderUtils.disableVertexAttribsArray(1);
 			GL11.glDisable(GL11.GL_BLEND);
 		}
 		RenderUtils.enableDepthTest();
+		RenderUtils.unbindVAO();
 		shader.stop();
 		fonts.clear();
 	}
