@@ -85,6 +85,8 @@ public class BitmapFontFile {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch(IndexOutOfBoundsException e) {
+				System.err.println("There might be a space that a font file has in one of the characters.");
 			}
 		// printKerning();
 	}

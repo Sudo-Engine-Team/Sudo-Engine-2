@@ -30,7 +30,7 @@ public class TextRender extends Renderable {
 			((TextShader) shader).loadProjection(projection);
 			((TextShader) shader).loadTranslation(SudoMaths.createTransformationMatrix(f.getPosition(), f.getScale()));
 			((TextShader) shader).loadColour(f.getColour());
-			//((TextShader) shader).loadDistanceField(Boolean.parseBoolean(f.getFile().getFileInfo().get("distanceField")));
+			((TextShader) shader).location_isDF.loadBoolean(Boolean.parseBoolean(f.getFile().getFileInfo().get("distanceField")));
 			GL13.glActiveTexture(GL13.GL_TEXTURE0);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, f.getTexture().getTextureID());
 			if(f.isDistanceField())

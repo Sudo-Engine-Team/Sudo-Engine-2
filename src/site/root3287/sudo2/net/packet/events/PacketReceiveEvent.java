@@ -1,6 +1,7 @@
-package site.root3287.sudo2.net.packet;
+package site.root3287.sudo2.net.packet.events;
 
 import site.root3287.sudo2.events.Event;
+import site.root3287.sudo2.net.packet.Packet;
 
 public class PacketReceiveEvent extends Event{
 

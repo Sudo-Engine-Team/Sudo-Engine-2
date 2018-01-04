@@ -24,10 +24,9 @@ public class VAO {
 		int i = 0;
 		for(VBO b : VAO_VBO.get(ALLVAO.get(id))){
 			b.dispose();
-			VAO_VBO.get(ALLVAO.get(id)).remove(i);
 			i++;
 		}
-		DisplayManager.LOGGER.log(Level.INFO, "Disposed "+(i+1)+" VBO");
+		DisplayManager.LOGGER.log(Level.INFO, "Disposed "+(i)+" VBO");
 		GL30.glDeleteVertexArrays(id);
 		VAO_VBO.remove(ALLVAO.get(id));
 		ALLVAO.remove(id);
