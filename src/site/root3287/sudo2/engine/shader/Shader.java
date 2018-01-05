@@ -120,7 +120,7 @@ public abstract class Shader {
             		}
             	}else{
             		if(currentShader == null){
-            			System.err.println("Line "+lineNum+": Shader not defined! Expected #shader <type>. Please use #shader <type> after #shader end");
+            			System.err.println("Line "+lineNum+": Shader not defined! Expected #shader <type(VERTEX|FRAGMENT|GEOMETRY|END)>. Please use #shader <type> after #shader end");
             			System.exit(0);
             		}
             		switch (currentShader) {
@@ -134,7 +134,7 @@ public abstract class Shader {
 						geometryShaderSource.append(line).append("\n");
 						break;
 					default:
-						System.err.println("Shader not defined! Use #shader <type> per shader!");
+						System.err.println("Shader not defined! Use #shader <type(VERTEX|FRAGMENT|GEOMETRY|END)> per shader!");
 						break;
 					}
             	}

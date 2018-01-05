@@ -1,4 +1,4 @@
-package site.root3287.sudo2.net;
+package site.root3287.sudo2.test.net;
 
 import java.util.Scanner;
 
