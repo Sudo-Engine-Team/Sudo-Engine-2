@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
@@ -76,7 +77,7 @@ public class DisplayManager {
 		LOGGER.setLevel(Level.ALL);
 		LOGGER.setUseParentHandlers(false);
 		LOGGER.addHandler(new ConsoleHandler());
-		LOGGER.log(Level.INFO, "Loading LWJGL natives for "+System.getProperty("os.name"));
+		LOGGER.log(Level.INFO, "Loaded LWJGL "+Version.getVersion()+" natives for "+System.getProperty("os.name"));
 		LOGGER.log(Level.INFO, "System.getProperty('os.name') == " + System.getProperty("os.name"));
 		LOGGER.log(Level.INFO, "System.getProperty('os.version') == " + System.getProperty("os.version"));
 		LOGGER.log(Level.INFO, "System.getProperty('os.arch') == " + System.getProperty("os.arch"));

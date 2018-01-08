@@ -11,7 +11,10 @@ public class AudioSource {
 	private Vector3f position, velocity;
 	private float gain;
 	private float pitch;
+	private float rolloff;
 	private boolean loop;
+	private boolean relativeSound;
+	private boolean absoluteSound;
 	
 	public AudioSource() {
 		this.id = AL10.alGenSources();
@@ -89,6 +92,39 @@ public class AudioSource {
 
 	public float getPitch() {
 		return pitch;
+	}
+	
+	public void setRolloff(float f) {
+		this.rolloff = f;
+		AL10.alSourcef(this.id, AL10.AL_ROLLOFF_FACTOR, rolloff);
+	}
+	
+	public float getRolloff() {
+		return this.rolloff;
+	}
+	
+	public void setRelativeSound(boolean b) {
+		if(b && absoluteSound) {
+			setAbsoluteSound(false);
+		}
+		this.relativeSound = b;
+		AL10.alSourcef(this.id, AL10.AL_SOURCE_RELATIVE, b?AL10.AL_TRUE:AL10.AL_FALSE);
+	}
+	
+	public boolean isRelativeSound() {
+		return relativeSound;
+	}
+	
+	public void setAbsoluteSound(boolean b) {
+		if(b && relativeSound) {
+			setRelativeSound(false);
+		}
+		this.absoluteSound = b;
+		AL10.alSourcef(this.id, AL10.AL_SOURCE_ABSOLUTE, b?AL10.AL_TRUE:AL10.AL_FALSE);
+	}
+	
+	public boolean isAbsoluteSound() {
+		return this.absoluteSound;
 	}
 	
 	public void dispose(){
