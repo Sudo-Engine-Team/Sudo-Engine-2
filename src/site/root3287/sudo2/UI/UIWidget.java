@@ -12,6 +12,7 @@ public abstract class UIWidget {
 	private Vector2f position, scale;
 	private UIWidget parent;
 	private List<UIWidget> children;
+	private boolean visable;
 	
 	
 	public UIWidget(){
@@ -56,5 +57,13 @@ public abstract class UIWidget {
 		this.scale = scale;
 	}
 	
+	public boolean isVisable() {
+		return visable;
+	}
+
+	public void setVisable(boolean visable) {
+		this.visable = visable;
+	}
+
 	public abstract void update(float delta);
 }

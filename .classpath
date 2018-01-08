@@ -187,7 +187,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-xxhash-natives-windows.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/lwjgl/natives/windows/lwjgl-yoga-natives-windows.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slick-util.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/SoundSystemJPCT.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/lwjgl_util.jar" sourcepath="lib/lwjgl_util-2.9.1-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/Users/Timothy/git/Sudo-Engine-2/lib/lwjgl_util-2.9.1-javadoc.jar!/"/>
@@ -199,5 +198,11 @@
 			<attribute name="javadoc_location" value="http://stleary.github.io/JSON-java/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/paulscode/CodecJOgg.jar" sourcepath="lib/paulscode/CodecJOgg.zip"/>
+	<classpathentry kind="lib" path="lib/paulscode/CodecWav.jar" sourcepath="lib/paulscode/CodecWav.zip"/>
+	<classpathentry kind="lib" path="lib/paulscode/LibraryLWJGLOpenAL.jar" sourcepath="lib/paulscode/LibraryLWJGLOpenAL.zip"/>
+	<classpathentry kind="lib" path="lib/paulscode/SoundSystem.jar" sourcepath="lib/paulscode/SoundSystem.zip"/>
+	<classpathentry kind="lib" path="lib/paulscode/LibraryJavaSound.jar" sourcepath="lib/paulscode/LibraryJavaSound.zip"/>
+	<classpathentry kind="lib" path="lib/paulscode/LibraryJOAL.jar" sourcepath="lib/paulscode/LibraryJOAL.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
