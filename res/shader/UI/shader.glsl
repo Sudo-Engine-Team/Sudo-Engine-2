@@ -19,9 +19,11 @@ void main(){
 
 in vec2 ptc;
 
-out vec4 colour;
+uniform vec4 colour;
+
+out vec4 out_colour;
 
 void main(){
-	colour = vec4(1);
+	out_colour = colour;
 }
 #shader end

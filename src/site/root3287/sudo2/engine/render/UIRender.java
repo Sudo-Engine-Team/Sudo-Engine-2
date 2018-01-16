@@ -14,16 +14,29 @@ public class UIRender extends Renderable{
 	}
 	
 	public void render(UIWidget w){
+		if(!w.isVisable())
+			return;
+		
 		w.getVAO().bind();
 		this.shader.start();
 		((UIShader)shader).trans.loadMatrix(SudoMaths.createTransformationMatrix(w.getAbsolutePosition(), w.getScale()));
+		((UIShader)shader).colour.loadVector(w.getColour());
+		
+		//Render this GUI
+		RenderUtils.disableDepthTest();
 		RenderUtils.enableVertexAttribsArray(0);
 		RenderUtils.enableVertexAttribsArray(1);
 		RenderUtils.renderElements(GL11.GL_TRIANGLES, w.getVAO().getSize(), GL11.GL_UNSIGNED_INT, 0);
 		RenderUtils.disableVertexAttribsArray(0);
 		RenderUtils.disableVertexAttribsArray(1);
+		RenderUtils.enableDepthTest();
 		this.shader.stop();
 		VAO.unbind();
+		
+		// Recursivly go though and render the children.
+		for(UIWidget child : w.getChildren()){
+			render(child);
+		}
 	}
 	
 	@Override

@@ -90,4 +90,8 @@ public class Server{
 	public void addReceiveListener(Listener l){
 		this.receiveEvent.addListener(l);
 	}
+	
+	public boolean isRunning(){
+		return running;
+	}
 }

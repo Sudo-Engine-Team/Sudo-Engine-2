@@ -31,6 +31,7 @@ public class RenderUtils {
 	}
 	public static void clear(){
 		clear(DisplayManager.BACKGROUND_COLOUR);
+		clearGLErrors();
 	}
 	public static void clear(Vector4f colour){
 		GL11.glEnable(GL11.GL_DEPTH_TEST);

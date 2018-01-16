@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.VAO;
 
@@ -12,7 +13,8 @@ public abstract class UIWidget {
 	private Vector2f position, scale;
 	private UIWidget parent;
 	private List<UIWidget> children;
-	private boolean visable;
+	private boolean visable = true;
+	private Vector4f colour = new Vector4f(1, 1, 1, 1);
 	
 	
 	public UIWidget(){
@@ -25,6 +27,9 @@ public abstract class UIWidget {
 	public void add(UIWidget w){
 		w.setParent(this);
 		children.add(w);
+	}
+	public List<UIWidget> getChildren(){
+		return children;
 	}
 	
 	public void setParent(UIWidget w){
@@ -63,6 +68,14 @@ public abstract class UIWidget {
 
 	public void setVisable(boolean visable) {
 		this.visable = visable;
+	}
+	
+	public void setColour(Vector4f colour){
+		this.colour = colour;
+	}
+	
+	public Vector4f getColour(){
+		return this.colour;
 	}
 
 	public abstract void update(float delta);
