@@ -1,13 +1,18 @@
 package site.root3287.sudo2.net.packet;
 
-import java.net.DatagramPacket;
+import java.net.Socket;
 
 public class Packet {
-	private DatagramPacket packet;
-	public Packet(DatagramPacket p){
+	private String packet;
+	private Socket socket;
+	public Packet(String p, Socket serverClient){
 		this.packet = p;
+		this.socket = serverClient;
 	}
-	public DatagramPacket getDatagramPacket(){
+	public String getPacket(){
 		return packet;
+	}
+	public Socket getSocket(){
+		return socket;
 	}
 }

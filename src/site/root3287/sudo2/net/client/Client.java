@@ -1,26 +1,28 @@
 package site.root3287.sudo2.net.client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.Socket;
 import java.net.UnknownHostException;
 
 import site.root3287.sudo2.events.EventDispatcher;
+import site.root3287.sudo2.events.Listener;
 import site.root3287.sudo2.net.packet.Packet;
 import site.root3287.sudo2.net.packet.events.PacketReceiveEvent;
 import site.root3287.sudo2.net.packet.events.PacketReceiveEventType;
 
 public class Client{
-	private static int BUFFER_SIZE = 1064*20;
 	private InetAddress destAddress;
 	private int port;
-	private DatagramSocket socket;
+	private Socket socket;
 	private Thread receive;
-	private boolean running = false;
-	private byte[] data = new byte[BUFFER_SIZE];
+	private boolean running;
 	private EventDispatcher receiveDispatcher = new EventDispatcher(new PacketReceiveEventType());
+	private BufferedReader in;
+	private PrintWriter out;
 	
 	/**
 	 * Connects to a remote host
@@ -36,8 +38,8 @@ public class Client{
 		}
 		this.port = port;
 		try {
-			this.socket = new DatagramSocket();
-		} catch (SocketException e) {
+			this.socket = new Socket(this.destAddress, this.port);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -48,7 +50,7 @@ public class Client{
 	 */
 	public void start(){
 		this.running = true;
-		this.receive = new Thread(()->listen(), "run");
+		this.receive = new Thread(()->listen(), "listen");
 		this.receive.setDaemon(true);
 		this.receive.start();
 	}
@@ -63,16 +65,20 @@ public class Client{
 	 */
 	private void listen() {
 		while(running){
+			String line = "";
 			try {
-				DatagramPacket p = new DatagramPacket(data, data.length);
-				this.socket.receive(p);
-				receiveDispatcher.execute(new PacketReceiveEvent(new Packet(p)));
-				this.data = new byte[BUFFER_SIZE];
+				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				out = new PrintWriter(socket.getOutputStream());
+				line = in.readLine();
+				if(line == null)
+					break;
+				receiveDispatcher.execute(new PacketReceiveEvent(new Packet(line, socket)));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		//SEND TO SERVER CLOSED OR DISCONNECTION SCREEN.
 	}
 
 	/**
@@ -80,22 +86,11 @@ public class Client{
 	 * @param data - data of the packet
 	 */
 	public void send(final String data){
-		send(this.destAddress, this.port, data);
+		out.println(data);
+		System.out.println(data);
 	}
 	
-	
-	/**
-	 * Send data to a specified hsot.
-	 * @param data - message
-	 * @param dest - remote host address
-	 * @param port - remote host port
-	 */
-	public void send(InetAddress dest, int port, final String data){
-		//System.out.println("Attempting to send "+ new String(data.getBytes()));
-		try {
-			this.socket.send(new DatagramPacket(data.getBytes(), data.getBytes().length, dest, port));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void addReceiveListener(Listener l){
+		this.receiveDispatcher.addListener(l);
 	}
 }

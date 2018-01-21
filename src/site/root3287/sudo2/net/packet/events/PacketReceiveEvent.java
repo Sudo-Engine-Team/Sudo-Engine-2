@@ -19,5 +19,4 @@ public class PacketReceiveEvent extends Event{
 	public void setPacket(Packet packet) {
 		this.packet = packet;
 	}
-
 }
