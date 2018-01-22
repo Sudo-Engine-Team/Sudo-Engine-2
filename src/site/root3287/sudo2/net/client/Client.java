@@ -8,6 +8,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import site.root3287.sudo2.events.EventDispatcher;
+import site.root3287.sudo2.events.Listener;
+import site.root3287.sudo2.net.packet.Packet;
+import site.root3287.sudo2.net.packet.events.PacketReceiveEvent;
+import site.root3287.sudo2.net.packet.events.PacketReceiveEventType;
+
 public class Client{
 	private String destAddress;
 	private int destPort;
@@ -17,7 +23,12 @@ public class Client{
 	private PrintWriter output;
 	private BufferedReader input;
 	
+	private boolean running = false;
+	private Thread listeningThread;
+	private EventDispatcher listenDispatcher;
+	
 	public Client(Socket s) {
+		this.listenDispatcher = new EventDispatcher(new PacketReceiveEventType());
 		this.socket = s;
 		try {
 			this.destAddress = s.getInetAddress().toString().replace('/', ' ').trim();
@@ -31,6 +42,7 @@ public class Client{
 	}
 	
 	public Client(String destAddres, int port) {
+		this.listenDispatcher = new EventDispatcher(new PacketReceiveEventType());
 		this.destAddress = destAddres;
 		this.destPort = port;
 		try {
@@ -45,6 +57,32 @@ public class Client{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void start(){
+		this.running = true;
+		this.listeningThread = new Thread(()->listen());
+		this.listeningThread.setDaemon(true);
+		this.listeningThread.start();
+	}
+	
+	public void listen(){
+		while(running){
+			String line;
+			try {
+				line = input.readLine();
+				if(line == null)
+					continue;
+				listenDispatcher.execute(new PacketReceiveEvent(new Packet(line, socket)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void stop(){
+		this.running = false;
 	}
 	
 	public void send(String message) {
@@ -93,6 +131,7 @@ public class Client{
 	}
 	
 	public void close() {
+		stop();
 		this.output.close();
 		try {
 			this.socket.close();
@@ -104,5 +143,9 @@ public class Client{
 	
 	public BufferedReader getInput() {
 		return this.input;
+	}
+	
+	public void addListener(Listener l){
+		this.listenDispatcher.addListener(l);
 	}
 }
