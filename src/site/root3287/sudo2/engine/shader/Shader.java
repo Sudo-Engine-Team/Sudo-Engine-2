@@ -73,7 +73,7 @@ public abstract class Shader {
     }
      
     public void dispose(){
-    	DisplayManager.LOGGER.log(Level.INFO, "Disposing Shader");
+    	DisplayManager.LOGGER.log(Level.INFO, "Disposing Shader "+this);
         stop();
         GL20.glDetachShader(programID, vertexShaderID);
         GL20.glDetachShader(programID, fragmentShaderID);

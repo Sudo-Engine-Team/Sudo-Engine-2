@@ -7,8 +7,10 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.VAO;
+import site.root3287.sudo2.engine.interfaces.Disposable;
+import site.root3287.sudo2.engine.interfaces.Updateable;
 
-public abstract class UIWidget {
+public abstract class UIWidget implements Updateable, Disposable{
 	private VAO vao;
 	private Vector2f position, scale;
 	private UIWidget parent;
@@ -18,6 +20,8 @@ public abstract class UIWidget {
 	
 	
 	public UIWidget(){
+		UIUtils.getInstance(); // Initialize the UIUtils, if it's haven't it already been...
+		setVAO(UIUtils.getInstance().getVAO());
 		position = new Vector2f();
 		scale = new Vector2f(100,100);
 		parent = null;
@@ -78,5 +82,15 @@ public abstract class UIWidget {
 		return this.colour;
 	}
 
-	public abstract void update(float delta);
+	public void update(float delta){
+		for(UIWidget child : children)
+			child.update(delta);
+	}
+	
+	public void dispose(){
+		UIUtils.getInstance().dispose();
+		for(UIWidget child : children){
+			child.dispose();
+		}
+	}
 }

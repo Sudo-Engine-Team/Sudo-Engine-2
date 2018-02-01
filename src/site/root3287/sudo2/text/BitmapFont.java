@@ -18,7 +18,7 @@ public class BitmapFont {
 	private VAO model;
 	private BitmapFontFile bmFile;
 	private String text;
-	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(2f, 2f);
+	private Vector2f positon = new Vector2f(0,0), scale= new Vector2f(100f, 100f);
 	private Vector4f colour;
 	private boolean isDistanceField;
 	

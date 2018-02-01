@@ -220,4 +220,8 @@ public class DisplayManager {
 		if(WINDOW != 0)
 		GLFW.glfwSetWindowTitle(WINDOW, title);
 	}
+	public static void close() {
+		SCREEN.destory();
+		GLFW.glfwSetWindowShouldClose(WINDOW, true);
+	}
 }

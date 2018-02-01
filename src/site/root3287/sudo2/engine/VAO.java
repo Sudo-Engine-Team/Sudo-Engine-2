@@ -20,6 +20,8 @@ public class VAO {
 		bind(0);
 	}
 	public static void dispose(int id){
+		if(ALLVAO.get(id) == null)
+			return;
 		DisplayManager.LOGGER.log(Level.INFO, "Disposing VAO "+id);
 		int i = 0;
 		for(VBO b : VAO_VBO.get(ALLVAO.get(id))){
@@ -76,6 +78,7 @@ public class VAO {
 	
 	public void dispose(){
 		dispose(id);
+		id = 0;
 	}
 	
 	public void setSize(int size){
