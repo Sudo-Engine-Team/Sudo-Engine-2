@@ -17,7 +17,7 @@ public class UIRender extends Renderable{
 		this.textRender = new TextRender();
 	}
 	
-	public void render(UIWidget w){
+	private void render(UIWidget w, boolean first){
 		if(!w.isVisable())
 			return;
 		
@@ -41,14 +41,21 @@ public class UIRender extends Renderable{
 		for(UIWidget child : w.getChildren()){
 			//TODO check if the child is a text object, if so use the text renderer.
 			if(child instanceof UIText){
-				if(this.textRender.projection == null){
-					this.textRender.projection = this.projection;
+				if(textRender.projection == null){
+					textRender.projection = projection;
 				}
-				textRender.render(((UIText)child).getBitmapFont());
+				textRender.addFont(((UIText)child).getBitmapFont());
 				continue;
 			}
-			render(child);
+			render(child, false);
 		}
+		
+		if(first)
+			textRender.render();
+	}
+	
+	public void render(UIWidget u){
+		render(u, true);
 	}
 	
 	@Override

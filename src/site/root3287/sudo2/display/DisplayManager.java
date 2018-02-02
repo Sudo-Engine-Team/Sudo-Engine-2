@@ -221,7 +221,6 @@ public class DisplayManager {
 		GLFW.glfwSetWindowTitle(WINDOW, title);
 	}
 	public static void close() {
-		SCREEN.destory();
 		GLFW.glfwSetWindowShouldClose(WINDOW, true);
 	}
 }
