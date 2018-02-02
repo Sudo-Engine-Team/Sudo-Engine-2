@@ -92,8 +92,13 @@ public class SudoMaths {
 		return projectionMatrix;
 	}
 	
+	public static Matrix4f ortho(float width, float height){
+		return ortho(-width/2, width/2, -height/2, height/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
+	}
+	
 	public static Matrix4f ortho(){
-		return ortho(-DisplayManager.WIDTH/2, DisplayManager.WIDTH/2, -DisplayManager.HEIGHT/2, DisplayManager.HEIGHT/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
+		return ortho(-DisplayManager.getCurrentWindowSize().x/2,DisplayManager.getCurrentWindowSize().x/2, -DisplayManager.getCurrentWindowSize().y/2, DisplayManager.getCurrentWindowSize().y/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
+		//	return ortho(-DisplayManager.WIDTH/2, DisplayManager.WIDTH/2, -DisplayManager.HEIGHT/2, DisplayManager.HEIGHT/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
 	}
 	
 	/**

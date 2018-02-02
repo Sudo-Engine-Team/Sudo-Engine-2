@@ -17,6 +17,7 @@ public abstract class Camera{
 		position = new Vector3f();
 	}
 	
+	public abstract void resize(float width, float height);
 	public abstract void update(float delta);
 
 	public Matrix4f getProjectionMatrix() {

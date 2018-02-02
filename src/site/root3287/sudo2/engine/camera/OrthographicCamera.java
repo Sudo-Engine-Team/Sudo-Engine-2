@@ -16,5 +16,10 @@ public class OrthographicCamera extends Camera{
 	public void update(float delta) {
 		Matrix4f.mul(projectionMatrix, viewMatrix, combind);
 	}
+
+	@Override
+	public void resize(float width, float height) {
+		this.projectionMatrix = SudoMaths.ortho();
+	}
 	
 }

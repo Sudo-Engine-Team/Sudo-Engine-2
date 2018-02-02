@@ -1,20 +1,33 @@
 package site.root3287.sudo2.engine.render;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Matrix4f;
 
 import site.root3287.sudo2.UI.UIText;
 import site.root3287.sudo2.UI.UIWidget;
 import site.root3287.sudo2.engine.VAO;
+import site.root3287.sudo2.engine.shader.programs.TextShader;
 import site.root3287.sudo2.engine.shader.programs.UIShader;
 import site.root3287.sudo2.utils.SudoMaths;
 
 public class UIRender extends Renderable{
 
-	TextRender textRender;
+	public TextRender textRender;
 	
 	public UIRender() {
 		this.shader = new UIShader();
 		this.textRender = new TextRender();
+	}
+	
+	public void setProjection(Matrix4f proj){
+		this.textRender.projection = proj;
+		this.projection = proj;
+		this.shader.start();
+		((UIShader)shader).proj.loadMatrix(proj);
+		this.shader.stop();
+		this.textRender.shader.start();
+		((TextShader)this.textRender.shader).location_projection.loadMatrix(proj);
+		this.textRender.shader.stop();
 	}
 	
 	private void render(UIWidget w, boolean first){
@@ -44,9 +57,6 @@ public class UIRender extends Renderable{
 		for(UIWidget child : w.getChildren()){
 			//TODO check if the child is a text object, if so use the text renderer.
 			if(child instanceof UIText){
-				if(textRender.projection == null){
-					textRender.projection = projection;
-				}
 				textRender.addFont(((UIText)child).getBitmapFont());
 				continue;
 			}

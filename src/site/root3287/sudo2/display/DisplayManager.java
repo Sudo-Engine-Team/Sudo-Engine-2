@@ -15,7 +15,6 @@ import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
 import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
-import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
 import static org.lwjgl.glfw.GLFW.glfwInit;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
@@ -27,11 +26,9 @@ import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 
-import java.nio.IntBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.lwjgl.BufferUtils;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWScrollCallback;
@@ -109,14 +106,20 @@ public class DisplayManager {
 			
 			@Override
 			public void invoke(long window, int width, int height) {
-				int[] w = new int[1], h = new int[1];
-				GLFW.glfwGetFramebufferSize(window, w, h);
-				LOGGER.log(Level.INFO, "The window has been resized to "+w[0] +", "+h[0]);
-				WIDTH = w[0];
-				HEIGHT = h[0];
 				resized = true;
-				resizeDispatcher.execute(new WindowResizeEvent(width, height));
+				int[] w = new int[1], h = new int[1];
+				int[] wid = new int[1], hei = new int[1];
+				GLFW.glfwGetFramebufferSize(window, w, h);
+				GLFW.glfwGetWindowSize(WINDOW, wid, hei);
+				float lastW = WIDTH, lastH = HEIGHT;
+				
+				WIDTH = wid[0];
+				HEIGHT = hei[0];
 				GL11.glViewport(0, 0, (int)w[0], (int)h[0]);
+				
+				LOGGER.log(Level.INFO, "The window has been resized to "+w[0] +", "+h[0]);
+				resizeDispatcher.execute(new WindowResizeEvent(wid[0], hei[0], width, height, lastW/WIDTH, lastH/HEIGHT));
+				SCREEN.resize(wid[0], hei[0],w[0], h[0], WIDTH/lastW, HEIGHT/lastH);
 			}
 		});
 		
@@ -177,10 +180,9 @@ public class DisplayManager {
 	}
 	
 	public static Vector2f getCurrentWindowSize(){
-		IntBuffer w = BufferUtils.createIntBuffer(1);
-		IntBuffer h = BufferUtils.createIntBuffer(1);
-		glfwGetWindowSize(WINDOW, w, h);
-		return new Vector2f(w.get(0), h.get(0));
+		int[] w = new int[1], h = new int[1];
+		GLFW.glfwGetFramebufferSize(WINDOW, w, h);
+		return new Vector2f(w[0], h[0]);
 	}
 	
 	public static void setScreen(Screen screen){

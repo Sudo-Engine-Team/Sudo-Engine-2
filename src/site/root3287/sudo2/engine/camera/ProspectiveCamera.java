@@ -17,4 +17,9 @@ public class ProspectiveCamera extends Camera {
 		this.viewMatrix = SudoMaths.createViewMatrix(this);
 		this.combind = Matrix4f.mul(projectionMatrix, viewMatrix, null);
 	}
+
+	@Override
+	public void resize(float width, float height) {
+		this.projectionMatrix = SudoMaths.createProjectionMatrix();
+	}
 }
