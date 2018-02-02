@@ -87,6 +87,14 @@ public abstract class UIWidget implements Updateable, Disposable{
 			child.update(delta);
 	}
 	
+	public void rescale(float scaleX, float scaleY){
+		Vector2f orginal = getScale();
+		this.scale = new Vector2f(orginal.x*scaleX, orginal.y*scaleY);
+		for(UIWidget child : children){
+			child.rescale(scaleX, scaleY);
+		}
+	}
+	
 	public void dispose(){
 		UIUtils.getInstance().dispose();
 		for(UIWidget child : children){

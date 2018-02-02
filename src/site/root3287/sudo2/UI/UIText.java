@@ -5,12 +5,21 @@ import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.engine.interfaces.Updateable;
 import site.root3287.sudo2.text.BitmapFont;
+import site.root3287.sudo2.text.BitmapFontFile;
 
 public abstract class UIText extends UIWidget implements Updateable{
 	private BitmapFont bmFont;
+	private String text;
 	
-	public UIText(){
+	public UIText(BitmapFont file){
 		super();
+		setBitmapFont(file);
+	}
+	
+	public UIText(String text, BitmapFontFile file){
+		super();
+		setBitmapFont(new BitmapFont(text, file));
+		this.text = text;
 	}
 	
 	@Override
@@ -44,6 +53,11 @@ public abstract class UIText extends UIWidget implements Updateable{
 	
 	public void setText(String text){
 		this.bmFont.setText(text);
+		this.text = text;
+	}
+	
+	public String getText(){
+		return this.text;
 	}
 	
 	@Override
