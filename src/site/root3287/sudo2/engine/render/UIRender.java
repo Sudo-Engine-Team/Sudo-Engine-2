@@ -20,7 +20,10 @@ public class UIRender extends Renderable{
 	private void render(UIWidget w, boolean first){
 		if(!w.isVisable())
 			return;
-		
+		if(w instanceof UIText){
+			this.textRender.render(((UIText)w).getBitmapFont());
+			return;
+		}
 		w.getVAO().bind();
 		this.shader.start();
 		((UIShader)shader).trans.loadMatrix(SudoMaths.createTransformationMatrix(w.getAbsolutePosition(), w.getScale()));
