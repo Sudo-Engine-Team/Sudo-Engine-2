@@ -57,5 +57,12 @@ public abstract class UIToggleButton extends UIButton {
 
 	public void setToggled(boolean toggled) {
 		this.toggled = toggled;
+		if(toggled){
+			setColour(toggleColour);
+			onToggle();
+		}else{
+			setColour(toggleOffColour);
+			offToggle();
+		}
 	}
 }
