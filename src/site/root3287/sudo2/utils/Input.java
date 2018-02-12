@@ -64,6 +64,9 @@ public class Input {
 		public static void addKeyPressedListener(Listener l){
 			keyPressedDispatcher.addListener(l);
 		}
+		public static char glfwToChar(int i){
+			return (char)i;
+		}
 	}
 	
 	public static class Mouse{

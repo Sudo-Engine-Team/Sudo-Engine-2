@@ -22,7 +22,7 @@ public abstract class UIWidget implements Updateable, Disposable{
 	public UIWidget(){
 		UIUtils.getInstance(); // Initialize the UIUtils, if it's haven't it already been...
 		setVAO(UIUtils.getInstance().getVAO());
-		position = new Vector2f();
+		position = new Vector2f(0,0);
 		scale = new Vector2f(100,100);
 		parent = null;
 		children = new ArrayList<>();

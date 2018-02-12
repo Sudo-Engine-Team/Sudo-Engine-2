@@ -34,6 +34,10 @@ public abstract class UIButton extends UIWidget{
 		
 	}
 	
+	public boolean isHovering(){
+		return hover;
+	}
+	
 	public abstract void onHover();
 	public abstract void offHover();
 	public abstract void onClick();
