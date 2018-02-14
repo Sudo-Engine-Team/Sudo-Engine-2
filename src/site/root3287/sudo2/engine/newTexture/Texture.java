@@ -1,13 +1,11 @@
 package site.root3287.sudo2.engine.newTexture;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
-import javax.imageio.ImageIO;
-
-import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.stb.STBImage;
+import org.lwjgl.system.MemoryStack;
 
 public class Texture {
 	public static void bind(int target, int id){
@@ -21,33 +19,34 @@ public class Texture {
 	}
 	
 	private int id;
-	private BufferedImage image;
+	private int width, height;
+	private ByteBuffer image;
+	private boolean flip = false;
 	
-	public Texture(String src){
-		try {
-			this.image = ImageIO.read(Class.class.getResourceAsStream(src));
-			
-			int[] rawPixel = image.getRGB(0, 0, this.image.getWidth(), this.image.getHeight(), null, 0, this.image.getWidth());
-			
-			ByteBuffer buffer = BufferUtils.createByteBuffer(this.image.getWidth() * this.image.getHeight() * 4);
-			for (int i = 0; i < this.image.getWidth(); i++) {
-				for (int j = 0; j < this.image.getHeight(); j++) {
-					int pixel = rawPixel[i*this.image.getWidth()+j];
-					buffer.put((byte) ((pixel >> 16) & 0xFF));
-					buffer.put((byte) ((pixel >> 8) & 0xFF));
-					buffer.put((byte) ((pixel) & 0xFF));
-					buffer.put((byte) ((pixel >> 24) & 0xFF));
-				}
-			}
-			buffer.flip();
-			
-			this.id = GL11.glGenTextures();
-			this.bind();
-			GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, this.image.getWidth(), this.image.getHeight(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public Texture(String src, boolean flip){
+		this.flip = flip;
+		IntBuffer w = MemoryStack.stackMallocInt(1);
+		IntBuffer h = MemoryStack.stackMallocInt(1);
+		IntBuffer comp = MemoryStack.stackMallocInt(1);
+		
+		STBImage.stbi_set_flip_vertically_on_load(this.flip);
+		
+		image = STBImage.stbi_load(src, w, h, comp, 4);
+		
+		if (image == null) {
+		    throw new RuntimeException("Failed to load a texture file!"
+		            + System.lineSeparator() + STBImage.stbi_failure_reason());
 		}
+		
+		width  = w.get();
+		height = w.get();
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, width, height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, image);
+	}
+	
+	public Texture(int id, int width, int height){
+		this.id = id;
+		this.width = width;
+		this.height = height;
 	}
 	
 	public void bind(){
@@ -64,4 +63,8 @@ public class Texture {
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, type, n);
 		unbind();
 	}
+	
+	public int getWidth(){return width;}
+	public int getHeight(){return height;}
+	public ByteBuffer getImage(){return image;}
 }
