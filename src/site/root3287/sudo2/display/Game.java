@@ -35,11 +35,10 @@ import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
+import site.root3287.sudo2.UI.UIUtils;
 import site.root3287.sudo2.events.EventDispatcher;
-import site.root3287.sudo2.events.Listener;
 import site.root3287.sudo2.events.event.KeyboardPressedEvent;
 import site.root3287.sudo2.events.event.KeyboardReleasedEvent;
 import site.root3287.sudo2.events.event.MouseClickEvent;
@@ -49,38 +48,44 @@ import site.root3287.sudo2.utils.ConsoleHandler;
 import site.root3287.sudo2.utils.Input;
 import site.root3287.sudo2.utils.Input.Mouse.State;
 
-public class DisplayManager {
-	private static String TITLE = "SUDO-Engine 2";
-	public static float WIDTH = 900;
-	public static float HEIGHT = WIDTH/16*9;
+public class Game {
 	public static final float FOV = 90;
 	public static final float NEAR_PLANE = 0.1f;
 	public static final float FAR_PLANE = 9999f;
-	public static Vector4f BACKGROUND_COLOUR = new Vector4f(0.25f, 0.25f, 0.25f, 1);
-	public static long WINDOW;
-	public static Screen SCREEN = null;
-	public static boolean fullscreen = false;
-	public static double DELTA;
-	private static double lastTime;
-	private static boolean resized;
-	public static Logger LOGGER = Logger.getLogger("SUDO");
 	
+	private long windowID;
+	private String title;
+	private int width = 900;
+	private int height = width / 16*9;
+	private Vector4f background_colour = new Vector4f(0.25f, 0.25f, 0.25f, 1);
+	private Screen screen;
+	private Logger logger = Logger.getLogger("Sudo");
+	private boolean fullscreen = false;
+	private boolean resized = false;
 	private static EventDispatcher resizeDispatcher = new EventDispatcher(new WindowResizeEventType());
+	private float delta, lastTime;
 	
-	public static void init(){
-		init(WIDTH, HEIGHT, TITLE);
+	public Game(String title) {
+		this.title = title;
 	}
-	public static void init(float width, float height, String title){
-		LOGGER.setLevel(Level.ALL);
-		LOGGER.setUseParentHandlers(false);
-		LOGGER.addHandler(new ConsoleHandler());
-		LOGGER.log(Level.INFO, "Loaded LWJGL "+Version.getVersion()+" natives for "+System.getProperty("os.name"));
-		LOGGER.log(Level.INFO, "System.getProperty('os.name') == " + System.getProperty("os.name"));
-		LOGGER.log(Level.INFO, "System.getProperty('os.version') == " + System.getProperty("os.version"));
-		LOGGER.log(Level.INFO, "System.getProperty('os.arch') == " + System.getProperty("os.arch"));
-		LOGGER.log(Level.INFO, "System.getProperty('java.version') == " + System.getProperty("java.version"));
-		LOGGER.log(Level.INFO, "System.getProperty('java.vendor') == " + System.getProperty("java.vendor"));
-		LOGGER.log(Level.INFO, "System.getProperty('sun.arch.data.model') == " + System.getProperty("sun.arch.data.model"));
+	
+	public Game(String title, int width, int height) {
+		this.title = title;
+		this.width = width;
+		this.height = height;
+	}
+	
+	private void init() {
+		logger.setLevel(Level.ALL);
+		logger.setUseParentHandlers(false);
+		logger.addHandler(new ConsoleHandler());
+		logger.log(Level.INFO, "Loaded LWJGL "+Version.getVersion()+" natives for "+System.getProperty("os.name"));
+		logger.log(Level.INFO, "System.getProperty('os.name') == " + System.getProperty("os.name"));
+		logger.log(Level.INFO, "System.getProperty('os.version') == " + System.getProperty("os.version"));
+		logger.log(Level.INFO, "System.getProperty('os.arch') == " + System.getProperty("os.arch"));
+		logger.log(Level.INFO, "System.getProperty('java.version') == " + System.getProperty("java.version"));
+		logger.log(Level.INFO, "System.getProperty('java.vendor') == " + System.getProperty("java.vendor"));
+		logger.log(Level.INFO, "System.getProperty('sun.arch.data.model') == " + System.getProperty("sun.arch.data.model"));
 		
 		if(!glfwInit())
 			throw new IllegalStateException("Cannot start GLFW");
@@ -92,17 +97,19 @@ public class DisplayManager {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		
-		WINDOW = glfwCreateWindow((int)WIDTH, (int)HEIGHT, TITLE, fullscreen?glfwGetPrimaryMonitor():0, 0);
-		if(WINDOW == 0){
+		windowID = glfwCreateWindow((int)this.width, (int)this.height, this.title, fullscreen?glfwGetPrimaryMonitor():0, 0);
+		if(windowID == 0){
 			throw new RuntimeException("Failed to create window!");
 		}
-		Input.WINDOW = WINDOW;
-		glfwMakeContextCurrent(WINDOW);
+		
+		Input.WINDOW = windowID;
+		
+		glfwMakeContextCurrent(windowID);
 		GL.createCapabilities();
 		glfwSwapInterval(1);
-		glfwShowWindow(WINDOW);
+		glfwShowWindow(windowID);
 		
-		glfwSetWindowSizeCallback(WINDOW, new GLFWWindowSizeCallback() {
+		glfwSetWindowSizeCallback(windowID, new GLFWWindowSizeCallback() {
 			
 			@Override
 			public void invoke(long window, int width, int height) {
@@ -110,20 +117,20 @@ public class DisplayManager {
 				int[] w = new int[1], h = new int[1];
 				int[] wid = new int[1], hei = new int[1];
 				GLFW.glfwGetFramebufferSize(window, w, h);
-				GLFW.glfwGetWindowSize(WINDOW, wid, hei);
-				float lastW = WIDTH, lastH = HEIGHT;
+				GLFW.glfwGetWindowSize(windowID, wid, hei);
+				float lastW = width, lastH = height;
 				
-				WIDTH = wid[0];
-				HEIGHT = hei[0];
+				width = wid[0];
+				height = hei[0];
 				GL11.glViewport(0, 0, (int)w[0], (int)h[0]);
 				
-				LOGGER.log(Level.INFO, "The window has been resized to "+w[0] +", "+h[0]);
-				resizeDispatcher.execute(new WindowResizeEvent(wid[0], hei[0], width, height, lastW/WIDTH, lastH/HEIGHT));
-				SCREEN.resize(wid[0], hei[0],w[0], h[0], WIDTH/lastW, HEIGHT/lastH);
+				logger.log(Level.INFO, "The window has been resized to "+w[0] +", "+h[0]);
+				resizeDispatcher.execute(new WindowResizeEvent(wid[0], hei[0], width, height, lastW/width, lastH/height));
+				screen.resize(wid[0], hei[0],w[0], h[0], width/lastW, height/lastH);
 			}
 		});
 		
-		glfwSetScrollCallback(WINDOW, new GLFWScrollCallback() {
+		glfwSetScrollCallback(windowID, new GLFWScrollCallback() {
 			
 			@Override
 			public void invoke(long window, double xoffset, double yoffset) {
@@ -132,16 +139,25 @@ public class DisplayManager {
 		});
 		
 		int[] w = new int[1], h = new int[1];
-		GLFW.glfwGetFramebufferSize(WINDOW, w, h);
+		GLFW.glfwGetFramebufferSize(windowID, w, h);
 		GL11.glViewport(0, 0, w[0], h[0]);
 
-		SCREEN.init();
+		UIUtils.game = this;
+		
+		screen.init();
 	}
 	
-	public static void loop(){
+	public Vector4f getBackgroundColour() {
+		return this.background_colour;
+	}
+	public boolean hasResized() {
+		return this.resized;
+	}
+	
+	private void loop() {
 		double current = currentTimeMillis();
-		DELTA = (current - lastTime)/1000;
-		lastTime = current;
+		this.delta = (float)(current - lastTime)/1000f;
+		this.lastTime = (float)current;
 		for(int i = 0; i < GLFW_KEY_LAST; i++){
 			if(Input.Keyboard.isKeyPressed(i)){
 				Input.Keyboard.keyPressedDispatcher.execute(new KeyboardPressedEvent(i));
@@ -158,71 +174,69 @@ public class DisplayManager {
 				Input.Mouse.clickDispatcher.execute(new MouseClickEvent((float)Input.Mouse.getX(), (float)Input.Mouse.getY(), i, State.MOUSE_RELEASE));
 			}
 		}
-		SCREEN.update((float)DisplayManager.getDelta());
-		SCREEN.render();
-		glfwSwapBuffers(WINDOW);
+		this.screen.update((float)DisplayManager.getDelta());
+		this.screen.render();
+		glfwSwapBuffers(windowID);
 		Input.update();
 		glfwPollEvents();
 		resized = false;
 	}
-	
-	public static void dispose(){
-		SCREEN.destory();
+	private void destory() {
+		screen.destory();
 		// Free the window callbacks and destroy the window
-		glfwFreeCallbacks(WINDOW);
-		glfwDestroyWindow(WINDOW);
+		glfwFreeCallbacks(this.windowID);
+		glfwDestroyWindow(this.windowID);
 		// Terminate GLFW and free the error callback
 		glfwTerminate();
 	}
 	
-	public static double currentTimeMillis() {
+	public void setTitle(String title){
+		this.title = title;
+		if(windowID != 0)
+			GLFW.glfwSetWindowTitle(windowID, title);
+	}
+	
+	public void run() {
+		init();
+		while(!GLFW.glfwWindowShouldClose(windowID)) {
+			loop();
+		}
+		destory();
+	}
+	
+	public float getDelta(){
+		return delta;
+	}
+	
+	public void setScreen(Screen screen){
+		setScreen(screen, false, false);
+	}
+	public void setScreen(Screen screen, boolean init){
+		setScreen(screen, init, false);
+	}
+	public void setScreen(Screen screen, boolean init, boolean destroy){
+		if(destroy){
+			screen.destory();
+		}
+		this.screen = screen;
+		if(init){
+			screen.init();
+		}
+	}
+	
+	private static double currentTimeMillis() {
 	    return glfwGetTime() * 1000;
 	}
 	
-	public static Vector2f getCurrentWindowSize(){
-		int[] w = new int[1], h = new int[1];
-		GLFW.glfwGetFramebufferSize(WINDOW, w, h);
-		return new Vector2f(w[0], h[0]);
+	public Logger getLogger() {
+		return this.logger;
 	}
 	
-	public static void setScreen(Screen screen){
-		setScreen(screen, false, false);
-	}
-	public static void setScreen(Screen screen, boolean init){
-		setScreen(screen, init, false);
-	}
-	public static void setScreen(Screen screen, boolean init, boolean destroy){
-		if(destroy){
-			SCREEN.destory();
-		}
-		SCREEN = screen;
-		if(init){
-			SCREEN.init();
-		}
+	public float getWidth() {
+		return this.width;
 	}
 	
-	public static double getDelta(){
-		return DELTA;
-	}
-	
-	public static boolean hasResized(){
-		return resized;
-	}
-	
-	public static Vector2f getNormalisedScreen(){
-		return new Vector2f();
-	}
-	
-	public static void addResizeEvent(Listener l){
-		resizeDispatcher.addListener(l);
-	}
-	
-	public static void setTitle(String title){
-		DisplayManager.TITLE = title;
-		if(WINDOW != 0)
-		GLFW.glfwSetWindowTitle(WINDOW, title);
-	}
-	public static void close() {
-		GLFW.glfwSetWindowShouldClose(WINDOW, true);
+	public float getHeight() {
+		return this.height;
 	}
 }

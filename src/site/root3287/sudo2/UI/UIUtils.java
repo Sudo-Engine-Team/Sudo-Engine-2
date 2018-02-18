@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import site.root3287.sudo2.UI.events.type.UIClickEventType;
+import site.root3287.sudo2.display.Game;
 import site.root3287.sudo2.engine.VAO;
 import site.root3287.sudo2.engine.VBO;
 import site.root3287.sudo2.engine.camera.Camera;
@@ -15,7 +16,7 @@ import site.root3287.sudo2.utils.Input;
 public class UIUtils implements Updateable, Disposable{
 	private static UIUtils _instance;
 	private Camera camera;
-	
+	public static Game game;
 	public EventDispatcher clickDispatcher = new EventDispatcher(new UIClickEventType());
 	public VAO vao;
 	
@@ -69,7 +70,7 @@ public class UIUtils implements Updateable, Disposable{
 	
 	public Vector2f getMousePosition(Camera c){
 		Vector2f mousePos = new Vector2f();
-		Vector3f pos = Input.Mouse.getMouseProjection(c);
+		Vector3f pos = Input.Mouse.getMouseProjection(c, new Vector2f(game.getWidth(), game.getHeight()));
 		mousePos.x = pos.x;
 		mousePos.y = pos.y;
 		return mousePos;

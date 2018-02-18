@@ -9,7 +9,6 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.engine.camera.Camera;
 import site.root3287.sudo2.events.EventDispatcher;
 import site.root3287.sudo2.events.Listener;
@@ -24,7 +23,10 @@ import site.root3287.sudo2.events.types.MouseMoveEventType;
 
 public class Input {
 	
+	public static long WINDOW;
+	
 	public static class Keyboard{
+		
 		public static EventDispatcher keyDownDispatcher = new EventDispatcher(new KeyboardDownEventType());
 		public static EventDispatcher keyReleasedDispatcher = new EventDispatcher(new KeyboardReleaseEventType());
 		public static EventDispatcher keyPressedDispatcher = new EventDispatcher(new KeyboardPressedEventType());
@@ -38,7 +40,7 @@ public class Input {
 		
 		public static boolean isKeyDown(int key){
 			boolean finalReturn = false;
-			if(GLFW.glfwGetKey(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE){
+			if(GLFW.glfwGetKey(Input.WINDOW, key) == GLFW.GLFW_TRUE){
 				finalReturn = true;
 			}
 			if(finalReturn){
@@ -48,11 +50,11 @@ public class Input {
 		}
 		
 		public static boolean isKeyPressed(int currentKey){
-			return ((GLFW.glfwGetKey(DisplayManager.WINDOW, currentKey) == GLFW.GLFW_TRUE)?true:false) && !key[currentKey];
+			return ((GLFW.glfwGetKey(Input.WINDOW, currentKey) == GLFW.GLFW_TRUE)?true:false) && !key[currentKey];
 		}
 		
 		public static boolean isKeyReleased(int key){
-			return !((GLFW.glfwGetKey(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE)?true:false) && Input.Keyboard.key[key];
+			return !((GLFW.glfwGetKey(Input.WINDOW, key) == GLFW.GLFW_TRUE)?true:false) && Input.Keyboard.key[key];
 		}
 		
 		public static void addKeyDownListener(Listener l){
@@ -89,10 +91,10 @@ public class Input {
 		private static double DWheel;
 		
 		public static boolean isMouseDown(int key){
-			if(GLFW.glfwGetMouseButton(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE){
+			if(GLFW.glfwGetMouseButton(Input.WINDOW, key) == GLFW.GLFW_TRUE){
 				clickDispatcher.execute(new MouseClickEvent((float)getX(), (float)getY(), key, State.MOUSE_DOWN));
 			}
-			return GLFW.glfwGetMouseButton(DisplayManager.WINDOW, key) == GLFW.GLFW_TRUE?true:false;
+			return GLFW.glfwGetMouseButton(Input.WINDOW, key) == GLFW.GLFW_TRUE?true:false;
 		}
 		
 		public static boolean isMousePressed(int key){
@@ -120,7 +122,7 @@ public class Input {
 		}
 		
 		public static void setMousePosition(double x, double y){
-			GLFW.glfwSetCursorPos(DisplayManager.WINDOW, x, y);
+			GLFW.glfwSetCursorPos(Input.WINDOW, x, y);
 		}
 		
 		public static void setDWheel(double y){
@@ -135,25 +137,20 @@ public class Input {
 			hidden = hide;
 			if(grabbed)
 				return;
-			GLFW.glfwSetInputMode(DisplayManager.WINDOW, GLFW.GLFW_CURSOR, (hidden)?GLFW.GLFW_CURSOR_HIDDEN:GLFW.GLFW_CURSOR_NORMAL);;
+			GLFW.glfwSetInputMode(Input.WINDOW, GLFW.GLFW_CURSOR, (hidden)?GLFW.GLFW_CURSOR_HIDDEN:GLFW.GLFW_CURSOR_NORMAL);;
 		}
 		public static void setGrabbed(boolean grab){
 			grabbed = grab;
 			if(hidden)
 				return;
-			GLFW.glfwSetInputMode(DisplayManager.WINDOW, GLFW.GLFW_CURSOR, (grabbed)?GLFW.GLFW_CURSOR_DISABLED:GLFW.GLFW_CURSOR_NORMAL);;
+			GLFW.glfwSetInputMode(Input.WINDOW, GLFW.GLFW_CURSOR, (grabbed)?GLFW.GLFW_CURSOR_DISABLED:GLFW.GLFW_CURSOR_NORMAL);;
 		}
 		public static boolean isGrabbed(){
 			return grabbed;
 		}
-		public static Vector2f getNormalizedMouseCoords(){
-			float x = (float) (2*getX() / DisplayManager.WIDTH)-1;
-			float y = (float) (2*getY() / DisplayManager.HEIGHT)-1;
-			return new Vector2f(x, y);
-		}
-		public static Vector2f getNormalizedMouseCoords(float x, float y){
-			float nx = (float) (2*x / DisplayManager.WIDTH)-1;
-			float ny = (float) (2*y / DisplayManager.HEIGHT)-1;
+		public static Vector2f getNormalizedMouseCoords(float x, float y, float width, float height){
+			float nx = (float) (2*x / width)-1;
+			float ny = (float) (2*y / height)-1;
 			return new Vector2f(nx, ny);
 		}
 		public static Vector2f getMouse(){
@@ -170,9 +167,9 @@ public class Input {
 			moveDispatcher.addListener(listener);
 		}
 		
-		public static Vector3f getMouseProjection(Camera c) {
+		public static Vector3f getMouseProjection(Camera c, Vector2f displaySettings) {
 			//System.out.println("Coords: "+getMouse());
-			Vector2f nmc = getNormalizedMouseCoords();
+			Vector2f nmc = getNormalizedMouseCoords((float)getX(), (float)getY(), displaySettings.x, displaySettings.y);
 			//System.out.println("nmc: "+nmc);
 			Vector4f pmc = new Vector4f(nmc.x, nmc.y, -1, 1);
 			//System.out.println("pmc: "+pmc);
@@ -182,9 +179,9 @@ public class Input {
 			
 			return world;
 		}
-		public static Vector3f getMouseProjection(Vector2f mousePos, Camera c) {
+		public static Vector3f getMouseProjection(Vector2f mousePos, Camera c, Vector2f displaySettings) {
 			//System.out.println("Coords: "+getMouse());
-			Vector2f nmc = getNormalizedMouseCoords(mousePos.x, mousePos.y);
+			Vector2f nmc = getNormalizedMouseCoords(mousePos.x, mousePos.y, displaySettings.x, displaySettings.y);
 			//System.out.println("nmc: "+nmc);
 			Vector4f pmc = new Vector4f(nmc.x, nmc.y, -1, 1);
 			//System.out.println("pmc: "+pmc);
@@ -210,7 +207,7 @@ public class Input {
 		DoubleBuffer mouseX = BufferUtils.createDoubleBuffer(1);
 		DoubleBuffer mouseY = BufferUtils.createDoubleBuffer(1);
 		
-		GLFW.glfwGetCursorPos(DisplayManager.WINDOW, mouseX, mouseY);
+		GLFW.glfwGetCursorPos(Input.WINDOW, mouseX, mouseY);
 		
 		double x = mouseX.get();
 		double y = mouseY.get();
