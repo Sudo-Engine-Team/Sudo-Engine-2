@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.lwjgl.opengl.GL30;
 
@@ -47,6 +48,8 @@ public class VAO {
 		List<VBO> vbos = new ArrayList<>();
 		ALLVAO.put(id, this);
 		VAO_VBO.put(this, vbos);
+		
+		DisplayManager.LOGGER.log(Level.INFO, "Created VAO with the ID of "+id);
 	}
 	
 	public int getID(){

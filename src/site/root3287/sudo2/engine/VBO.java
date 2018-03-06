@@ -3,11 +3,14 @@ package site.root3287.sudo2.engine;
 import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.logging.Level;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
+
+import site.root3287.sudo2.display.DisplayManager;
 
 public class VBO {
 	
@@ -46,11 +49,13 @@ public class VBO {
 	public VBO(){
 		this.id = GL15.glGenBuffers();
 		this.isInd = false;
+		DisplayManager.LOGGER.log(Level.INFO, "Created VBO with the ID of "+id);
 	}
 	
 	public VBO(boolean isInd){
 		this.id = GL15.glGenBuffers();
 		this.isInd = isInd;
+		DisplayManager.LOGGER.log(Level.INFO, "Created VBO with the ID of "+id);
 	}
 	
 	public void bind(boolean ind){
