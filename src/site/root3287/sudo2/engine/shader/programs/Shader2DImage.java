@@ -2,22 +2,19 @@ package site.root3287.sudo2.engine.shader.programs;
 
 import site.root3287.sudo2.engine.shader.Shader;
 import site.root3287.sudo2.engine.shader.uniforms.UniformMatrix;
-import site.root3287.sudo2.engine.shader.uniforms.UniformVector;
 
-public class UIShader extends Shader {
+public class Shader2DImage extends Shader {
 	
-	public UniformMatrix proj, trans;
-	public UniformVector colour;
+	public UniformMatrix proj;
 
-	public UIShader() {
-		super("/shader/UI/shader.glsl");
+	public Shader2DImage() {
+		super("/shader/shader2D/shaderImage.glsl");
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void getAllUniformLocations() {
 		proj = new UniformMatrix(programID, "proj");
-		trans = new UniformMatrix(programID, "trans");
-		colour = new UniformVector(programID, "colour");
 	}
 
 	@Override

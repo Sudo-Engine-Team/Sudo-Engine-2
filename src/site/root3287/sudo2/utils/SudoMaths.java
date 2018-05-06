@@ -1,13 +1,11 @@
 package site.root3287.sudo2.utils;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import site.root3287.sudo2.display.DisplayManager;
 import site.root3287.sudo2.engine.camera.Camera;
 
 public class SudoMaths {
@@ -73,32 +71,25 @@ public class SudoMaths {
         Matrix4f.translate(negativeCameraPos, viewMatrix, viewMatrix);
         return viewMatrix;
 	}
-	public static Matrix4f createProjectionMatrix(){
-		DisplayManager.LOGGER.log(Level.INFO, "Creating projection Matrix");
-		Vector2f size = DisplayManager.getCurrentWindowSize();
-		float aspectRatio = (float) size.x/size.y;
-		float y_scale = (float) ((1f / Math.tan(Math.toRadians(DisplayManager.FOV/ 2f))) * aspectRatio);
+	public static Matrix4f createProjectionMatrix(float windowWidth, float windowHeight, float fov, float near, float far){
+		float aspectRatio = (float) windowWidth/windowHeight;
+		float y_scale = (float) ((1f / Math.tan(Math.toRadians(fov/ 2f))) * aspectRatio);
 		float x_scale = y_scale / aspectRatio;
-		float frustum_length = DisplayManager.FAR_PLANE - DisplayManager.NEAR_PLANE;
+		float frustum_length = far - near;
 
 		Matrix4f projectionMatrix = new Matrix4f();
 		projectionMatrix.m00 = x_scale;
 		projectionMatrix.m11 = y_scale;
-		projectionMatrix.m22 = -((DisplayManager.FAR_PLANE + DisplayManager.NEAR_PLANE) / frustum_length);
+		projectionMatrix.m22 = -((far + near) / frustum_length);
 		projectionMatrix.m23 = -1;
-		projectionMatrix.m32 = -((2 * DisplayManager.NEAR_PLANE * DisplayManager.FAR_PLANE) / frustum_length);
+		projectionMatrix.m32 = -((2 * near * far) / frustum_length);
 		projectionMatrix.m33 = 0;
 		
 		return projectionMatrix;
 	}
 	
-	public static Matrix4f ortho(float width, float height){
-		return ortho(-width/2, width/2, -height/2, height/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
-	}
-	
-	public static Matrix4f ortho(){
-		return ortho(-DisplayManager.getCurrentWindowSize().x/2,DisplayManager.getCurrentWindowSize().x/2, -DisplayManager.getCurrentWindowSize().y/2, DisplayManager.getCurrentWindowSize().y/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
-		//	return ortho(-DisplayManager.WIDTH/2, DisplayManager.WIDTH/2, -DisplayManager.HEIGHT/2, DisplayManager.HEIGHT/2, DisplayManager.NEAR_PLANE, DisplayManager.FAR_PLANE);
+	public static Matrix4f ortho(float width, float height, float near, float far){
+		return ortho(-width/2, width/2, -height/2, height/2, near, far);
 	}
 	
 	/**
@@ -146,7 +137,8 @@ public class SudoMaths {
 		float l3 = 1.0f - l1 - l2;
 		return l1 * p1.y + l2 * p2.y + l3 * p3.y;
 	}
-	public static float distance3d(Vector3f p1, Vector3f p2){
+	
+	public static float distance3f(Vector3f p1, Vector3f p2){
 		return (float) Math.sqrt(Math.pow((p1.x - p2.x ), 2) + Math.pow((p1.y - p2.y), 2) + Math.pow((p1.z - p2.z), 2));
 	}
 	public static Vector3f maxVector3f(Vector3f x, Vector3f y){
@@ -168,9 +160,6 @@ public class SudoMaths {
 			maxVal = x.z;
 		}
 		return maxVal;
-	}
-	public static float degreesToRadians(float degree){
-		return (float) (degree * (Math.PI / 180f));
 	}
 	
 	public static float getMaxFloat(List<Float> list) {

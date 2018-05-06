@@ -16,7 +16,7 @@ public class BoundingSphere {
 	
 	public IntersectData isIntersecting(BoundingSphere other){
 		float radiusDistace = this.radius + other.radius;
-		float centerDistance = SudoMaths.distance3d(other.center, this.center);
+		float centerDistance = SudoMaths.distance3f(other.center, this.center);
 		float distance = centerDistance - radiusDistace;
 		
 		return new IntersectData(centerDistance < radiusDistace, distance);

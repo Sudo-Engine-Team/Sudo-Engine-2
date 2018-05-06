@@ -3,6 +3,7 @@ package site.root3287.sudo2.shape;
 import java.util.ArrayList;
 import java.util.List;
 
+import site.root3287.sudo2.engine.IBO;
 import site.root3287.sudo2.engine.VAO;
 import site.root3287.sudo2.engine.VBO;
 
@@ -13,9 +14,9 @@ public abstract class SquareShape extends Shape{
 		this.model = new VAO();
 		VBO pos = new VBO();
 		pos.setData(g.getPos());
-		VBO ind = new VBO(true);
+		IBO ind = new IBO();
 		ind.setData(g.getInd());
-		this.model.addVBO(ind);
+		this.model.setIBO(ind);
 		this.model.addVBO(0, 3, pos);
 	}
 	

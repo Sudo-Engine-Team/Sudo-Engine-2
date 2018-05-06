@@ -5,12 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL32;
-
-import site.root3287.sudo2.display.DisplayManager;
 
 public abstract class Shader {
 	protected int programID;
@@ -73,7 +72,7 @@ public abstract class Shader {
     }
      
     public void dispose(){
-    	DisplayManager.LOGGER.log(Level.INFO, "Disposing Shader "+this);
+    	Logger.getLogger("Sudo").log(Level.INFO, "Disposing Shader "+this);
         stop();
         GL20.glDetachShader(programID, vertexShaderID);
         GL20.glDetachShader(programID, fragmentShaderID);
@@ -186,7 +185,7 @@ public abstract class Shader {
     			System.err.println("Could not compile shader in "+file+"!");
     			System.exit(-1);
     		}
-    		DisplayManager.LOGGER.log(Level.INFO, "Shader loaded: "+file);
+    		Logger.getLogger("Sudo").log(Level.INFO, "Shader loaded: "+file);
     	}
     	return programs;
     }
@@ -213,7 +212,7 @@ public abstract class Shader {
             System.err.println("Could not compile shader in "+file+"!");
             System.exit(-1);
         }
-       DisplayManager.LOGGER.log(Level.INFO, "Shader Loaded: "+file);
+       Logger.getLogger("Sudo").log(Level.INFO, "Shader Loaded: "+file);
         return shaderID;
     }
     public int getProgramID() {

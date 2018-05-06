@@ -1,6 +1,7 @@
 package site.root3287.sudo2.engine.render;
 
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
@@ -9,9 +10,6 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL32;
 import org.lwjgl.opengl.GL40;
 import org.lwjgl.util.vector.Vector4f;
-
-import site.root3287.sudo2.display.Application;
-import site.root3287.sudo2.display.DisplayManager;
 
 public class RenderUtils {
 	private static boolean wireframe = false;
@@ -28,10 +26,6 @@ public class RenderUtils {
 	}
 	public static void disableDepthTest() {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
-	}
-	public static void clear(){
-		clear(DisplayManager.BACKGROUND_COLOUR);
-		clearGLErrors();
 	}
 	public static void clear(Vector4f colour){
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
@@ -131,8 +125,8 @@ public class RenderUtils {
 		boolean hasError = false;
 		while((e = GL11.glGetError()) != GL11.GL_NO_ERROR) {
 			if(count < 0)
-				Application.LOGGER.log(Level.SEVERE, "OpenGl has recieved an Error!");
-			Application.LOGGER.log(Level.SEVERE, count+": "+e+ ": 0x0" + Integer.toHexString(e));
+				Logger.getLogger("Sudo").log(Level.SEVERE, "OpenGl has recieved an Error!");
+			Logger.getLogger("Sudo").log(Level.SEVERE, count+": "+e+ ": 0x0" + Integer.toHexString(e));
 			hasError = true;
 			count++;
 		}

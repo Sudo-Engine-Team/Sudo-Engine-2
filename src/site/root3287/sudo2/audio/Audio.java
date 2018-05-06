@@ -3,14 +3,13 @@ package site.root3287.sudo2.audio;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.ALC;
 import org.lwjgl.openal.ALC10;
 import org.lwjgl.openal.ALCCapabilities;
-
-import site.root3287.sudo2.display.Application;
 
 public class Audio {
 	private static long device;
@@ -33,7 +32,7 @@ public class Audio {
 	public static void getErrors(){
 		int e = AL10.alGetError();
 		while(e != AL10.AL_NO_ERROR){
-			Application.getClientLogger().log(Level.SEVERE, "OpenAL has received an error! "+AL10.alGetString(e));
+			Logger.getLogger("Sudo-Audio").log(Level.SEVERE, "OpenAL has received an error! "+AL10.alGetString(e));
 			e = AL10.alGetError();
 		}
 	}

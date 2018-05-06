@@ -1,19 +1,16 @@
 package site.root3287.sudo2.engine;
 
 import java.nio.Buffer;
-import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
 
-public class VBO {
-	
+public class IBO {
 	public static void bind(int id){
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, id);
+		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, id);
 	}
 	
 	public static void dispose(int id){
@@ -27,7 +24,7 @@ public class VBO {
 	private int id, dataSize;
 	private Buffer data;
 	
-	public VBO(){
+	public IBO(){
 		this.id = GL15.glGenBuffers();
 		Logger.getLogger("Sudo").log(Level.INFO, "Created VBO with the ID of "+id);
 	}
@@ -36,9 +33,12 @@ public class VBO {
 		bind(this.id);
 	}
 	
-	public void bindData(int attributeNumber, int size){
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, (FloatBuffer)this.data, GL15.GL_STATIC_DRAW);
-		GL20.glVertexAttribPointer(attributeNumber, size, GL11.GL_FLOAT, false, 0, 0);
+	public void unbind(){
+		bind(0);
+	}
+	
+	public void bindData(){
+		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, (IntBuffer)this.data, GL15.GL_STATIC_DRAW);
 	}
 	
 	public int getID(){
@@ -49,9 +49,9 @@ public class VBO {
 		return data;
 	}
 	
-	public void setData(float[] data){
+	public void setData(int[] data){
 		this.dataSize = data.length;
-		FloatBuffer b = BufferUtils.createFloatBuffer(data.length);
+		IntBuffer b = BufferUtils.createIntBuffer(data.length);
 		b.put(data);
 		b.flip();
 		this.data = b;

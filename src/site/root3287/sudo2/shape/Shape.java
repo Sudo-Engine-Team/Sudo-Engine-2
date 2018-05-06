@@ -3,6 +3,7 @@ package site.root3287.sudo2.shape;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
+import site.root3287.sudo2.engine.IBO;
 import site.root3287.sudo2.engine.VAO;
 import site.root3287.sudo2.engine.VBO;
 
@@ -54,9 +55,9 @@ public abstract class Shape {
 		this.model = new VAO();
 		VBO pos = new VBO();
 		pos.setData(position);
-		VBO indVBO = new VBO(true);
+		IBO indVBO = new IBO();
 		indVBO.setData(ind);
 		this.model.addVBO(0,3,pos);
-		this.model.addVBO(indVBO);
+		this.model.addIBO(indVBO);
 	}
 }

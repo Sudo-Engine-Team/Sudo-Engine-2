@@ -37,7 +37,6 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector4f;
 
-import site.root3287.sudo2.UI.UIUtils;
 import site.root3287.sudo2.events.EventDispatcher;
 import site.root3287.sudo2.events.event.KeyboardPressedEvent;
 import site.root3287.sudo2.events.event.KeyboardReleasedEvent;
@@ -49,9 +48,9 @@ import site.root3287.sudo2.utils.Input;
 import site.root3287.sudo2.utils.Input.Mouse.State;
 
 public class Game {
-	public static final float FOV = 90;
-	public static final float NEAR_PLANE = 0.1f;
-	public static final float FAR_PLANE = 9999f;
+	private float fov = 90;
+	private float nearPlane = 0.1f;
+	private float farPlane = 9999f;
 	
 	private long windowID;
 	private String title;
@@ -141,8 +140,6 @@ public class Game {
 		int[] w = new int[1], h = new int[1];
 		GLFW.glfwGetFramebufferSize(windowID, w, h);
 		GL11.glViewport(0, 0, w[0], h[0]);
-
-		UIUtils.game = this;
 		
 		screen.init();
 	}
@@ -174,7 +171,7 @@ public class Game {
 				Input.Mouse.clickDispatcher.execute(new MouseClickEvent((float)Input.Mouse.getX(), (float)Input.Mouse.getY(), i, State.MOUSE_RELEASE));
 			}
 		}
-		this.screen.update((float)DisplayManager.getDelta());
+		this.screen.update((float)getDelta());
 		this.screen.render();
 		glfwSwapBuffers(windowID);
 		Input.update();
@@ -238,5 +235,29 @@ public class Game {
 	
 	public float getHeight() {
 		return this.height;
+	}
+
+	public float getFarPlane() {
+		return farPlane;
+	}
+
+	public void setFarPlane(float farPlane) {
+		this.farPlane = farPlane;
+	}
+
+	public float getNearPlane() {
+		return nearPlane;
+	}
+
+	public void setNearPlane(float nearPlane) {
+		this.nearPlane = nearPlane;
+	}
+
+	public float getFov() {
+		return fov;
+	}
+
+	public void setFov(float fov) {
+		this.fov = fov;
 	}
 }

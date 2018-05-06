@@ -11,4 +11,20 @@ public class API {
 		
 	}
 
+	public String getPublicKey() {
+		return publicKey;
+	}
+
+	public void setPublicKey(String publicKey) {
+		this.publicKey = publicKey;
+	}
+
+	public URL getHost() {
+		return host;
+	}
+
+	public void setHost(URL host) {
+		this.host = host;
+	}
+
 }
