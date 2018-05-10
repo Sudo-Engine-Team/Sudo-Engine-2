@@ -45,12 +45,13 @@ public class RenderUtils {
 	public static boolean isWireframe(){
 		return wireframe;
 	}
-	public static void bindTexture(int index, int textureID) {
+	public static void bindTexture(int index, int textureID) throws IndexOutOfBoundsException {
 		int base = 0x84c0;
-		if(index > 31) {
-			return;
+		if(index > 31 || index < 0) {
+			throw new IndexOutOfBoundsException("The index have to be between 0 and 32");
 		}
 		GL13.glActiveTexture(base+index);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
 	}
 	
 	public static void enableAlpha(){

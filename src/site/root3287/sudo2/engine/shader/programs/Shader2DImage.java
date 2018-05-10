@@ -6,6 +6,8 @@ import site.root3287.sudo2.engine.shader.uniforms.UniformMatrix;
 public class Shader2DImage extends Shader {
 	
 	public UniformMatrix proj;
+	public UniformMatrix imageTrans;
+	public UniformMatrix trans;
 
 	public Shader2DImage() {
 		super("/shader/shader2D/shaderImage.glsl");
@@ -15,6 +17,8 @@ public class Shader2DImage extends Shader {
 	@Override
 	protected void getAllUniformLocations() {
 		proj = new UniformMatrix(programID, "proj");
+		imageTrans = new UniformMatrix(programID, "imageTrans");
+		trans = new UniformMatrix(programID, "trans");
 	}
 
 	@Override

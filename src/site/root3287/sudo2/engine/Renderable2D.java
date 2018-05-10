@@ -21,8 +21,7 @@ public class Renderable2D {
 	}
 	
 	public boolean hasImage() {
-		if(image == null) return false;
-		return true;
+		return (image == null)? false:true;
 	}
 
 	public Vector4f getColour() {

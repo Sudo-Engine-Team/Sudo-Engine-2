@@ -5,22 +5,26 @@ in vec3 pos;
 in vec2 tc;
 
 uniform mat4 proj;
+uniform mat4 imageTrans;
+uniform mat4 trans;
 
 out vec2 out_tc;
 
 void main(){
-	gl_Position = proj*vec4(pos, 1);
-	out_tc = tc;
+	gl_Position = trans*proj*vec4(pos, 1);
+	out_tc = (imageTrans*vec4(tc, 0, 1)).xy;
 }
 #shader fragment
 #version 400 core
 
-in vec2 tc;
+in vec2 out_tc;
+
+uniform sampler2D sampler;
 
 out vec4 out_colour;
 
 void main(){
-	out_colour = vec4(1);
+	out_colour = texture(sampler, out_tc);
 }
 
 #shader end

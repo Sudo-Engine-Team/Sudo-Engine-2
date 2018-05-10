@@ -27,7 +27,7 @@ public class VAO {
 			b.dispose();
 			i++;
 		}
-		ALLVAO.get(i).ibo.dispose();
+		ALLVAO.get(id).ibo.dispose();
 		i++;
 		Logger.getLogger("Sudo").log(Level.INFO, "Disposed "+(i)+" VBO");
 		GL30.glDeleteVertexArrays(id);

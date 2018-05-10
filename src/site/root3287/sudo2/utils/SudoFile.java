@@ -1,16 +1,16 @@
 package site.root3287.sudo2.utils;
 
-import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class SudoFile {
-	public BufferedInputStream getInternal(String file) {
-		return new BufferedInputStream(this.getClass().getClassLoader().getResourceAsStream(file));
+	public static InputStream getInternal(String file) {
+		return Class.class.getResourceAsStream(file);
 	}
-	public BufferedInputStream getExturnal(String file) {
+	public static InputStream getExturnal(String file) {
 		try {
-			return new BufferedInputStream(new FileInputStream(file));
+			return new FileInputStream(file);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

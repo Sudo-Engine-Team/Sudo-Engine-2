@@ -38,30 +38,40 @@ public class Render2D implements Disposable{
 		Matrix4f translation = (Matrix4f) new Matrix4f().setIdentity();
 		translation.translate(obj.getPosition());
 		translation.scale(new Vector3f(obj.getScale().x,obj.getScale().y, 0));
-		translation.rotate(obj.getRotation().x, new Vector3f(1,0,0));
-		translation.rotate(obj.getRotation().y, new Vector3f(0,1,0));
-		translation.rotate(obj.getRotation().z, new Vector3f(0,0,1));
+		translation.rotate((float) Math.toRadians(obj.getRotation().x), new Vector3f(1,0,0));
+		translation.rotate((float) Math.toRadians(obj.getRotation().y), new Vector3f(0,1,0));
+		translation.rotate((float) Math.toRadians(obj.getRotation().z), new Vector3f(0,0,1));
+		
+		RenderUtils.disableDepthTest();
+		obj.getModel().bind();
+		RenderUtils.enableVertexAttribsArray(0);
 		if(obj.hasImage()) {
+			Matrix4f imageTransform = (Matrix4f) new Matrix4f().setIdentity();
+			imageTransform.scale(new Vector3f(
+					((obj.getImage().getTextureWidth())/(obj.getImage().getImageWidth()+0.5f) ), 
+					((obj.getImage().getTextureHeight())/(obj.getImage().getImageHeight())), 1));
+			imageTransform.translate(obj.getImage().getOffset());
+			
 			this.imageShader.start();
-			obj.getModel().bind();
-			RenderUtils.enableVertexAttribsArray(0);
+			this.imageShader.trans.loadMatrix(translation);
+			this.imageShader.imageTrans.loadMatrix(imageTransform);
+			//RenderUtils.enableAlpha();
 			RenderUtils.enableVertexAttribsArray(1);
+			RenderUtils.bindTexture(0, obj.getImage().getID());
 			RenderUtils.renderElements(GL11.GL_TRIANGLES, obj.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
-			RenderUtils.disableVertexAttribsArray(0);
 			RenderUtils.disableVertexAttribsArray(1);
-			obj.getModel().unbind();
+			//RenderUtils.disableAlpha();
 			this.imageShader.stop();
 		}else {
 			this.shader.start();
 			this.shader.colour.loadVector(obj.getColour());
 			this.shader.trans.loadMatrix(translation);
-			obj.getModel().bind();
-			RenderUtils.enableVertexAttribsArray(0);
 			RenderUtils.renderElements(GL11.GL_TRIANGLES, obj.getModel().getSize(), GL11.GL_UNSIGNED_INT, 0);
-			RenderUtils.disableVertexAttribsArray(0);
-			obj.getModel().unbind();
 			this.shader.stop();
 		}
+		RenderUtils.disableVertexAttribsArray(0);
+		obj.getModel().unbind();
+		RenderUtils.enableDepthTest();
 	}
 
 	@Override
