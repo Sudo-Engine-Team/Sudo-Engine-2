@@ -6,11 +6,10 @@ import org.lwjgl.util.vector.Vector3f;
 
 import site.root3287.sudo2.engine.Renderable2D;
 import site.root3287.sudo2.engine.camera.Camera;
-import site.root3287.sudo2.engine.interfaces.Disposable;
 import site.root3287.sudo2.engine.shader.programs.Shader2D;
 import site.root3287.sudo2.engine.shader.programs.Shader2DImage;
 
-public class Render2D implements Disposable{
+public class Render2D extends Renderer{
 	private Shader2DImage imageShader;
 	private Shader2D shader;
 	private Camera camera;
