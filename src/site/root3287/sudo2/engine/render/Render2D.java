@@ -60,8 +60,8 @@ public class Render2D extends Renderer{
 				if(obj.hasImage()) {
 					Matrix4f imageTransform = (Matrix4f) new Matrix4f().setIdentity();
 					imageTransform.scale(new Vector3f(
-							((obj.getImage().getTextureWidth())/(obj.getImage().getImageWidth()+0.5f) ), 
-							((obj.getImage().getTextureHeight())/(obj.getImage().getImageHeight())), 1));
+							((obj.getImage().getTextureWidth())/(obj.getImage().getImageWidth()) ), 
+							((obj.getImage().getTextureHeight())/(obj.getImage().getImageHeight())), 0));
 					imageTransform.translate(obj.getImage().getOffset());
 					
 					this.imageShader.start();

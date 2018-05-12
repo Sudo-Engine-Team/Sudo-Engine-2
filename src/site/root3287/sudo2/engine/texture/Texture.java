@@ -125,4 +125,18 @@ public class Texture {
 
         return texture;
 	}
+	
+	@Override
+	public Texture clone(){
+		Texture texture = new Texture();
+		texture.flip = this.flip;
+		texture.height = this.height;
+		texture.id = this.id;
+		texture.image = this.image;
+		texture.offset = this.offset;
+		texture.textureHeight = this.textureHeight;
+		texture.textureWidth = this.textureWidth;
+		texture.width = this.width;
+		return texture;
+	}
 }

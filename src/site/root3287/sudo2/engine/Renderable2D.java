@@ -24,10 +24,11 @@ public class Renderable2D {
 		this.image =texture;
 	}
 	public Renderable2D(Texture texture, Vector2f texScale, Vector2f texOffset) {
-		this.image =texture;
+		this.image = texture;
 		this.image.setTextureHeight(texScale.y);
 		this.image.setTextureWidth(texScale.x);
 		this.image.setTextureOffset(texOffset);
+		this.scale = texScale;
 	}
 	
 	public boolean hasImage() {

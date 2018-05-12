@@ -41,7 +41,7 @@ public class Sudo implements Screen{
 		UI.DISPLAY_SIZE = new Vector2f(game.getWidth(), game.getHeight());
 		UI.CAMERA = c;
 		
-		patch = new NineSlice(new Texture(SudoFile.getInternal("/test/TextureAtlas128.png"), false), 16, 16, new Vector2f(0, 0), new Vector2f(1, 0), new Vector2f(2, 0), new Vector2f(0, 1), new Vector2f(1, 1), new Vector2f(1, 2), new Vector2f(2, 0), new Vector2f(2, 1), new Vector2f(2, 2));		
+		patch = new NineSlice(new Texture(SudoFile.getInternal("/test/btn.png"), false), 16, 16, new Vector2f(0, 0), new Vector2f(1, 0), new Vector2f(2, 0), new Vector2f(0, 1), new Vector2f(1, 1), new Vector2f(2, 1), new Vector2f(0, 2), new Vector2f(1, 2), new Vector2f(2, 2));		
 		VAO model = new VAO();
 		IBO ibo = new IBO();
 		ibo.setData(new int[] {

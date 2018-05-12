@@ -31,30 +31,35 @@ public class NineSlice implements Disposable{
 		
 	}
 	public NineSlice(Texture texture, int width, int height, Vector2f topLeft, Vector2f top, Vector2f topRight, Vector2f left, Vector2f center, Vector2f right, Vector2f bottomLeft, Vector2f bottom, Vector2f bottomRight) {
-		this.topLeft = new Renderable2D(texture, new Vector2f(width, height), topLeft);
-		this.top = new Renderable2D(texture, new Vector2f(width, height), top);
-		this.topRight = new Renderable2D(texture, new Vector2f(width, height), topRight);
+		this.topLeft = new Renderable2D(texture.clone(), new Vector2f(width, height), topLeft);
+		this.top = new Renderable2D(texture.clone(), new Vector2f(width, height), top);
+		this.topRight = new Renderable2D(texture.clone(), new Vector2f(width, height), topRight);
 		
-		this.left = new Renderable2D(texture, new Vector2f(width, height), left);
-		this.center = new Renderable2D(texture, new Vector2f(width, height), center);
-		this.right = new Renderable2D(texture, new Vector2f(width, height), right);
+		this.left = new Renderable2D(texture.clone(), new Vector2f(width, height), left);
+		this.center = new Renderable2D(texture.clone(), new Vector2f(width, height), center);
+		this.right = new Renderable2D(texture.clone(), new Vector2f(width, height), right);
 		
-		this.bottomLeft = new Renderable2D(texture, new Vector2f(width, height), bottomLeft);
-		this.bottom = new Renderable2D(texture, new Vector2f(width, height), bottom);
-		this.bottomRight = new Renderable2D(texture, new Vector2f(width, height), bottomRight);
+		this.bottomLeft = new Renderable2D(texture.clone(), new Vector2f(width, height), bottomLeft);
+		this.bottom = new Renderable2D(texture.clone(), new Vector2f(width, height), bottom);
+		this.bottomRight = new Renderable2D(texture.clone(), new Vector2f(width, height), bottomRight);
+		
 		setPosition(new Vector2f());
+		setScale(new Vector2f(50,50));
+		
 	}
 	
 	public void render(Render2D render) {
+
+		render.add(center);
 		render.add(topLeft);
 		render.add(topRight);
-		render.add(left);
-		render.add(right);
 		render.add(bottomLeft);
 		render.add(bottomRight);
-		render.add(bottom);
+		
 		render.add(top);
-		render.add(center);
+		render.add(bottom);
+		render.add(left);
+		render.add(right);
 		render.render();
 	}
 	
@@ -65,14 +70,16 @@ public class NineSlice implements Disposable{
 	public void setPosition(Vector2f position) {
 		this.position = position;
 		this.center.setPosition(position);
-		this.top.setPosition(new Vector2f(position.x, position.y+0.5f));
-		this.bottom.setPosition(new Vector2f(position.x, position.y-0.5f));
-		this.left.setPosition(new Vector2f(position.x-0.5f, position.y));
-		this.right.setPosition(new Vector2f(position.x+0.5f, position.y));
-		this.topRight.setPosition(new Vector2f(position.x+0.5f, position.y+0.5f));
-		this.topLeft.setPosition(new Vector2f(position.x-0.5f, position.y+0.5f));
-		this.bottomLeft.setPosition(new Vector2f(position.x-0.5f, position.y-0.5f));
-		this.bottomRight.setPosition(new Vector2f(position.x+0.5f, position.y-0.5f));
+		
+		float sep = 0.2f;
+		this.top.setPosition(new Vector2f(position.x, position.y+sep));
+		this.bottom.setPosition(new Vector2f(position.x, position.y-sep));
+		this.left.setPosition(new Vector2f(position.x-sep, position.y));
+		this.right.setPosition(new Vector2f(position.x+sep, position.y));
+		this.topRight.setPosition(new Vector2f(position.x+sep, position.y+sep));
+		this.topLeft.setPosition(new Vector2f(position.x-sep, position.y+sep));
+		this.bottomLeft.setPosition(new Vector2f(position.x-sep, position.y-sep));
+		this.bottomRight.setPosition(new Vector2f(position.x+sep, position.y-sep));
 	}
 	public void setScale(Vector2f scale) {
 		this.scale = scale;
