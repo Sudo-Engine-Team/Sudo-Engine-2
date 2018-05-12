@@ -10,6 +10,7 @@ import com.sun.media.jfxmediaimpl.MediaDisposer.Disposable;
 
 import site.root3287.sudo2.engine.Renderable2D;
 import site.root3287.sudo2.engine.interfaces.Updateable;
+import site.root3287.sudo2.engine.render.Render2D;
 import site.root3287.sudo2.utils.Input;
 
 public abstract class UIElement implements Updateable, Disposable{
@@ -36,7 +37,6 @@ public abstract class UIElement implements Updateable, Disposable{
 	public abstract void onClick();
 	
 	public void mouseUpdate() {
-		boolean out = true;
 		if(isVisable) {
 			Vector3f mouseTemp = Input.Mouse.getMouseProjection(UI.CAMERA, UI.DISPLAY_SIZE);
 			Vector2f mousePos = new Vector2f(mouseTemp.x, mouseTemp.y);
@@ -63,4 +63,6 @@ public abstract class UIElement implements Updateable, Disposable{
 	public Vector2f getSize() {return this.size;}
 	public void visable(boolean visable) {this.isVisable = visable;}
 	public boolean isVisable() { return this.isVisable;}
+	
+	public abstract void render(Render2D render);
 }

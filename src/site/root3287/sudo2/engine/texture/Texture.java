@@ -85,6 +85,7 @@ public class Texture {
 	public ByteBuffer getImage(){return image;}
 	public boolean flipped() {return this.flip;}
 	public Vector2f getOffset() {return this.offset;}
+	public void setTextureOffset(Vector2f offset) {this.offset = offset;}
 	
 	public static Texture loadTexture(String path) { return loadTexture(path, true);}
 	public static Texture loadTexture(String path, boolean flip) {

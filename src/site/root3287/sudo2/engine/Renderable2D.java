@@ -20,6 +20,16 @@ public class Renderable2D {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Renderable2D(Texture texture) {
+		this.image =texture;
+	}
+	public Renderable2D(Texture texture, Vector2f texOffset, Vector2f texScale) {
+		this.image =texture;
+		this.image.setTextureHeight(texScale.y);
+		this.image.setTextureWidth(texScale.x);
+		this.image.setTextureOffset(texOffset);
+	}
+	
 	public boolean hasImage() {
 		return (image == null)? false:true;
 	}

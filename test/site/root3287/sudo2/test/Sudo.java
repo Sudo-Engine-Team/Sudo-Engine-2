@@ -91,6 +91,11 @@ public class Sudo implements Screen{
 			public void hover() {
 				System.out.println("Hovering");
 			}
+
+			@Override
+			public void render(Render2D render) {
+				
+			}
 		};
 		
 		element.setSize(new Vector2f(200,100));
