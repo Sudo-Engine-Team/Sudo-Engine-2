@@ -1,6 +1,8 @@
 package site.root3287.sudo2.utils;
 
+import site.root3287.sudo2.engine.IBO;
 import site.root3287.sudo2.engine.VAO;
+import site.root3287.sudo2.engine.VBO;
 
 public class SudoShapeUtil {
 	public static VAO generateRoundedSquare(float radius) {

@@ -11,8 +11,10 @@ import site.root3287.sudo2.engine.VBO;
 import site.root3287.sudo2.engine.camera.OrthographicCamera;
 import site.root3287.sudo2.engine.render.Render2D;
 import site.root3287.sudo2.engine.render.RenderUtils;
+import site.root3287.sudo2.engine.texture.Texture;
 import site.root3287.sudo2.ui.UI;
-import site.root3287.sudo2.ui.UIElement;
+import site.root3287.sudo2.ui.nineSlice.NineSlice;
+import site.root3287.sudo2.utils.SudoFile;
 
 public class Sudo implements Screen{
 	
@@ -25,10 +27,8 @@ public class Sudo implements Screen{
 	Render2D render;
 	Game game;
 	OrthographicCamera c;
-	
+	NineSlice patch;
 	Renderable2D obj;
-	
-	UIElement element;
 	
 	public Sudo(Game game) {
 		this.game = game;
@@ -41,8 +41,7 @@ public class Sudo implements Screen{
 		UI.DISPLAY_SIZE = new Vector2f(game.getWidth(), game.getHeight());
 		UI.CAMERA = c;
 		
-		obj = new Renderable2D();
-		
+		patch = new NineSlice(new Texture(SudoFile.getInternal("/test/TextureAtlas128.png"), false), 16, 16, new Vector2f(0, 0), new Vector2f(1, 0), new Vector2f(2, 0), new Vector2f(0, 1), new Vector2f(1, 1), new Vector2f(1, 2), new Vector2f(2, 0), new Vector2f(2, 1), new Vector2f(2, 2));		
 		VAO model = new VAO();
 		IBO ibo = new IBO();
 		ibo.setData(new int[] {
@@ -50,68 +49,30 @@ public class Sudo implements Screen{
 		});
 		VBO pos = new VBO();
 		pos.setData(new float[] {-1,1,0,-1,-1,0,1,1,0,1,-1,0});
+		VBO tc = new VBO();
+		tc.setData(new float[] {0,0,0,1,1,0,1,1});
 		model.addIBO(ibo);
 		model.addVBO(0, 3, pos);
+		model.addVBO(1, 2, tc);
+		patch.setModel(model);
 		
+		obj = new Renderable2D(new Texture(SudoFile.getInternal("/test/TextureAtlas128.png"), false));
 		obj.setModel(model);
-		obj.setScale(new Vector2f(200,100));
 		
 		render = new Render2D();
-		
-		element = new UIElement() {
-			
-			@Override
-			public void dispose() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void update(float delta) {
-				mouseUpdate();
-			}
-			
-			@Override
-			public void onHover() {
-				System.out.println("On Hovering");
-			}
-			
-			@Override
-			public void onClick() {
-				System.out.println("Click");
-			}
-			
-			@Override
-			public void offHover() {
-				System.out.println("Off Hovering");
-				
-			}
-			
-			@Override
-			public void hover() {
-				System.out.println("Hovering");
-			}
-
-			@Override
-			public void render(Render2D render) {
-				
-			}
-		};
-		
-		element.setSize(new Vector2f(200,100));
 	}
 
 	@Override
 	public void update(float delta) {
 		c.update(delta);
-		element.update(delta);
 		render.setCamera(c);
+		//patch.render(render);
 	}
 
 	@Override
 	public void render() {
 		RenderUtils.clear(game.getBackgroundColour());
-		render.render(obj);
+		patch.render(render);
 	}
 
 	@Override
@@ -124,7 +85,7 @@ public class Sudo implements Screen{
 	@Override
 	public void destory() {
 		render.dispose();
-		obj.getModel().dispose();
+		patch.dispose();
 	}
 
 }
