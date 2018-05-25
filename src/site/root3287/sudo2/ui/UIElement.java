@@ -65,4 +65,12 @@ public abstract class UIElement implements Updateable, Disposable{
 	public boolean isVisable() { return this.isVisable;}
 	
 	public abstract void render(Render2D render);
+
+	public Renderable2D getModel() {
+		return model;
+	}
+
+	public void setModel(Renderable2D model) {
+		this.model = model;
+	}
 }
