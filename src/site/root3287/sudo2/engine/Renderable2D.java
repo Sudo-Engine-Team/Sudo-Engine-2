@@ -20,6 +20,12 @@ public class Renderable2D {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Renderable2D(VAO model, Vector4f colour) {
+		this.image = null;
+		this.model = model;
+		this.colour = colour;
+	}
+	
 	public Renderable2D(Texture texture) {
 		this.image =texture;
 	}

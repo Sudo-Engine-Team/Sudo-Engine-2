@@ -9,6 +9,7 @@ public class Shader2D extends Shader{
 	public UniformMatrix proj;
 	public UniformMatrix trans;
 	public UniformVector colour;
+	public UniformMatrix view;
 	
 	public Shader2D() {
 		super("/shader/shader2D/shader.glsl");
@@ -20,6 +21,7 @@ public class Shader2D extends Shader{
 		proj = new UniformMatrix(programID, "proj");
 		trans = new UniformMatrix(programID, "trans");
 		colour = new UniformVector(programID, "colour");
+		view = new UniformMatrix(programID, "view");
 	}
 
 	@Override

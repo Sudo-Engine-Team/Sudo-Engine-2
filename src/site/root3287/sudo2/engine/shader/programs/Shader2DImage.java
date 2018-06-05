@@ -8,6 +8,7 @@ public class Shader2DImage extends Shader {
 	public UniformMatrix proj;
 	public UniformMatrix imageTrans;
 	public UniformMatrix trans;
+	public UniformMatrix view;
 
 	public Shader2DImage() {
 		super("/shader/shader2D/shaderImage.glsl");
@@ -19,6 +20,7 @@ public class Shader2DImage extends Shader {
 		proj = new UniformMatrix(programID, "proj");
 		imageTrans = new UniformMatrix(programID, "imageTrans");
 		trans = new UniformMatrix(programID, "trans");
+		view = new UniformMatrix(programID, "view");
 	}
 
 	@Override

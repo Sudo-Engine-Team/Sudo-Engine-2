@@ -21,24 +21,37 @@ public class Render2D extends Renderer{
 	private Camera camera;
 	private Map<VAO, List<Renderable2D>> batch = new HashMap<>();
 	
+	private Matrix4f proj;
+	
 	public Render2D() {
 		this.shader = new Shader2D();
 		this.imageShader = new Shader2DImage();
 	}
 	
 	public void setCamera(Camera c) {
+		if(proj == null) {
+			proj = c.getProjectionMatrix();
+			this.shader.start();
+			this.shader.proj.loadMatrix(proj);
+			this.shader.stop();
+			this.imageShader.start();
+			this.imageShader.proj.loadMatrix(proj);
+			this.imageShader.stop();
+		}
+		
 		this.camera = c;
 		this.shader.start();
-		this.shader.proj.loadMatrix(camera.getCombind());
+		this.shader.view.loadMatrix(camera.getViewMatrix());
 		this.shader.stop();
 		this.imageShader.start();
-		this.imageShader.proj.loadMatrix(camera.getCombind());
+		this.imageShader.view.loadMatrix(camera.getCombind());
 		this.imageShader.stop();
 	}
 	
 	public void add(Renderable2D obj) {
 		if(batch.get(obj.getModel()) == null) {
 			List<Renderable2D> temp = new ArrayList<>();
+			temp.add(obj);
 			batch.put(obj.getModel(), temp);
 		}
 		batch.get(obj.getModel()).add(obj);

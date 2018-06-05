@@ -7,11 +7,12 @@ in vec2 tc;
 uniform mat4 proj;
 uniform mat4 imageTrans;
 uniform mat4 trans;
+uniform mat4 view;
 
 out vec2 out_tc;
 
 void main(){
-	gl_Position = trans*proj*vec4(pos, 1);
+	gl_Position = view*proj*trans*vec4(pos, 1);
 	out_tc = (imageTrans*vec4(tc, 0, 1)).xy;
 }
 #shader fragment

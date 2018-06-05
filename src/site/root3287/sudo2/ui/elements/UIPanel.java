@@ -6,13 +6,15 @@ import site.root3287.sudo2.engine.render.Render2D;
 import site.root3287.sudo2.ui.UIElement;
 
 public class UIPanel extends UIElement{
-	public Vector2f padding;
-	public float roundingRadius = 0;
+	private Vector2f padding;
+	private float roundingRadius = 0;
 	
 	@Override
 	public void update(float delta) {
-		// TODO Auto-generated method stub
-		
+		model.setPosition(getAbsolutePosition());
+		for(UIElement element : this.children) {
+			element.update(delta);
+		}
 	}
 
 	@Override
@@ -23,8 +25,7 @@ public class UIPanel extends UIElement{
 
 	@Override
 	public void onHover() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Hovering");
 	}
 
 	@Override
@@ -47,7 +48,27 @@ public class UIPanel extends UIElement{
 
 	@Override
 	public void render(Render2D render) {
-		// TODO Auto-generated method stub
+		if(this.isVisable)
+			render.add(model);
 		
+		for(UIElement elements : children) {
+			elements.render(render);
+		}
+	}
+
+	public Vector2f getPadding() {
+		return padding;
+	}
+
+	public void setPadding(Vector2f padding) {
+		this.padding = padding;
+	}
+
+	public float getRoundingRadius() {
+		return roundingRadius;
+	}
+
+	public void setRoundingRadius(float roundingRadius) {
+		this.roundingRadius = roundingRadius;
 	}
 }

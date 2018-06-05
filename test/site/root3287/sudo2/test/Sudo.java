@@ -1,6 +1,7 @@
 package site.root3287.sudo2.test;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import site.root3287.sudo2.display.Game;
 import site.root3287.sudo2.display.Screen;
@@ -11,10 +12,9 @@ import site.root3287.sudo2.engine.VBO;
 import site.root3287.sudo2.engine.camera.OrthographicCamera;
 import site.root3287.sudo2.engine.render.Render2D;
 import site.root3287.sudo2.engine.render.RenderUtils;
-import site.root3287.sudo2.engine.texture.Texture;
 import site.root3287.sudo2.ui.UI;
-import site.root3287.sudo2.ui.nineSlice.NineSlice;
-import site.root3287.sudo2.utils.SudoFile;
+import site.root3287.sudo2.ui.elements.UIPanel;
+import site.root3287.sudo2.ui.elements.UIRoot;
 
 public class Sudo implements Screen{
 	
@@ -27,8 +27,10 @@ public class Sudo implements Screen{
 	Render2D render;
 	Game game;
 	OrthographicCamera c;
-	NineSlice patch;
-	Renderable2D obj;
+	
+	VAO model;
+	
+	UIRoot root;
 	
 	public Sudo(Game game) {
 		this.game = game;
@@ -41,23 +43,36 @@ public class Sudo implements Screen{
 		UI.DISPLAY_SIZE = new Vector2f(game.getWidth(), game.getHeight());
 		UI.CAMERA = c;
 		
-		patch = new NineSlice(new Texture(SudoFile.getInternal("/test/btn.png"), false), 16, 16, new Vector2f(0, 0), new Vector2f(1, 0), new Vector2f(2, 0), new Vector2f(0, 1), new Vector2f(1, 1), new Vector2f(2, 1), new Vector2f(0, 2), new Vector2f(1, 2), new Vector2f(2, 2));		
-		VAO model = new VAO();
+		model = new VAO();
 		IBO ibo = new IBO();
 		ibo.setData(new int[] {
 				0,1,2,2,1,3
 		});
 		VBO pos = new VBO();
 		pos.setData(new float[] {-1,1,0,-1,-1,0,1,1,0,1,-1,0});
-		VBO tc = new VBO();
-		tc.setData(new float[] {0,0,0,1,1,0,1,1});
+		//VBO tc = new VBO();
+		//tc.setData(new float[] {0,0,0,1,1,0,1,1});
 		model.addIBO(ibo);
 		model.addVBO(0, 3, pos);
-		model.addVBO(1, 2, tc);
-		patch.setModel(model);
+		//model.addVBO(1, 2, tc);
 		
-		obj = new Renderable2D(new Texture(SudoFile.getInternal("/test/TextureAtlas128.png"), false));
-		obj.setModel(model);
+		this.root = new UIRoot();
+		
+		UIPanel panel1 = new UIPanel();
+		panel1.setModel(new Renderable2D(model, new Vector4f(255, 0, 0, 255)));
+		panel1.setPosition(new Vector2f(-200f,0));
+		
+		UIPanel panel1a = new UIPanel();
+		panel1a.setModel(new Renderable2D(model, new Vector4f(255, 255, 0, 255)));
+		panel1a.setSize(new Vector2f(90, 90));
+		panel1.add(panel1a);
+		
+		UIPanel panel2 = new UIPanel();
+		panel2.setModel(new Renderable2D(model, new Vector4f(0, 0, 255, 255)));
+		panel2.setPosition(new Vector2f(200, 0));
+		
+		this.root.add(panel1);
+		this.root.add(panel2);
 		
 		render = new Render2D();
 	}
@@ -66,13 +81,14 @@ public class Sudo implements Screen{
 	public void update(float delta) {
 		c.update(delta);
 		render.setCamera(c);
-		//patch.render(render);
+		this.root.update(delta);
+		System.out.println(delta);
 	}
 
 	@Override
 	public void render() {
 		RenderUtils.clear(game.getBackgroundColour());
-		patch.render(render);
+		root.render(render);
 	}
 
 	@Override
@@ -85,7 +101,7 @@ public class Sudo implements Screen{
 	@Override
 	public void destory() {
 		render.dispose();
-		patch.dispose();
+		model.dispose();
 	}
 
 }
